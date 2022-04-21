@@ -1,16 +1,15 @@
 package com.juhnny.dailydiscovery
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
+import com.juhnny.dailydiscovery.databinding.FragmentBioBinding
 
-class TodayFragment : Fragment() {
+open class BioFragment : Fragment() {
 
-    val b by lazy { FragmentTodayBinding.inflate(layoutInflater) }
+    val b by lazy { FragmentBioBinding.inflate(layoutInflater) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,12 +22,8 @@ class TodayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        b.tvGotoWrite.setOnClickListener {
-            val intent = Intent(context, EditorActivity::class.java)
-            val ac = activity as MainActivity
-            ac.editorResultLauncher.launch(intent)
+        b.tv.setOnClickListener {
+            b.tv.text = "${System.currentTimeMillis()}"
         }
-
-
     }
 }

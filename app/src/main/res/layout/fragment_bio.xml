@@ -8,9 +8,8 @@
         android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="topic fragment"
-        android:background="@color/skyblue"
-        android:gravity="center" />
-
+        android:text="BioFragment"
+        android:background="@color/dahong"
+        android:gravity="center"/>
 
 </LinearLayout>

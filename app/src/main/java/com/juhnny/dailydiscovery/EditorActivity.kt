@@ -38,6 +38,8 @@ class EditorActivity : AppCompatActivity() {
                     .setNegativeButton("나가기", DialogInterface.OnClickListener( {
                         dialogInterface, i -> run{
                         Toast.makeText(this, "나가기", Toast.LENGTH_SHORT).show()
+
+                        setResult(RESULT_OK, intent)
                         finish()
                         }
                     }))
