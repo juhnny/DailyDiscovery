@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DailyDiscovery</string>
+    <string name="openDrawerDesc">open drawer</string>
+    <string name="closeDrawerDesc">close drawer</string>
+</resources>
