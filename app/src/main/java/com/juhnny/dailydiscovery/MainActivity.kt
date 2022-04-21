@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
         
-// aaa
+// aaabbb
 //        b.root.transitionName = "introExpand"
 
         setSupportActionBar(b.toolbar)
