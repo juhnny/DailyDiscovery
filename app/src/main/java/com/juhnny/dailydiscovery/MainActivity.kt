@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
-
+        
+// aaa
 //        b.root.transitionName = "introExpand"
 
         setSupportActionBar(b.toolbar)
