@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘의 주제"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"/>
+        <TextView
+            android:id="@+id/tv_topic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="바다"
+            android:textSize="30sp"
+            android:background="@drawable/topic_bg"
+            android:padding="12dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:id="@+id/tv_goto_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="참가하기"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="100dp"/>
+        <TextView
+            android:id="@+id/tv_goto_topics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주제별 전시"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
