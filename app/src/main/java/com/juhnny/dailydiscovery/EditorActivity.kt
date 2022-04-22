@@ -53,6 +53,7 @@ class EditorActivity : AppCompatActivity() {
 
     }
 
+    //Back버튼 눌렀을 때도 바로 닫히지 않고 안내 뜨게 해야함 - 한번 더 누르면 닫히고 내용은 저장되지 않는다고.
 
 
 }

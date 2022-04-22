@@ -26,6 +26,6 @@
         <item name="colorControlNormal">@color/sunset</item>
     </style>
 
-    <style name="Theme.My.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
     </style>
 </resources>

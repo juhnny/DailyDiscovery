@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.juhnny.dailydiscovery.databinding.FragmentBioBinding
+import com.juhnny.dailydiscovery.databinding.FragmentBioOthersBinding
 
-open class BioFragment : Fragment() {
+class OthersBioFragment : Fragment() {
 
-    val b by lazy { FragmentBioBinding.inflate(layoutInflater) }
+    open lateinit var b:FragmentBioOthersBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        b = FragmentBioOthersBinding.inflate(layoutInflater)
         return b.root
     }
 

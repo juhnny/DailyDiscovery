@@ -22,5 +22,10 @@ class IntroActivity : AppCompatActivity() {
             startActivity(intent, optionsCompat.toBundle())
             finish()
         }
+
+        val intent = Intent(this, MainActivity::class.java)
+        val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, 42, 75, 1, 1)
+        startActivity(intent, optionsCompat.toBundle())
+        finish()
     }
 }
