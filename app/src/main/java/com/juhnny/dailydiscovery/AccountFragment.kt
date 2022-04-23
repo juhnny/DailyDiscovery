@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.juhnny.dailydiscovery.databinding.FragmentAccountBinding
 
 class AccountFragment:Fragment() {
-
+    val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy { FragmentAccountBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,13 +30,11 @@ class AccountFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val mainActivity = requireActivity() as MainActivity
 //        mainActivity.setSupportActionBar(null)
-//        mainActivity.setSupportActionBar(b.toolbar)
+        mainActivity.setSupportActionBar(b.toolbar)
         mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mainActivity.supportActionBar?.title = "Account"
-        mainActivity.supportActionBar?.setCustomView(R.layout.actionbar_account)
+//        mainActivity.supportActionBar?.setCustomView(R.layout.actionbar_account)
 
 
 //        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -51,7 +49,7 @@ class AccountFragment:Fragment() {
 
     override fun onResume() {
         super.onResume()
-        requireActivity().invalidateOptionsMenu()
+        mainActivity.invalidateOptionsMenu()
 
     }
 
@@ -59,6 +57,7 @@ class AccountFragment:Fragment() {
         when(item.itemId){
             android.R.id.home -> {
                 Toast.makeText(context, "home", Toast.LENGTH_SHORT).show()
+                parentFragmentManager.beginTransaction().hide(this).commit()
                 return true
             }
         }

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tangerine">
+    android:orientation="vertical"
+    tools:context=".SignupActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Account"/>
+        android:background="@color/purple_200"/>
 
     <TextView
-        android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="account fragment"
+        android:text="signup activity"
         android:background="@color/lightgreen"
-        android:gravity="center"/>
+        android:gravity="center" />
 
 </LinearLayout>

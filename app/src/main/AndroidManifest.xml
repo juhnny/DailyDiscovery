@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DailyDiscovery">
         <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <!--            android:parentActivityName=".LoginActivity"
+-->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".PhotoActivity"
             android:exported="false" />
         <activity

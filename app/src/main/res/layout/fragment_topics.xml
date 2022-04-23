@@ -12,5 +12,4 @@
         android:background="@color/skyblue"
         android:gravity="center" />
 
-
 </LinearLayout>
