@@ -1,9 +1,7 @@
 package com.juhnny.dailydiscovery
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.TextView
@@ -11,16 +9,13 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.juhnny.dailydiscovery.databinding.ActivityMainBinding
-import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
     val b:ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    val fragments = listOf(TodayFragment(), TopicFragment(), SubsFragment(), MyBioFragment(), SettingsFragment())
+    val fragments = listOf(TodayFragment(), TopicsFragment(), SubsFragment(), MyBioFragment(), SettingsFragment())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(b.root)

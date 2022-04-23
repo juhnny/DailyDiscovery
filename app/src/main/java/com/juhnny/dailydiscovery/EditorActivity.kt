@@ -1,6 +1,7 @@
 package com.juhnny.dailydiscovery
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +21,12 @@ class EditorActivity : AppCompatActivity() {
         setSupportActionBar(b.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close)
+
+        b.ivPhoto.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivity(intent)
+        }
 
     }//onCreate()
 
@@ -47,6 +54,17 @@ class EditorActivity : AppCompatActivity() {
             }
             R.id.submit -> {
                 Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+
+                //입력 데이터 읽어와서
+                var topic = b.etTopic.text.toString()
+                var desc = b.etDesc.text.toString()
+
+                //Firebase Storage에 사진 업로드
+
+                //Firebase Firestore에 전체 데이터 업로드
+
+                //업로드 성공 시 액티비티 종료
+                //실패시 알림창 띄우고 재시도 하도록
             }
         }
         return super.onOptionsItemSelected(item)

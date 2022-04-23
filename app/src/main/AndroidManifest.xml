@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DailyDiscovery">
-
+        <activity
+            android:name=".PhotoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FollowActivity"
+            android:exported="false" />
         <activity
             android:name=".IntroActivity"
             android:exported="true"
@@ -20,17 +25,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
-
+            android:exported="true" />
         <activity
             android:name=".EditorActivity"
-            android:exported="true"></activity>
-
-        <activity android:name=".AccountActivity"
-            android:exported="false"/>
+            android:exported="true" />
+        <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
