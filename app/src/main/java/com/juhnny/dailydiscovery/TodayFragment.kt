@@ -25,10 +25,12 @@ class TodayFragment : Fragment() {
 
         b.tvGotoWrite.setOnClickListener {
             val intent = Intent(context, EditorActivity::class.java)
+//            intent.putExtra("topic", )
             val ac = activity as MainActivity
             ac.editorResultLauncher.launch(intent)
         }
-
-
     }
+
+    //오늘의 주제를 발행하는 방법은?
+
 }

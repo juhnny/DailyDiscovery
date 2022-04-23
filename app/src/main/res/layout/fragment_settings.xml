@@ -7,9 +7,16 @@
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
         android:text="Settings Fragment"
         android:background="@color/navy"
+        android:gravity="center" />
+        <TextView
+        android:id="@+id/tv_activity"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="Settings Fragment"
+        android:background="@color/purple_500"
         android:gravity="center" />
 
 </LinearLayout>

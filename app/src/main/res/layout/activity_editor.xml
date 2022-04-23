@@ -16,8 +16,16 @@
         android:layout_height="400dp"
         android:scaleType="fitCenter"
         android:background="@drawable/editor_photo_bg"/>
+
     <EditText
-        android:id="@+id/et_msg"
+        android:id="@+id/et_topic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="주제"
+        android:inputType="text"
+        android:gravity="start"/>
+    <EditText
+        android:id="@+id/et_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="설명"
