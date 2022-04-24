@@ -21,10 +21,18 @@
             android:text="bbb"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager_tab1"
+    <LinearLayout
+        android:id="@+id/container_tab3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey128"/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="tab3 fragment"
+            android:gravity="center"
+            android:background="@color/green"/>
+    </LinearLayout>
 
 </LinearLayout>

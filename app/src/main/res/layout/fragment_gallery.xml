@@ -8,8 +8,8 @@
         android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:text="topic fragment"
-        android:background="@color/skyblue"
+        android:text="gallery fragment"
+        android:background="@color/navy"
         android:gravity="center" />
     <ScrollView
         android:layout_width="match_parent"
@@ -22,19 +22,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:text="111"
-                android:background="@color/purple_700"
+                android:background="@color/dahong"
                 android:gravity="center"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:text="222"
-                android:background="@color/purple_500"
+                android:background="@color/orange"
                 android:gravity="center"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:text="333"
-                android:background="@color/purple_200"
+                android:background="@color/tangerine"
                 android:gravity="center"/>
         </LinearLayout>
     </ScrollView>

@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import com.juhnny.dailydiscovery.databinding.FragmentGalleryBinding
 import com.juhnny.dailydiscovery.databinding.FragmentTopicsBinding
 
-class TopicsFragment : Fragment() {
+class GalleryFragment : Fragment() {
 
-    val b by lazy {FragmentTopicsBinding.inflate(layoutInflater)}
-    val fragmets = mutableListOf<Fragment>()
+    val b by lazy {FragmentGalleryBinding.inflate(layoutInflater)}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,12 +26,18 @@ class TopicsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         b.tv.setOnClickListener{
-//            val galleryFragment = GalleryFragment()
-//            fragmets.add(galleryFragment)
-            parentFragmentManager.beginTransaction().add(R.id.container_bnv, GalleryFragment()).addToBackStack(null).commit()
+            if(parentFragmentManager.fragments.size == 1)
+                parentFragmentManager.beginTransaction().add(R.id.container_bnv, TopicsFragment()).addToBackStack(null).commit()
+            else parentFragmentManager.beginTransaction().replace(R.id.container_bnv, TopicsFragment()).addToBackStack(null).commit()
             Toast.makeText(context, "" + parentFragmentManager.fragments.size, Toast.LENGTH_SHORT).show()
+
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        parentFragmentManager.beginTransaction().show(parentFragmentManager.)
     }
 
 }

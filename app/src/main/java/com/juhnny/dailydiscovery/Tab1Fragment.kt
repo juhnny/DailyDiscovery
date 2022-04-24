@@ -25,5 +25,7 @@ class Tab1Fragment : Fragment() {
 
         mainActivity.setSupportActionBar(b.toolbar)
 
+        b.pagerTab1.adapter = Tab1PagerAdapter(requireActivity())
+
     }
 }
