@@ -15,7 +15,7 @@ import com.juhnny.dailydiscovery.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     val b:ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    val fragments = listOf(Tab1Fragment(), Tab2Fragment(), Tab3Fragment(), Tab4Fragment())
+    val fragments = listOf(TodayFragment(), TopicsFragment(), Tab3Fragment(), Tab4Fragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +69,9 @@ class MainActivity : AppCompatActivity() {
             val trans = supportFragmentManager.beginTransaction()
             if( ! supportFragmentManager.fragments.contains(fragments[1])) trans.add(R.id.container_bnv, fragments[1])
             trans.show(fragments[1])
-            //pager.currentPosition(0) //아마 이런 명령으로 몇 번재 페이저 화면 보여줄 지 정하면 될 듯
             trans.commit()
+
+            b.bnv.menu.getItem(1).isChecked = true
         } else {
             Toast.makeText(this, "결과 못 받음", Toast.LENGTH_SHORT).show()
         }

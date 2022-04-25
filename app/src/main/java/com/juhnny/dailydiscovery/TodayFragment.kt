@@ -10,6 +10,7 @@ import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
 
 class TodayFragment : Fragment() {
 
+    val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy { FragmentTodayBinding.inflate(layoutInflater) }
 
     override fun onCreateView(
@@ -26,8 +27,16 @@ class TodayFragment : Fragment() {
         b.tvGotoWrite.setOnClickListener {
             val intent = Intent(context, EditorActivity::class.java)
 //            intent.putExtra("topic", )
-            val ac = activity as MainActivity
-            ac.editorResultLauncher.launch(intent)
+            mainActivity.editorResultLauncher.launch(intent)
+        }
+
+        b.tvTopic.setOnClickListener {
+            mainActivity.b.bnv.menu.getItem(1).isChecked = true
+            parentFragmentManager.beginTransaction().hide(mainActivity.fragments[0]).commit()
+            val trans = parentFragmentManager.beginTransaction()
+            if( ! parentFragmentManager.fragments.contains(mainActivity.fragments[1])) trans.add(R.id.container_bnv, mainActivity.fragments[1])
+            trans.show(mainActivity.fragments[1])
+            trans.commit()
         }
     }
 

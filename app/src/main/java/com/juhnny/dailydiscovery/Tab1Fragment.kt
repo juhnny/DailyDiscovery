@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.juhnny.dailydiscovery.databinding.FragmentTab1Binding
 
@@ -25,7 +26,7 @@ class Tab1Fragment : Fragment() {
 
         mainActivity.setSupportActionBar(b.toolbar)
 
-        b.pagerTab1.adapter = Tab1PagerAdapter(requireActivity())
 
     }
+
 }

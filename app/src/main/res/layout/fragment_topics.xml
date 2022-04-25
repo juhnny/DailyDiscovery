@@ -1,42 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey128">
 
-    <TextView
-        android:id="@+id/tv"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:text="topic fragment"
-        android:background="@color/skyblue"
-        android:gravity="center" />
-    <ScrollView
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:title="주제">
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:text="111"
-                android:background="@color/purple_700"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:text="222"
-                android:background="@color/purple_500"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:text="333"
-                android:background="@color/purple_200"
-                android:gravity="center"/>
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"/>
 
 </LinearLayout>

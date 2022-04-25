@@ -16,7 +16,7 @@ class Tab4Fragment : Fragment(){
 
     val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy {FragmentTab4Binding.inflate(layoutInflater)}
-    val fragments = listOf(TodayFragment(), TopicsFragment(), SubsFragment(), SettingsFragment())
+    val fragments = listOf(MyBioFragment(), TopicsFragment(), SubsFragment(), SettingsFragment())
 
     //오버라이드 되도록 BioFragment의 b를 var로 바꿔보자
     //그러면 여기서 바꿔진 바인딩으로 상속받은 메소드들이 작동하지 않을까?

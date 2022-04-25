@@ -4,35 +4,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tangerine">
+    android:id="@+id/tab3_root">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="tab1">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="aaaa"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="bbb"/>
+        android:background="@color/tangerine"
+        app:title="개인전시">
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/container_tab3"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager_tab3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="tab3 fragment"
-            android:gravity="center"
-            android:background="@color/green"/>
-    </LinearLayout>
+        android:background="@color/grey128"/>
 
 </LinearLayout>

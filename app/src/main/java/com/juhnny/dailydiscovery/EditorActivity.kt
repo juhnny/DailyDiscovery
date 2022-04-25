@@ -46,7 +46,7 @@ class EditorActivity : AppCompatActivity() {
                         dialogInterface, i -> run{
                         Toast.makeText(this, "나가기", Toast.LENGTH_SHORT).show()
 
-                        setResult(RESULT_OK, intent)
+                        setResult(RESULT_OK, intent) //나중에 Canceled로 수정
                         finish()
                         }
                     }))

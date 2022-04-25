@@ -2,6 +2,7 @@ package com.juhnny.dailydiscovery
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -25,15 +26,11 @@ class Tab3Fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mainActivity.setSupportActionBar(b.toolbar)
-        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mainActivity.supportActionBar?.title = "Tab3 Fragment"
 
-        b.tv.setOnClickListener {
-            childFragmentManager.beginTransaction().add(R.id.container_tab3, Tab3Fragment()).commit()
-            Toast.makeText(context, "parent: " + parentFragmentManager.fragments.size, Toast.LENGTH_SHORT).show()
-            Toast.makeText(context, "child: " + childFragmentManager.fragments.size, Toast.LENGTH_SHORT).show()
-        }
+        b.pagerTab3.adapter = Tab3PagerAdapter(requireActivity())
+
     }
+
 
 
 }

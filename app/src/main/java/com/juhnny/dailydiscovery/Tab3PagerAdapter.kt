@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class Tab1PagerAdapter(fragmentActivity:FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class Tab3PagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity) {
 
-    val fragments = listOf(GalleryFragment(), TopicsFragment())
+    val fragments = listOf(FollowingsFragment(), FollowersFragment())
 
     override fun getItemCount(): Int = fragments.size
 
