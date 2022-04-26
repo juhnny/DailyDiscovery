@@ -1,11 +1,13 @@
 package com.juhnny.dailydiscovery
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
@@ -47,16 +49,36 @@ class MyBioFragment : Fragment(){
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            android.R.id.home -> {
-                Toast.makeText(mainActivity, "home", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.beginTransaction().remove(this).commit()
-                return true
+    //업 버튼(홈 메뉴)을 누르면 프래그먼트가 닫히도록
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId){
+//            android.R.id.home -> {
+//                Toast.makeText(mainActivity, "home", Toast.LENGTH_SHORT).show()
+//                parentFragmentManager.beginTransaction().remove(this).commit()
+//                return true
+//            }
+//        }
+//        Toast.makeText(mainActivity, "home not clicked", Toast.LENGTH_SHORT).show()
+//        return super.onOptionsItemSelected(item)
+//    }
+
+    //Activity에 onBackPressed 발생 시 Fragment에 콜백이 오도록 하고 그 때 handleOnBackPressed() 내 명령 실행
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                Toast.makeText(context, "callback 받음", Toast.LENGTH_SHORT).show()
+                parentFragmentManager.beginTransaction().remove(this@MyBioFragment).commit()
             }
         }
-        Toast.makeText(mainActivity, "home not clicked", Toast.LENGTH_SHORT).show()
-        return super.onOptionsItemSelected(item)
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
 
