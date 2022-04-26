@@ -22,5 +22,9 @@
     <color name="skyblue">#00BCD4</color>
     <color name="navy">#3F51B5</color>
     <color name="transparent00">#00FFFFFF</color>
+    <color name="champaigngold">#C4B6A6</color>
+    <color name="champaigngold_bright">#D1C2B2</color>
+    <color name="champaigngold_shade">#857B71</color>
+    <color name="champaigngold_dark">#45403B</color>
 
 </resources>

@@ -24,6 +24,9 @@ class TodayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mainActivity.setSupportActionBar(b.toolbar)
+        mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
+
         b.tvGotoWrite.setOnClickListener {
             val intent = Intent(context, EditorActivity::class.java)
 //            intent.putExtra("topic", )

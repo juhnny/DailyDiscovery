@@ -25,7 +25,8 @@ class Tab3Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainActivity.setSupportActionBar(b.toolbar)
+//        mainActivity.setSupportActionBar(b.toolbar)
+//        mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
         b.pagerTab3.adapter = Tab3PagerAdapter(requireActivity())
 

@@ -14,7 +14,7 @@ import com.juhnny.dailydiscovery.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    val b:ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    val b by lazy { ActivityMainBinding.inflate(layoutInflater) }
     val fragments = listOf(TodayFragment(), TopicsFragment(), Tab3Fragment(), Tab4Fragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction().add(R.id.container_bnv, fragments[0]).commit()
+
         b.bnv.setOnItemSelectedListener {
             fragmentManager.fragments.forEach {
                 fragmentManager.beginTransaction().hide(it).commit()
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     trans.show(fragments[1])
                 }
                 R.id.bnv_tab3 -> {
-                    if( ! fragmentManager.fragments.contains(fragments[2])) trans.add(R.id.container_bnv, fragments[2])
+                    if( ! fragmentManager.fragments.contains(fragments[2])) trans.replace(R.id.container_bnv, fragments[2])
                     trans.show(fragments[2])
                 }
                 R.id.bnv_tab4 -> {
@@ -78,10 +79,17 @@ class MainActivity : AppCompatActivity() {
     })
 
 //    override fun onBackPressed() {
-//        if(fragments[2].isVisible) Toast.makeText(this, "fragment is visible", Toast.LENGTH_SHORT).show()
-//        else{
-//            super.onBackPressed()
+//        val frag = supportFragmentManager.findFragmentById(R.id.tab3_fragment_root)
+//        if(frag != null) {
+//            if(frag.parentFragmentManager.backStackEntryCount > 0){
+//                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
+//                frag.parentFragmentManager.popBackStack()
+//            }else{
+//                Toast.makeText(this, "2", Toast.LENGTH_SHORT).show()
+//                super.onBackPressed()
+//            }
 //        }
+//        Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
 //    }
 
 

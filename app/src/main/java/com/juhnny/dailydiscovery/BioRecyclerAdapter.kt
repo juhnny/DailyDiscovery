@@ -3,18 +3,17 @@ package com.juhnny.dailydiscovery
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.juhnny.dailydiscovery.databinding.RecyclerItemGalleryBinding
 
-class GalleryRecyclerAdapter(val context:Context, var photos:MutableList<Photo>): RecyclerView.Adapter<GalleryRecyclerAdapter.VH>() {
+class BioRecyclerAdapter(val context:Context, var photos:MutableList<Photo>): RecyclerView.Adapter<BioRecyclerAdapter.VH>() {
 
     inner class VH(val binding: RecyclerItemGalleryBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(photo:Photo){
             Glide.with(context).load(photo.src).into(binding.ivPhoto)
-            binding.tvTopicname.visibility = View.GONE
+            binding.tvTopicname.text = photo.topic
             binding.tvMsg.text = photo.message
 //            binding.tvNickname.text = photo.nickname
 //            binding.tvCreationDate.text = photo.creationDate

@@ -26,7 +26,8 @@ class GalleryActivity : AppCompatActivity() {
 
         setSupportActionBar(b.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = topicSelected
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        b.tvBarTitle.text = topicSelected
 
         b.recycler.adapter = GalleryRecyclerAdapter(this, photos)
 

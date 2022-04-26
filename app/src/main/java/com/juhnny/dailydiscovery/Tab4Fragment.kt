@@ -35,6 +35,7 @@ class Tab4Fragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         mainActivity.setSupportActionBar(b.toolbar)
+        mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
 //        //DrawerToggle 자체가 리스너를 상속
         val drawerToggle = ActionBarDrawerToggle(mainActivity, b.root, b.toolbar, R.string.openDrawerDesc, R.string.closeDrawerDesc)

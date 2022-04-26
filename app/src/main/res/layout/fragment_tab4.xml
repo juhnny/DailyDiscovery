@@ -13,16 +13,12 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="tab1">
+            android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="aaaa"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="bbb"/>
+                android:layout_gravity="center"
+                android:text=""/>
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout

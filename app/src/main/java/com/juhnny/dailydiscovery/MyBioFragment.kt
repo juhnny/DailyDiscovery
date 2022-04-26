@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
 
 class MyBioFragment : Fragment(){
 
-//    val mainActivity by lazy { requireActivity() as MainActivity }
+    val mainActivity by lazy { requireActivity() as MainActivity }
+    val appCompatActivity by lazy { requireActivity() as AppCompatActivity }
     val b by lazy {FragmentBioMyBinding.inflate(layoutInflater)}
 
     var photos = mutableListOf<Photo>()
@@ -31,11 +33,17 @@ class MyBioFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        b.recycler.adapter = GalleryRecyclerAdapter(requireContext(), photos)
+        appCompatActivity.setSupportActionBar(b.toolbar)
+        appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
+        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
 
         loadPhotos()
 
     }
+
+
 
     fun loadPhotos(){
         photos.add(Photo("1", "주제명", "A material metaphor is the unifying theory of a rationalized space and a system of motion.\n" +

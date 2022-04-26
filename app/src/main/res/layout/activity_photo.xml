@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PhotoActivity"
     android:orientation="vertical"
-    android:background="@color/black"
-    android:id="@+id/view_root">
+    android:background="@color/grey205"
+
+    android:id="@+id/photo_activity_root">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Photo Activity"
         android:background="@color/lightgreen"/>
 
@@ -20,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_below="@id/tv"/>
 
 
-</LinearLayout>
+</RelativeLayout>

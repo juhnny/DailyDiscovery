@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.juhnny.dailydiscovery.databinding.FragmentFollowingsBinding
 
 class FollowingsFragment : Fragment() {
 
-    val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy { FragmentFollowingsBinding.inflate(layoutInflater) }
 
     val follows = mutableListOf<Follow>()
@@ -25,9 +25,20 @@ class FollowingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        b.recycler.adapter = FollowRecyclerAdapter(requireContext(), follows)
+        val appCompatActivity = requireActivity() as AppCompatActivity
+        appCompatActivity.setSupportActionBar(b.toolbar)
+        appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        b.recycler.adapter = FollowRecyclerAdapter(requireContext(), this, follows)
 
         loadFollows()
+
+        b.btnAdd.setOnClickListener{
+            parentFragmentManager.beginTransaction().add(R.id.container_bnv, FollowingsFragment()).addToBackStack(null).commit()
+        }
+        b.btnReplace.setOnClickListener{
+            parentFragmentManager.beginTransaction().replace(R.id.container_bnv, FollowingsFragment()).addToBackStack(null).commit()
+        }
     }
 
     fun loadFollows(){

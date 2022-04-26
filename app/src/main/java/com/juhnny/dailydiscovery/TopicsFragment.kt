@@ -13,6 +13,7 @@ import com.juhnny.dailydiscovery.databinding.FragmentTopicsBinding
 
 class TopicsFragment : Fragment() {
 
+    val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy {FragmentTopicsBinding.inflate(layoutInflater)}
     val fragmets = mutableListOf<Fragment>()
 
@@ -28,6 +29,9 @@ class TopicsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mainActivity.setSupportActionBar(b.toolbar)
+        mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
         b.recycler.adapter = TopicsRecyclerAdapter(requireContext(), topics)
         loadData()
