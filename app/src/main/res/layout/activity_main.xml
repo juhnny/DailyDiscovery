@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:background="@color/tangerine">
+    android:background="@color/grey205">
 
     <FrameLayout
         android:id="@+id/container_bnv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/purple_700"/>
+        android:layout_weight="1"/>
     <!--안에 DrawerLayout이 들어가려면 외부 뷰의 높이는 무조건 match_parent-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -31,7 +31,7 @@ class TopicsFragment : Fragment() {
 
         b.recycler.adapter = TopicsRecyclerAdapter(requireContext(), topics)
         loadData()
-        b.recycler.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+//        b.recycler.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
     }
 

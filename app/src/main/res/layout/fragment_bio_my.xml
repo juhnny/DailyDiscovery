@@ -17,12 +17,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NICKNAME"
+        android:textSize="20sp"
         android:layout_below="@+id/tv_title"/>
     <TextView
         android:id="@+id/tv_introduce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="INTRODUCE"
+        android:textSize="16sp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         android:layout_below="@+id/tv_nickname"/>
 
     <androidx.recyclerview.widget.RecyclerView

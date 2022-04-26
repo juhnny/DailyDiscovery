@@ -6,10 +6,13 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="grey240">#F0F0F0</color>
     <color name="grey224">#E0E0E0</color>
+    <color name="grey205">#CDCDCD</color>
     <color name="grey192">#C0C0C0</color>
     <color name="grey128">#808080</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="coolwhite">#F9FBFF</color>
     <color name="dahong">#F44336</color>
     <color name="sunset">#FF5722</color>
     <color name="tangerine">#FFC107</color>

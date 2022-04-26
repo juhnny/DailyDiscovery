@@ -32,7 +32,10 @@ class FollowingsFragment : Fragment() {
 
     fun loadFollows(){
         for(i in 1..20){
-            follows.add(Follow("name${i}", "I am like... ${i}", "http://iwibest.dothome.co.kr/profile2.jpg", "http://iwibest.dothome.co.kr/profile2.jpg", "http://iwibest.dothome.co.kr/profile2.jpg"))
+            follows.add(Follow("name${i}", "I am like... ${i}",
+                "https://a.cdn-hotels.com/gdcs/production87/d499/8196849a-5862-4e4f-86ec-a2c362157f74.jpg",
+                "https://www.qmul.ac.uk/media/qmul/London-Bridge.jpg",
+                "https://i.natgeofe.com/n/99790646-c5a4-4637-8f10-1d1c41ce3705/london_travel_2x3.jpg"))
         }
         b.recycler.adapter?.notifyDataSetChanged()
     }
