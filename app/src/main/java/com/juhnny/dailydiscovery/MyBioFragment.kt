@@ -2,8 +2,10 @@ package com.juhnny.dailydiscovery
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
@@ -27,6 +29,8 @@ class MyBioFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        setHasOptionsMenu(true)
         return b.root
     }
 
@@ -41,6 +45,18 @@ class MyBioFragment : Fragment(){
 
         loadPhotos()
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                Toast.makeText(mainActivity, "home", Toast.LENGTH_SHORT).show()
+                parentFragmentManager.beginTransaction().remove(this).commit()
+                return true
+            }
+        }
+        Toast.makeText(mainActivity, "home not clicked", Toast.LENGTH_SHORT).show()
+        return super.onOptionsItemSelected(item)
     }
 
 

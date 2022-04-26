@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     trans.show(fragments[1])
                 }
                 R.id.bnv_tab3 -> {
-                    if( ! fragmentManager.fragments.contains(fragments[2])) trans.replace(R.id.container_bnv, fragments[2])
+                    if( ! fragmentManager.fragments.contains(fragments[2])) trans.add(R.id.container_bnv, fragments[2])
                     trans.show(fragments[2])
                 }
                 R.id.bnv_tab4 -> {
@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
 //    }
-
 
 
 }

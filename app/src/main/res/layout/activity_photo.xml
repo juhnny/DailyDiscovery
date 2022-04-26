@@ -10,6 +10,12 @@
 
     android:id="@+id/photo_activity_root">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="photo"/>
+
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"

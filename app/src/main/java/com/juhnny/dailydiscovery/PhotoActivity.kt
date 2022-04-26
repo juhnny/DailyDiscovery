@@ -14,6 +14,8 @@ class PhotoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
 
+        setSupportActionBar(b.toolbar)
+
         photos = intent.getParcelableArrayListExtra<Photo>("photos")!! //얘한테 null 안들어오게 해줘라
         val currentPos = intent.getIntExtra("position", 0)
         Log.e("myPhotos" , photos.toString()) //[Photo(no=1, topic=주제명, message=주제에 대한 설명, nickname=hong1, creationDate=20220101, updateDate=20220101, src=2131165346), Photo(생략), Photo(생략) ... ]
