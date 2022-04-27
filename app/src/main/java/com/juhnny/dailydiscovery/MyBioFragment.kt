@@ -48,12 +48,12 @@ class MyBioFragment : Fragment(){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                Toast.makeText(requireContext(), "home", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "MyBio - home", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.beginTransaction().remove(this).commit()
                 return true
             }
         }
-        Toast.makeText(requireContext(), "home not clicked", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "MyBio - home not clicked", Toast.LENGTH_SHORT).show()
         return super.onOptionsItemSelected(item)
     }
 
@@ -64,7 +64,7 @@ class MyBioFragment : Fragment(){
         super.onAttach(context)
         callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                Toast.makeText(context, "callback 받음", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "MyBio - callback 받음", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.beginTransaction().remove(this@MyBioFragment).commit()
             }
         }

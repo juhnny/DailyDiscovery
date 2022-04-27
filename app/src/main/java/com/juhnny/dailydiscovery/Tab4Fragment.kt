@@ -8,9 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -28,6 +26,7 @@ class Tab4Fragment : Fragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         return b.root
     }
 
@@ -71,17 +70,17 @@ class Tab4Fragment : Fragment(){
         b.nav.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_notice -> {
-                    Toast.makeText(context, "aa", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Tab4 - aa", Toast.LENGTH_SHORT).show()
                     //공지사항 화면 열기. 프래그먼트로 만들어보자.
                     //MyBioFragment는 닫고, NoticeFragment는 열고
                     childFragmentManager.beginTransaction()
                         .hide(fragments[0])
-                        .add(R.id.tab4_fragment_root, NotiFragment())
+                        .add(R.id.tab4_fragment_root, NoticeFragment())
                         .addToBackStack(null)
                         .commit()
                 }
                 R.id.nav_appstore -> {
-                    Toast.makeText(context, "bb", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Tab4 - bb", Toast.LENGTH_SHORT).show()
                     //리뷰/평점 남기기 위해 플레이스토어 앱페이지 열기
                     //market:// 프로토콜은 playstore 뿐만 아니라 다른 마켓 앱에서도 반응한다.
                     //다른 마켓 말고 플레이스토어를 먼저 타겟하겠다면.. https://stackoverflow.com/a/28090925
@@ -95,12 +94,12 @@ class Tab4Fragment : Fragment(){
 
                 }
                 R.id.nav_opinion -> {
-                    Toast.makeText(context, "cc", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Tab4 - cc", Toast.LENGTH_SHORT).show()
                     //이메일 앱 띄우기
                     sendEmailToAdmin(requireContext(), arrayOf("opnrstudio@gmail.com"), "개발자에게 메일 보내기")
                 }
                 R.id.nav_settings -> {
-                    Toast.makeText(context, "dd", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Tab4 - dd", Toast.LENGTH_SHORT).show()
                     //설정 액티비티 열기
                 }
             }
@@ -116,6 +115,18 @@ class Tab4Fragment : Fragment(){
 //        headerInfo.setText("more info")
 
     }//onViewCreated
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.options_tab4, menu) //나는 내가 쓸 메뉴 만들고
+        super.onCreateOptionsMenu(menu, inflater) //부모는 기본적인 메뉴 만들고
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_tab4_notification -> Toast.makeText(requireContext(), "Tab4 - 알림", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     fun sendEmailToAdmin(context: Context, receivers:Array<String>, title:String){
         val intent = Intent(Intent.ACTION_SEND)

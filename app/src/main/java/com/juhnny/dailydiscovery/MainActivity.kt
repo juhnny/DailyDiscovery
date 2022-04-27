@@ -109,11 +109,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                Toast.makeText(this, "home clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "MainActivity - home clicked", Toast.LENGTH_SHORT).show()
                 onBackPressed()
             }
         }
-        Toast.makeText(this, "item clicked", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "MainActivity - item clicked", Toast.LENGTH_SHORT).show()
         return super.onOptionsItemSelected(item)
     }
 
