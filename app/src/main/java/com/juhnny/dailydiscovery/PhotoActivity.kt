@@ -3,6 +3,7 @@ package com.juhnny.dailydiscovery
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import com.juhnny.dailydiscovery.databinding.ActivityPhotoBinding
 
 class PhotoActivity : AppCompatActivity() {
@@ -15,6 +16,8 @@ class PhotoActivity : AppCompatActivity() {
         setContentView(b.root)
 
         setSupportActionBar(b.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         photos = intent.getParcelableArrayListExtra<Photo>("photos")!! //얘한테 null 안들어오게 해줘라
         val currentPos = intent.getIntExtra("position", 0)
@@ -22,6 +25,16 @@ class PhotoActivity : AppCompatActivity() {
 
         b.pagerPhoto.adapter = PhotoPagerAdapter(this, photos)
         b.pagerPhoto.currentItem = currentPos
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //이걸 추가해주지 않으면 업버튼을 눌러도 동작 안한다.
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed() //혹은 finish()
+        }
+        return super.onOptionsItemSelected(item) //부모의 메소드는 앱 manifest에 명시한 부모 액티비티로 이동하도록 처리한다.
+                                                //부모 액티비티로 지정한 액티비티가 백스택에 없으면 안 열리는 듯
 
     }
 

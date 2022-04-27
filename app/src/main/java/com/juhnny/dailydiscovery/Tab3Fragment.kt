@@ -28,7 +28,7 @@ class Tab3Fragment : Fragment() {
 //        mainActivity.setSupportActionBar(b.toolbar)
 //        mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        b.pagerTab3.adapter = Tab3PagerAdapter(requireActivity())
+        b.pagerTab3.adapter = Tab3PagerAdapter(this)
 
     }
 

@@ -12,6 +12,8 @@ data class Photo(var no:String,
                  var src:String) : Parcelable{
 
     //Parcel을 Photo 객체로 변환하기 위한 보조생성자
+    //콜론 뒤에는 주생성자
+    //constructor() : this()
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(), //혹시 파라미터 값으로 null이 들어왔어도 그냥 문자로 변환해 보여줘
         parcel.readString().toString(),

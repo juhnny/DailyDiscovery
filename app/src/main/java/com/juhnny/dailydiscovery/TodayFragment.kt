@@ -19,6 +19,13 @@ class TodayFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return b.root
+        //이 프래그먼트는 replace를 당해도 addToBackStack() 이후 다시 Back 해서 확인해보면 뷰들이 그대로 남아있다.
+        //원래 replace는 remove & add 이기 때문에 프래그먼트가 remove되면서 그에 속한 view들도 container로부터 remove 되는 게 일반적.
+        //알고보니 그 이유는 return b.root로 넘긴 뷰들이 멤버변수에 속해있는 뷰들이기 때문
+        //onCreateView에서 LayoutInflator로 만든 뷰 객체들은 Fragment가 remove될 때 같이 remove되어 더 이상 참조되지 않게 되면 제거됨
+        //헌데 멤버변수인 바인딩에 소속된 뷰 객체들은 remove 되어도 멤버변수 소속이므로 계속 참조상태로 남아있기 때문에 제거되지 않음
+        //이런 원리를 알고 쓴다면 b.root를 사용해도 된다.
+        //만약 binding 객체가 이 메소드 안에서 로컬로 만들어졌다면 remove 된 이후 결국 사라질 것이다.
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

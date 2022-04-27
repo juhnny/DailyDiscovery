@@ -2,7 +2,9 @@ package com.juhnny.dailydiscovery
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -23,10 +25,13 @@ class MainActivity : AppCompatActivity() {
 
 //        b.root.transitionName = "introExpand"
 
-        val fragmentManager = supportFragmentManager
+        val fragmentManager = supportFragmentManager //Activity 레벨 매니저
         fragmentManager.beginTransaction().add(R.id.container_bnv, fragments[0]).commit()
 
         b.bnv.setOnItemSelectedListener {
+            Log.e("myTag", "이 매니저가 관리하던 Fragment 개수: ${fragmentManager.fragments.size}")
+            Log.e("myTag", "이 매니저가 관리하던 Fragment 종류: ${fragmentManager.fragments.toString()}")
+
             fragmentManager.fragments.forEach {
                 fragmentManager.beginTransaction().hide(it).commit()
             }
@@ -50,9 +55,32 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             trans.commit()
+
             true
         }
 
+//        b.bnv.setOnItemSelectedListener {
+//            Log.e("myTag", "이 매니저가 관리하는 Fragment 개수: ${fragmentManager.fragments.size}")
+//
+//            val trans = fragmentManager.beginTransaction()
+//            when(it.itemId){
+//                R.id.bnv_tab1 -> {
+//                    if( ! fragmentManager.fragments.contains(fragments[0])) trans.replace(R.id.container_bnv, fragments[0])
+//                }
+//                R.id.bnv_tab2 -> {
+//                    if( ! fragmentManager.fragments.contains(fragments[1])) trans.replace(R.id.container_bnv, fragments[1])
+//                }
+//                R.id.bnv_tab3 -> {
+//                    if( fragmentManager.fragments.contains(fragments[2])) Log.e("myTag", "이 프래그먼트가 포함돼있음")
+//                    if( ! fragmentManager.fragments.contains(fragments[2])) trans.replace(R.id.container_bnv, fragments[2])
+//                }
+//                R.id.bnv_tab4 -> {
+//                    if( ! fragmentManager.fragments.contains(fragments[3])) trans.replace(R.id.container_bnv, fragments[3])
+//                }
+//            }
+//            trans.commit()
+//            true
+//        }
 
     }//onCreate()
 
@@ -77,6 +105,17 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "결과 못 받음", Toast.LENGTH_SHORT).show()
         }
     })
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                Toast.makeText(this, "home clicked", Toast.LENGTH_SHORT).show()
+                onBackPressed()
+            }
+        }
+        Toast.makeText(this, "item clicked", Toast.LENGTH_SHORT).show()
+        return super.onOptionsItemSelected(item)
+    }
 
 //    override fun onBackPressed() {
 //        val frag = supportFragmentManager.findFragmentById(R.id.tab3_fragment_root)

@@ -2,6 +2,7 @@ package com.juhnny.dailydiscovery
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,17 +15,10 @@ import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
 
 class MyBioFragment : Fragment(){
 
-    val mainActivity by lazy { requireActivity() as MainActivity }
     val appCompatActivity by lazy { requireActivity() as AppCompatActivity }
     val b by lazy {FragmentBioMyBinding.inflate(layoutInflater)}
 
     var photos = mutableListOf<Photo>()
-
-    //오버라이드 되도록 BioFragment의 b를 var로 바꿔보자
-    //그러면 여기서 바꿔진 바인딩으로 상속받은 메소드들이 작동하지 않을까?
-
-    //부모 프래그먼트에서 뷰들의 기능을 미리 정의해놓고
-    //자식 프래그먼트에서
 
    override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,12 +26,13 @@ class MyBioFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(true) //잊지마
         return b.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("myParentFragment: ", "${parentFragment}")
 
         appCompatActivity.setSupportActionBar(b.toolbar)
         appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -49,18 +44,18 @@ class MyBioFragment : Fragment(){
 
     }
 
-    //업 버튼(홈 메뉴)을 누르면 프래그먼트가 닫히도록
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId){
-//            android.R.id.home -> {
-//                Toast.makeText(mainActivity, "home", Toast.LENGTH_SHORT).show()
-//                parentFragmentManager.beginTransaction().remove(this).commit()
-//                return true
-//            }
-//        }
-//        Toast.makeText(mainActivity, "home not clicked", Toast.LENGTH_SHORT).show()
-//        return super.onOptionsItemSelected(item)
-//    }
+//    업 버튼(홈 메뉴)을 누르면 프래그먼트가 닫히도록
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                Toast.makeText(requireContext(), "home", Toast.LENGTH_SHORT).show()
+                parentFragmentManager.beginTransaction().remove(this).commit()
+                return true
+            }
+        }
+        Toast.makeText(requireContext(), "home not clicked", Toast.LENGTH_SHORT).show()
+        return super.onOptionsItemSelected(item)
+    }
 
     //Activity에 onBackPressed 발생 시 Fragment에 콜백이 오도록 하고 그 때 handleOnBackPressed() 내 명령 실행
     private lateinit var callback: OnBackPressedCallback
@@ -80,7 +75,6 @@ class MyBioFragment : Fragment(){
         super.onDetach()
         callback.remove()
     }
-
 
 
     fun loadPhotos(){
@@ -118,7 +112,7 @@ class MyBioFragment : Fragment(){
         photos.add(Photo("7", "주제명", "주제에 대한 설명", "hong7", "20220101", "20220101",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpfuXPYRo0AoLkM1sr8lTfu7hXxJzh9KQ-rQ&usqp=CAU"))
 
-//        b.recycler.adapter?.notifyDataSetChanged()
+        b.recycler.adapter?.notifyDataSetChanged()
     }
 
 }

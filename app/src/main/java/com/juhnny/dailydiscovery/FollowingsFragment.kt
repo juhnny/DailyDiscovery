@@ -1,12 +1,16 @@
 package com.juhnny.dailydiscovery
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.juhnny.dailydiscovery.databinding.FragmentFollowingsBinding
+import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
 
 class FollowingsFragment : Fragment() {
 
@@ -19,7 +23,30 @@ class FollowingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return b.root
+                return b.root
+
+        //바인딩을 inflate 해서 root뷰를 넘기는 방법
+//        val binding = FragmentFollowingsBinding.inflate(layoutInflater)
+//        binding.btnAdd.setOnClickListener{
+//            parentFragmentManager.beginTransaction().add(R.id.container_bnv, FollowingsFragment()).addToBackStack(null).commit()
+//        }
+//        binding.btnReplace.setOnClickListener{
+//            parentFragmentManager.beginTransaction().replace(R.id.container_bnv, FollowingsFragment()).addToBackStack(null).commit()
+//        }
+//        binding.recycler.adapter = FollowRecyclerAdapter(requireContext(), this, follows)
+//
+//        return binding.root
+
+        //기존 방법 - inflater로 뷰를 만들어 리턴
+//        val view = inflater.inflate(R.layout.fragment_followings, container, false)
+//        view.findViewById<RecyclerView>(R.id.recycler).adapter = FollowRecyclerAdapter(requireContext(), this, follows)
+//        view.findViewById<Button>(R.id.btn_add).setOnClickListener{
+//            parentFragmentManager.beginTransaction().replace(R.id.container_bnv, FollowingsFragment()).addToBackStack(null).commit()
+//        }
+//        view.findViewById<Button>(R.id.btn_replace).setOnClickListener{
+//            parentFragmentManager.beginTransaction().replace(R.id.container_bnv, FollowingsFragment()).addToBackStack(null).commit()
+//        }
+//        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

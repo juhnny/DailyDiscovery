@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_todays_topic"
-        android:title="오늘의 주제"
+        android:id="@+id/nav_notice"
+        android:title="공지사항"
         android:icon="@drawable/ic_launcher_foreground"/>
     <item
-        android:id="@+id/nav_search"
-        android:title="검색"
+        android:id="@+id/nav_appstore"
+        android:title="앱 리뷰 남기기"
         android:icon="@drawable/ic_launcher_foreground"/>
     <item
-        android:id="@+id/nav_subs"
-        android:title="구독"
+        android:id="@+id/nav_opinion"
+        android:title="의견 보내기"
         android:icon="@drawable/ic_launcher_foreground"/>
 
     <group android:id="@+id/nav_group2">

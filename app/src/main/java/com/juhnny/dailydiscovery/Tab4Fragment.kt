@@ -1,7 +1,13 @@
 package com.juhnny.dailydiscovery
 
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +22,7 @@ class Tab4Fragment : Fragment(){
 
     val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy {FragmentTab4Binding.inflate(layoutInflater)}
-    val fragments = listOf(MyBioFragment(), TopicsFragment(), SubsFragment(), SettingsFragment())
-
-    //오버라이드 되도록 BioFragment의 b를 var로 바꿔보자
-    //그러면 여기서 바꿔진 바인딩으로 상속받은 메소드들이 작동하지 않을까?
-
-    //부모 프래그먼트에서 뷰들의 기능을 미리 정의해놓고
-    //자식 프래그먼트에서
+    val fragments = listOf(MyBioFragment())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,26 +54,8 @@ class Tab4Fragment : Fragment(){
 ////        drawerToggle.toolbarNavigationClickListener.onClick(null)
         b.root.addDrawerListener(drawerToggle)
 
-
         val tvHeaderName = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_name)
-        tvHeaderName.setOnClickListener {
-            childFragmentManager.fragments.forEach{
-                childFragmentManager.beginTransaction().hide(it).commit()
-            }
-            val trans = childFragmentManager.beginTransaction()
-            if( ! childFragmentManager.fragments.contains(fragments[3])) trans.add(R.id.container_tab4, fragments[3])
-            trans.show(fragments[3])
-            trans.commit()
-            b.root.closeDrawer(b.nav, true)
-            Toast.makeText(context, "${it.id}", Toast.LENGTH_SHORT).show()
-        }
-
         val tvHeaderInfo = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_info)
-        tvHeaderInfo.setOnClickListener(object : OnHeaderClickListener(fragment = mainActivity.fragments[3]){
-            override fun onClick(p0: View?) {
-                super.onClick(p0)
-            }
-        })
 
         val btnLogin = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_login)
         //로그인 돼있는 상태면 버튼 숨기고 다른 헤더 정보 띄우기
@@ -83,42 +65,45 @@ class Tab4Fragment : Fragment(){
         }
 
 
-        val fragmentManager = childFragmentManager //교체할 container가 내 layout 안에 있다면 childFragmentManager를 쓴다.
-//        val fragmentManager = mainActivity.supportFragmentManager
-        fragmentManager.beginTransaction().add(R.id.container_tab4, fragments[0]).commit()
+        //교체할 container가 내 layout 안에 있다면 childFragmentManager를 쓴다.
+        childFragmentManager.beginTransaction().add(R.id.container_tab4, fragments[0], "MYBIO_FRAG").addToBackStack(null).commit() //기본 화면
 
         b.nav.setNavigationItemSelectedListener {
-//            fragmentManager.fragments.forEach {
-//                fragmentManager.beginTransaction().hide(it).commit()
-//            }
-
-            val trans = fragmentManager.beginTransaction()
             when(it.itemId){
-                R.id.nav_todays_topic -> {
+                R.id.nav_notice -> {
                     Toast.makeText(context, "aa", Toast.LENGTH_SHORT).show()
-//                    trans.show(fragments[0])
-                    trans.replace(R.id.container_tab4, fragments[0])
+                    //공지사항 화면 열기. 프래그먼트로 만들어보자.
+                    //MyBioFragment는 닫고, NoticeFragment는 열고
+                    childFragmentManager.beginTransaction()
+                        .hide(fragments[0])
+                        .add(R.id.tab4_fragment_root, NotiFragment())
+                        .addToBackStack(null)
+                        .commit()
                 }
-                R.id.nav_search -> {
+                R.id.nav_appstore -> {
                     Toast.makeText(context, "bb", Toast.LENGTH_SHORT).show()
-//                    if( ! fragmentManager.fragments.contains(fragments[1])) trans.add(R.id.container_tab4, fragments[1])
-//                    trans.show(fragments[1])
-                    trans.replace(R.id.container_tab4, fragments[1])
+                    //리뷰/평점 남기기 위해 플레이스토어 앱페이지 열기
+                    //market:// 프로토콜은 playstore 뿐만 아니라 다른 마켓 앱에서도 반응한다.
+                    //다른 마켓 말고 플레이스토어를 먼저 타겟하겠다면.. https://stackoverflow.com/a/28090925
+                    val packageName = context?.packageName
+                    try {
+                        val rateIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${packageName}"))
+                        startActivity(rateIntent)
+                    }catch (e: ActivityNotFoundException){
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)))
+                    }
+
                 }
-                R.id.nav_subs -> {
+                R.id.nav_opinion -> {
                     Toast.makeText(context, "cc", Toast.LENGTH_SHORT).show()
-//                    if( ! fragmentManager.fragments.contains(fragments[2])) trans.add(R.id.container_tab4, fragments[2])
-//                    trans.show(fragments[2])
-                    trans.replace(R.id.container_tab4, fragments[2])
+                    //이메일 앱 띄우기
+                    sendEmailToAdmin(requireContext(), arrayOf("opnrstudio@gmail.com"), "개발자에게 메일 보내기")
                 }
                 R.id.nav_settings -> {
                     Toast.makeText(context, "dd", Toast.LENGTH_SHORT).show()
-//                    if( ! fragmentManager.fragments.contains(fragments[3])) trans.add(R.id.container_tab4, fragments[3])
-//                    trans.show(fragments[3])
-                    trans.replace(R.id.container_tab4, fragments[3])
+                    //설정 액티비티 열기
                 }
             }
-            trans.commit()
             b.root.closeDrawer(b.nav, true)
 
             false
@@ -132,6 +117,31 @@ class Tab4Fragment : Fragment(){
 
     }//onViewCreated
 
+    fun sendEmailToAdmin(context: Context, receivers:Array<String>, title:String){
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_EMAIL, receivers)
+        intent.putExtra(Intent.EXTRA_SUBJECT, title)
+
+        val deviceModel = Build.MODEL
+        val deviceId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        val deviceOs = Build.VERSION.RELEASE.toString()
+        val appVersion = BuildConfig.VERSION_NAME
+        val appVersionCode = BuildConfig.VERSION_CODE
+        intent.putExtra(Intent.EXTRA_TEXT, "Device Model : ${deviceModel}\n" +
+                "SSAID: ${deviceId}\n" +
+                "OS : ${deviceOs}\n" +
+                "App Version(SDK) : ${appVersion}(${appVersionCode}) \n" +
+                "내용 : ")
+        intent.setType("message/rfc822")
+        startActivity(intent)
+
+    }
+    //device id => 기기의 고유한 하드웨어 식별자 Android ID (SSAID)
+    //device model => 어떤 제품인지 (안드로이드 기기의 제품 모델명)
+    //device os => 안드로이드 버전 몇인지
+    //app version => 해당 앱의 버전이 몇인지
+
+    //Drawer Navigation에서 메뉴를 클릭하면 해당하는 프래그먼트를 띄우는 커스텀 리스너
     //수정 필요. childFragmentManager를 써야 할지, parentFragmentManager를 써야 할지 정해서 바꿔야 함
     open inner class OnHeaderClickListener(val fragment: Fragment) : View.OnClickListener{
         override fun onClick(p0: View?) {

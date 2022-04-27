@@ -15,8 +15,9 @@
     <color name="coolwhite">#F9FBFF</color>
     <color name="dahong">#F44336</color>
     <color name="sunset">#FF5722</color>
-    <color name="tangerine">#FFC107</color>
     <color name="orange">#FF9800</color>
+    <color name="tangerine">#FFC107</color>
+    <color name="lemon">#FFEB3B</color>
     <color name="lightgreen">#8BC34A</color>
     <color name="green">#4CAF50</color>
     <color name="skyblue">#00BCD4</color>
