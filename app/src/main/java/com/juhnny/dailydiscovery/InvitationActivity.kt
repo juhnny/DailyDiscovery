@@ -16,7 +16,7 @@ class InvitationActivity : AppCompatActivity() {
         b.pagerInvitation.adapter = InvitationPagerAdapter(this)
 
         val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+//        startActivity(intent)
+//        finish()
     }
 }

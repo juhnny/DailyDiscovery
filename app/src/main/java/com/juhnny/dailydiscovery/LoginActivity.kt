@@ -16,6 +16,7 @@ class LoginActivity : AppCompatActivity() {
 
         setSupportActionBar(b.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         b.tvSignup.setOnClickListener{
             val intent = Intent(this, SignupActivity::class.java )
