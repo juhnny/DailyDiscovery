@@ -31,6 +31,7 @@ class Tab4Fragment : Fragment(){
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.e("myTag", "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
 
         mainActivity.setSupportActionBar(b.toolbar)
@@ -38,7 +39,7 @@ class Tab4Fragment : Fragment(){
 
 //        //DrawerToggle 자체가 리스너를 상속
         val drawerToggle = ActionBarDrawerToggle(mainActivity, b.root, b.toolbar, R.string.openDrawerDesc, R.string.closeDrawerDesc)
-        drawerToggle.syncState()
+        drawerToggle.syncState() //toggle 아이콘을 툴바에 띄우고 누르면 열리게 함
 //        //아래 왜 안 먹힐까..
         drawerToggle.setDrawerIndicatorEnabled(true)
 ////        Toast.makeText(this, "" + drawerToggle.toolbarNavigationClickListener.toString(), Toast.LENGTH_SHORT).show()
@@ -57,7 +58,7 @@ class Tab4Fragment : Fragment(){
         val tvHeaderInfo = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_info)
 
         val btnLogin = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_login)
-        //로그인 돼있는 상태면 버튼 숨기고 다른 헤더 정보 띄우기
+        //추가하기. 로그인 돼있는 상태면 버튼 숨기고 다른 헤더 정보 띄우기
         btnLogin.setOnClickListener {
             b.root.closeDrawer(b.nav)
             startActivity(Intent(context, LoginActivity::class.java))
@@ -75,7 +76,7 @@ class Tab4Fragment : Fragment(){
                     //MyBioFragment는 닫고, NoticeFragment는 열고
                     childFragmentManager.beginTransaction()
                         .hide(fragments[0])
-                        .add(R.id.tab4_fragment_root, NoticeFragment())
+                        .add(R.id.tab4_fragment_root, NoticeFragment(), "NOTICE_FRAG")
                         .addToBackStack(null)
                         .commit()
                 }
@@ -101,6 +102,8 @@ class Tab4Fragment : Fragment(){
                 R.id.nav_settings -> {
                     Toast.makeText(context, "Tab4 - dd", Toast.LENGTH_SHORT).show()
                     //설정 액티비티 열기
+                    startActivity(Intent(context, SettingsActivity::class.java))
+
                 }
             }
             b.root.closeDrawer(b.nav, true)
@@ -117,8 +120,12 @@ class Tab4Fragment : Fragment(){
     }//onViewCreated
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.options_tab4, menu) //나는 내가 쓸 메뉴 만들고
+//        inflater.inflate(R.menu.options_tab4, menu) //나는 내가 쓸 메뉴 만들고
         super.onCreateOptionsMenu(menu, inflater) //부모는 기본적인 메뉴 만들고
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) { //뭐 하는 단계?
+        super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

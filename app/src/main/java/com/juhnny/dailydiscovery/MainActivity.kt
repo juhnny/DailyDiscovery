@@ -59,34 +59,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-//        b.bnv.setOnItemSelectedListener {
-//            Log.e("myTag", "이 매니저가 관리하는 Fragment 개수: ${fragmentManager.fragments.size}")
-//
-//            val trans = fragmentManager.beginTransaction()
-//            when(it.itemId){
-//                R.id.bnv_tab1 -> {
-//                    if( ! fragmentManager.fragments.contains(fragments[0])) trans.replace(R.id.container_bnv, fragments[0])
-//                }
-//                R.id.bnv_tab2 -> {
-//                    if( ! fragmentManager.fragments.contains(fragments[1])) trans.replace(R.id.container_bnv, fragments[1])
-//                }
-//                R.id.bnv_tab3 -> {
-//                    if( fragmentManager.fragments.contains(fragments[2])) Log.e("myTag", "이 프래그먼트가 포함돼있음")
-//                    if( ! fragmentManager.fragments.contains(fragments[2])) trans.replace(R.id.container_bnv, fragments[2])
-//                }
-//                R.id.bnv_tab4 -> {
-//                    if( ! fragmentManager.fragments.contains(fragments[3])) trans.replace(R.id.container_bnv, fragments[3])
-//                }
-//            }
-//            trans.commit()
-//            true
-//        }
-
     }//onCreate()
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        return super.onCreateOptionsMenu(menu)
-//    }//onCreateOptionsMenu
 
     //글쓰기가 완료되면 두번째 탭 열기
     val editorResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ActivityResultCallback {
@@ -106,16 +80,31 @@ class MainActivity : AppCompatActivity() {
         }
     })
 
+    // Activity 에도, Fragment 에도 OptionMenu 를 설정했다면, 둘이 ActionBar 에 섞여서 나타난다.
+    // Activity 것이 먼저 나오고 Fragment 것이 뒤에 나온다.
+    // 여러 Fragment 에서 OptionMenu 를 설정했다면, add 되는 순서대로 나온다.
+    // 이 순서는 바굴 수 있는데, <item> 의 android:orderInCategory 옵션을 잘 조정하면 된다.
+    //출처: https://aroundck.tistory.com/727 [돼지왕 놀이터]
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                Toast.makeText(this, "MainActivity - home clicked", Toast.LENGTH_SHORT).show()
+                Log.e("MainActivity - home", "")
                 onBackPressed()
+                return true //해당 (클릭) 이벤트를 다 소비했으면 true, 아직 다른 뷰들에서 사용해야 하면 false
+            }
+            else ->{
+                Log.e("MainActivity - else", "")
+                return false
             }
         }
-        Toast.makeText(this, "MainActivity - item clicked", Toast.LENGTH_SHORT).show()
         return super.onOptionsItemSelected(item)
     }
+    // onOptionsItemSelected() 에서 return 값이 중요하다.
+    // super 는 default 로 false 를 return 한다.
+    // Fragment 에도 option menu 가 있는 경우에는 Activity 의 onOptionsItemSelected() 가 먼저 불리고,
+    // return 값이 true 가 될때까지, activity 에 붙은 순서대로 fragment들의 onOptionsItemSelected() 가 호출된다.
+    //출처: https://aroundck.tistory.com/727 [돼지왕 놀이터]
 
 //    override fun onBackPressed() {
 //        val frag = supportFragmentManager.findFragmentById(R.id.tab3_fragment_root)

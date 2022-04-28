@@ -13,12 +13,14 @@
         android:theme="@style/Theme.DailyDiscovery"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".InvitationActivity"
             android:exported="false" />
         <activity
             android:name=".SignupActivity"
-            android:exported="false" />
-        <!--             android:parentActivityName=".LoginActivity" -->
+            android:exported="false" /> <!-- android:parentActivityName=".LoginActivity" -->
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
@@ -33,6 +35,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

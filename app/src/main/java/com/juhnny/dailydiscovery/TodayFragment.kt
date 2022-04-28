@@ -34,6 +34,10 @@ class TodayFragment : Fragment() {
         mainActivity.setSupportActionBar(b.toolbar)
         mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        b.ivNoti.setOnClickListener{
+            childFragmentManager.beginTransaction().add(R.id.today_fragment_root, NotiFragment()).addToBackStack(null).commit()
+        }
+
         b.tvGotoWrite.setOnClickListener {
             val intent = Intent(context, EditorActivity::class.java)
 //            intent.putExtra("topic", )

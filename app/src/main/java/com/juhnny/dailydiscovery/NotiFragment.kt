@@ -42,9 +42,7 @@ class NotiFragment : Fragment() {
                 Toast.makeText(context, "callback 받음", Toast.LENGTH_SHORT).show()
                 Log.e("myTag", "관리 중인 프래그먼트 목록: ${parentFragmentManager.fragments}")
                 //현재 프래그먼트는 닫게 하고
-                parentFragmentManager.beginTransaction().remove(this@NotiFragment).commit()
-                //원래 있던 프래그먼트는 보여달라고 하기
-                val result = parentFragmentManager.beginTransaction().show(parentFragmentManager.findFragmentByTag("MYBIO_FRAG")!!).commit()
+                val result = parentFragmentManager.beginTransaction().remove(this@NotiFragment).commit()
                 Log.e("myResult", "${result}")
             }
         }

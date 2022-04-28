@@ -31,7 +31,7 @@ class PhotoPagerAdapter(val context: Context, val photos:ArrayList<Photo>): Recy
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        Log.e("tag photos: ", photos.toString())
+//        Log.e("tag photos: ", photos.toString())
         var photo = photos[position]
         holder.setData(photo)
 

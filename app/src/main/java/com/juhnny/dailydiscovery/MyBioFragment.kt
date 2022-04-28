@@ -3,14 +3,12 @@ package com.juhnny.dailydiscovery
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.manager.SupportRequestManagerFragment
 import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
 
 class MyBioFragment : Fragment(){
@@ -32,11 +30,11 @@ class MyBioFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("myParentFragment: ", "${parentFragment}")
+        Log.e("myParentFragmentManager: ", "${parentFragmentManager}")
 
         appCompatActivity.setSupportActionBar(b.toolbar)
-        appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
         appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
         b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
 
@@ -44,19 +42,29 @@ class MyBioFragment : Fragment(){
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.options_my_bio, menu)
+    }
+
 //    업 버튼(홈 메뉴)을 누르면 프래그먼트가 닫히도록
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                Toast.makeText(requireContext(), "MyBio - home", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.beginTransaction().remove(this).commit()
+                Log.e("MyBio - home", "")
+//                parentFragmentManager.beginTransaction().remove(this).commit()
                 return true
             }
+            R.id.menu_my_bio_menu1 ->
+                Log.e("MyBio - menu1", "")
+
+            else ->
+                Log.e("MyBio - else", "")
         }
-        Toast.makeText(requireContext(), "MyBio - home not clicked", Toast.LENGTH_SHORT).show()
         return super.onOptionsItemSelected(item)
     }
 
+    //백 버튼. 현재는 업버튼에도 액티비티가 onBackPressed를 발동해 동작하고 있음..
     //Activity에 onBackPressed 발생 시 Fragment에 콜백이 오도록 하고 그 때 handleOnBackPressed() 내 명령 실행
     private lateinit var callback: OnBackPressedCallback
 
@@ -64,8 +72,9 @@ class MyBioFragment : Fragment(){
         super.onAttach(context)
         callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                Toast.makeText(context, "MyBio - callback 받음", Toast.LENGTH_SHORT).show()
+                Log.e("MyBio - onBack callback 받음", "")
                 parentFragmentManager.beginTransaction().remove(this@MyBioFragment).commit()
+                Log.e("MyBio Frag removed", "")
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
