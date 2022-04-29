@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.juhnny.dailydiscovery.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
+
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("isFirstRun", "true").commit() //있는 값 위에 쓰면 덮어쓰기
+        Log.e("which pref?", "${PreferenceManager.getDefaultSharedPreferences(this).getString("isFirstRun", "not found")}")
 
 //        b.root.transitionName = "introExpand"
 
