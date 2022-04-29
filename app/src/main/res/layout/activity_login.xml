@@ -21,87 +21,121 @@
         android:background="@color/purple_200"
         android:layout_below="@id/toolbar"/>
 
-    <ImageView
-        android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_camera"
-        android:layout_marginTop="200dp"
-        android:layout_centerHorizontal="true"/>
-
-    <EditText
-        android:id="@+id/et_id"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:layout_below="@id/iv_logo" />
-    <TextView
-        android:id="@+id/tv_guide1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="아이디 찾기"
-        android:layout_below="@id/et_id"/>
-    <EditText
-        android:id="@+id/et_pw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:layout_below="@id/tv_guide1" />
-    <TextView
-        android:id="@+id/tv_guide2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="아이디 찾기"
-        android:layout_below="@id/et_pw"/>
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="로그인"
-        android:layout_below="@id/tv_guide2" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:paddingHorizontal="16dp">
 
-
-    <LinearLayout
-        android:id="@+id/layout_find_id_pw_singup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/btn_login"
-        android:layout_centerHorizontal="true">
-        <TextView
+        <ImageView
+            android:id="@+id/iv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아이디 찾기"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="200dp"
+            android:src="@drawable/ic_camera" />
+
+        <EditText
+            android:id="@+id/et_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_logo"
+            android:hint="Email" />
+
         <TextView
+            android:id="@+id/tv_guide1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" | "/>
+            android:layout_below="@id/et_id"
+            android:text="안내문"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/et_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_guide1"
+            android:hint="Password" />
+
         <TextView
+            android:id="@+id/tv_guide2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="비밀번호 찾기"/>
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_below="@id/et_pw"
+            android:text="안내문"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" | "/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="회원 가입"/>
-    </LinearLayout>
+            android:layout_below="@id/tv_guide2"
+            android:text="로그인" />
 
 
-    <TextView
-        android:id="@+id/tv_ganpyeon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="간편 로그인"
-        android:layout_below="@id/layout_find_id_pw_singup"/>
-    <Button
-        android:id="@+id/btn_with_google"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="구글 로그인"
-        android:layout_below="@id/tv_ganpyeon"/>
+        <LinearLayout
+            android:id="@+id/layout_find_id_pw_singup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아이디 찾기" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호 찾기" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원 가입" />
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layout_ganpyeon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_find_id_pw_singup">
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@color/grey205"
+                android:text=" 또는 " />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_with_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_ganpyeon"
+            android:text="구글 로그인" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -5,19 +5,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SignupActivity">
+    tools:context=".SignupActivity"
+    android:background="@color/grey205">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_200"/>
+        android:layout_height="wrap_content">
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="signup activity"
+        android:background="#009688"/>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="signup activity"
-        android:background="@color/lightgreen"
-        android:gravity="center" />
+        android:layout_below="@id/toolbar"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="200dp"
+            android:src="@drawable/ic_camera" />
+
+        <EditText
+            android:id="@+id/et_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_logo"
+            android:hint="Email" />
+
+        <TextView
+            android:id="@+id/tv_guide1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_id"
+            android:text="안내문"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/et_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_guide1"
+            android:hint="Password" />
+
+        <TextView
+            android:id="@+id/tv_guide2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_pw"
+            android:text="안내문"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_guide2"
+            android:hint="Nickname"/>
+
+        <TextView
+            android:id="@+id/tv_guide3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_nickname"
+            android:text="안내문"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_guide3"
+            android:text="회원 가입" />
+
+    </RelativeLayout>
 
 </LinearLayout>

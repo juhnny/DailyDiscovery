@@ -1,6 +1,7 @@
 package com.juhnny.dailydiscovery
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityOptionsCompat
@@ -23,9 +24,15 @@ class IntroActivity : AppCompatActivity() {
             finish()
         }
 
+
+        //앱 설치 후 처음 한번만 Invitation Activity를 띄우기
+        //sharedPreference에 저장해놓자
+        val prefs:SharedPreferences =
+
+
         val intent = Intent(this, InvitationActivity::class.java)
         val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, 42, 75, 1, 1)
         startActivity(intent, optionsCompat.toBundle())
         finish()
-    }
+    }//onCreate()
 }
