@@ -11,28 +11,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <ImageView
-        android:id="@+id/iv_photo"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:scaleType="fitCenter"
-        android:background="@drawable/editor_photo_bg"/>
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/et_topic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="주제"
-        android:inputType="text"
-        android:gravity="start"/>
-    <EditText
-        android:id="@+id/et_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="설명"
-        android:inputType="textMultiLine"
-        android:lines="2"
-        android:maxLines="2"
-        android:gravity="start"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey224"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_image_search_200"
+                    android:background="@color/white"/>
+
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/et_topic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="주제"
+                android:inputType="text"
+                android:gravity="start"/>
+            <EditText
+                android:id="@+id/et_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="설명"
+                android:inputType="textMultiLine"
+                android:lines="2"
+                android:maxLines="2"
+                android:gravity="start"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>

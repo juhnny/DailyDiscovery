@@ -17,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -57,11 +58,11 @@ class LoginActivity : AppCompatActivity() {
             auth.signOut()
 
             //구글 로그아웃
-            val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
-            val client = GoogleSignIn.getClient(this, signInOptions)
-            client.signOut().addOnCompleteListener {
-                Toast.makeText(this, "구글 로그아웃", Toast.LENGTH_SHORT).show()
-            }
+//            val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+//            val client = GoogleSignIn.getClient(this, signInOptions)
+//            client.signOut().addOnCompleteListener {
+//                Toast.makeText(this, "구글 로그아웃", Toast.LENGTH_SHORT).show()
+//            }
             Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
         }
     }
@@ -221,13 +222,19 @@ class LoginActivity : AppCompatActivity() {
     val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object: ActivityResultCallback<ActivityResult>{
         override fun onActivityResult(result: ActivityResult?) {
             Toast.makeText(baseContext, "resultLauncer came back", Toast.LENGTH_SHORT).show()
-            if(result != null){
-                val intent = result.data
+            try {
+                //로그인 창을 그냥 닫아버리면 예외 발생
+                val intent = result?.data
                 val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
                 val account = task.getResult()
 
                 val email = account.email
                 Log.e("TAG Google sign in account", "$email")
+
+                startActivity(Intent(baseContext, MainActivity::class.java))
+                finish()
+            } catch (e:ApiException){
+                Log.w("TAG Google Login Failed", "failure code : ${e.statusCode}")
             }
         }
     })

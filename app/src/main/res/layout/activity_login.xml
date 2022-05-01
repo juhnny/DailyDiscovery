@@ -184,11 +184,11 @@
             android:layout_below="@id/layout_ganpyeon"
             android:text="구글 로그인" />
 
-        <com.google.android.gms.common.SignInButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btn_google_login"
-            tools:ignore="MissingConstraints"/>
+<!--        <com.google.android.gms.common.SignInButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/btn_google_login"-->
+<!--            tools:ignore="MissingConstraints"/>-->
 
     </RelativeLayout>
 
