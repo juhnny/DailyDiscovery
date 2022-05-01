@@ -7,10 +7,21 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.juhnny.dailydiscovery.databinding.ActivityLoginBinding
+import kotlin.math.sign
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,29 +39,33 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-        b.btnLogin.setOnClickListener{
-            signIn()
-        }
+        b.btnLogin.setOnClickListener{ signIn() }
 
-        b.tvFindId.setOnClickListener {
-            MyUtil.showAlert(this)
-        }
+        b.tvFindId.setOnClickListener { MyUtil.showAlert(this) }
 
-        b.tvFindPw.setOnClickListener {
-            MyUtil.showAlert(this)
-        }
+        b.tvFindPw.setOnClickListener { MyUtil.showAlert(this) }
 
         b.tvSignup.setOnClickListener{
             val intent = Intent(this, SignupActivity::class.java )
             startActivity(intent)
         }
 
+        b.btnGoogleLogin.setOnClickListener { googleLogin() }
+
         b.btnLogout.visibility = View.VISIBLE
         b.btnLogout.setOnClickListener{
             auth.signOut()
+
+            //구글 로그아웃
+            val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+            val client = GoogleSignIn.getClient(this, signInOptions)
+            client.signOut().addOnCompleteListener {
+                Toast.makeText(this, "구글 로그아웃", Toast.LENGTH_SHORT).show()
+            }
             Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -62,8 +77,6 @@ class LoginActivity : AppCompatActivity() {
     fun signIn(){
         val email = b.etEmail.text.toString()
         val pw = b.etPw.text.toString()
-
-
 
         //기존에 받아둔 currentUser 토큰이 더이상 유효하지 않은 경우(아래 코멘트의 상황들)에 대한 처리
         //FirebaseAuth 서버를 감시
@@ -81,8 +94,6 @@ class LoginActivity : AppCompatActivity() {
             //- When a user is signed in
             //- When the current user is signed out
             //- When the current user changes
-
-//            auth.currentUser.
 
         }
 
@@ -196,5 +207,29 @@ class LoginActivity : AppCompatActivity() {
     //- When the current user is signed out
     //- When the current user changes
 
+    private fun googleLogin(){
+        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestEmail()
+                                .build()
+
+        val client:GoogleSignInClient = GoogleSignIn.getClient(this, signInOptions)
+        val intent = client.signInIntent
+        resultLauncher.launch(intent)
+
+    }
+
+    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object: ActivityResultCallback<ActivityResult>{
+        override fun onActivityResult(result: ActivityResult?) {
+            Toast.makeText(baseContext, "resultLauncer came back", Toast.LENGTH_SHORT).show()
+            if(result != null){
+                val intent = result.data
+                val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
+                val account = task.getResult()
+
+                val email = account.email
+                Log.e("TAG Google sign in account", "$email")
+            }
+        }
+    })
 
 }
