@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.FragmentTab4Binding
 
 class Tab4Fragment : Fragment(){
@@ -58,10 +59,25 @@ class Tab4Fragment : Fragment(){
         val tvHeaderInfo = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_info)
 
         val btnLogin = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_login)
+        val btnLogout = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_logout)
         //추가하기. 로그인 돼있는 상태면 버튼 숨기고 다른 헤더 정보 띄우기
+        if(FirebaseAuth.getInstance().currentUser == null) {
+            btnLogin.visibility = View.VISIBLE
+            btnLogout.visibility = View.GONE
+        } else {
+            btnLogin.visibility = View.GONE
+            btnLogout.visibility = View.VISIBLE
+        }
         btnLogin.setOnClickListener {
             b.root.closeDrawer(b.nav)
             startActivity(Intent(context, LoginActivity::class.java))
+        }
+        btnLogout.setOnClickListener {
+            b.root.closeDrawer(b.nav)
+            FirebaseAuth.getInstance().signOut()
+            Toast.makeText(requireContext(), "로그아웃 완료", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(context, MainActivity::class.java))
+            requireActivity().finish()
         }
 
 

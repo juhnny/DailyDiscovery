@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="signup activity"
-        android:background="#009688"/>
+        android:background="#009688" />
 
     <RelativeLayout
         android:layout_width="match_parent"

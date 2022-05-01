@@ -7,11 +7,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.app.ActivityOptionsCompat
 import androidx.preference.PreferenceManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.juhnny.dailydiscovery.databinding.ActivityIntroBinding
 
 class IntroActivity : AppCompatActivity() {
 
     val b:ActivityIntroBinding by lazy { ActivityIntroBinding.inflate(layoutInflater) }
+    val auth by lazy { FirebaseAuth.getInstance() }
+    //FirebaseApp이라는 앱 실행과 함께 자동실행되는 Content Provider의 객체를 소환
+    //비슷한 애로 FirebaseInitProvider라는 Content Provider도 있다.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +34,18 @@ class IntroActivity : AppCompatActivity() {
         //3. getPreferences() - 해당 Activity에 속하는 환경설정
         val prefs:SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor =  prefs.edit()
-        val isFirstRun = prefs.getString("isFirstRun", "false").toBoolean()
-        Log.e("isFirstRun: ", "$isFirstRun")
+        if( ! prefs.contains("isFirstRun")) editor.putBoolean("isFirstRun", true).commit() //처음엔 항목이 없을테니..
+        val isFirstRun = prefs.getBoolean("isFirstRun", false)
+        Log.e("isFirstRun from IntroActivity: ", "$isFirstRun")
 
+        //첫 실행이면 Invitation Activity 실행
         if(isFirstRun) {
             val intent = Intent(this, InvitationActivity::class.java)
             val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, 42, 75, 1, 1)
             startActivity(intent, optionsCompat.toBundle())
             finish()
         }
+
 
         val openMainActivity = {
             val intent = Intent(this, MainActivity::class.java)
@@ -48,7 +56,7 @@ class IntroActivity : AppCompatActivity() {
             finish()
         }
 
-        //TEST!!!!!!!!!!!!!!!!!!
+        //TEST
         startActivity(Intent(this, SignupActivity::class.java))
 
         b.entrance.setOnClickListener {
@@ -57,4 +65,30 @@ class IntroActivity : AppCompatActivity() {
 
 
     }//onCreate()
+
+    override fun onStart() {
+        super.onStart()
+        //한국어로 설정 - 인증메일 언어 로컬화
+        auth.setLanguageCode("ko")
+        //액티비티를 초기화할 때 사용자가 현재 로그인되어 있는지(nun-null) 확인하고 걸맞는 작업 해주기
+        //FirebaseUser 객체는 앱 세션 내에서 캐시를 사용하므로 변경이 있을 수 있으니 reload() 권장
+        //인터넷이 끊긴 상황에서는? 로그인을 풀지는 말아보자. 어차피 글 업로드나 사진 로딩에 실패할 것..
+        //그러려면 여기서는 reload()를 안 쓰는 게 낫겠네..
+        val currentUser:FirebaseUser? = auth.currentUser
+        if(currentUser != null){ //로그인 되어있을 경우
+            Log.e("TAG IntroAc", "로그인 O, email:${currentUser.email}")
+            //인증이 돼있나 확인
+            if(currentUser.isEmailVerified){ //인증 완료시에만 메인 액티비티 스타트
+                Log.e("TAG IntroAc", "인증 완료")
+                startActivity(Intent(this, MainActivity::class.java))
+            } else { //인증 미완료 시 로그인 화면으로 연결
+                Log.e("TAG IntroAc", "인증 미완료")
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+        } else{ //로그인 안돼있을 시에도 로그인 화면으로 연결
+            Log.e("TAG IntroAc", "로그인 X")
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+    }
+
 }

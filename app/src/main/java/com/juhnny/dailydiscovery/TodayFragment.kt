@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
 
 class TodayFragment : Fragment() {
@@ -45,13 +47,20 @@ class TodayFragment : Fragment() {
         }
 
         b.tvTopic.setOnClickListener {
-            mainActivity.b.bnv.menu.getItem(1).isChecked = true
-            parentFragmentManager.beginTransaction().hide(mainActivity.fragments[0]).commit()
-            val trans = parentFragmentManager.beginTransaction()
-            if( ! parentFragmentManager.fragments.contains(mainActivity.fragments[1])) trans.add(R.id.container_bnv, mainActivity.fragments[1])
-            trans.show(mainActivity.fragments[1])
-            trans.commit()
+            val auth:FirebaseAuth = FirebaseAuth.getInstance()
+            auth.signOut()
+            Toast.makeText(requireContext(), "signOut", Toast.LENGTH_SHORT).show()
         }
+
+//        //해당 탭을 닫고 다른 탭으로 이동하는 방법
+//        b.tvTopic.setOnClickListener {
+//            mainActivity.b.bnv.menu.getItem(1).isChecked = true
+//            parentFragmentManager.beginTransaction().hide(mainActivity.fragments[0]).commit()
+//            val trans = parentFragmentManager.beginTransaction()
+//            if( ! parentFragmentManager.fragments.contains(mainActivity.fragments[1])) trans.add(R.id.container_bnv, mainActivity.fragments[1])
+//            trans.show(mainActivity.fragments[1])
+//            trans.commit()
+//        }
     }
 
     //오늘의 주제를 발행하는 방법은?

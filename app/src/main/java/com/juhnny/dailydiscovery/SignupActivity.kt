@@ -67,10 +67,13 @@ class SignupActivity : AppCompatActivity() {
         }
 
         auth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener {
-            if (it.isSuccessful) { //이렇게만 해도 Firebase Auth에는 회원등록까지 되지만 인증이 안되어 있는 상태
+            if (it.isSuccessful) { //이렇게만 해도 Firebase Auth에는 회원등록이 완료.
                 //입력된 이메일로 [인증확인] 메일 전송 및 전송 성공여부 확인
                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
-                    if(it.isSuccessful) Toast.makeText(this, "전송된 이메일을 확인하고 인증에 성공하면 가입이 완료됩니다", Toast.LENGTH_SHORT).show()
+                    if(it.isSuccessful) {
+                        Toast.makeText(this, "전송된 이메일을 확인하고 인증에 성공하면 가입이 완료됩니다", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
                     else {
                         Toast.makeText(this, "인증용 이메일 전송에 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         Log.e("TAG", "createUser failed: ", it.exception)
@@ -81,6 +84,8 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "가입 실패 : ${it.exception?.message}", Toast.LENGTH_LONG).show()
             }
         }
+        //인증을 마친 사용자는 기본적으로 Firebase 실시간 데이터베이스와 Cloud Storage에서 데이터를 읽고 쓸 수 있습니다.
+        // 사용자의 액세스 권한을 제어하려면 Firebase 실시간 데이터베이스 및 Cloud Storage 보안 규칙을 수정하면 됩니다.
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

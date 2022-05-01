@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
 
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("isFirstRun", "true").commit() //있는 값 위에 쓰면 덮어쓰기
-        Log.e("which pref?", "${PreferenceManager.getDefaultSharedPreferences(this).getString("isFirstRun", "not found")}")
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isFirstRun", false).commit() //있는 값 위에 쓰면 덮어쓰기
+        Log.e("isFirstRun from MainActivity :", "${PreferenceManager.getDefaultSharedPreferences(this).getBoolean("isFirstRun", false)}")
 
 //        b.root.transitionName = "introExpand"
 

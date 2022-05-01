@@ -82,12 +82,48 @@
             android:layout_below="@id/tv_guide2"
             android:text="로그인" />
 
+        <TextView
+            android:id="@+id/tv_guide_email_verification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:text="안내문"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"/>
+        <LinearLayout
+            android:id="@+id/layout_email_verification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tv_guide_email_verification"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_send_email_verification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증 메일 재발송"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | "/>
+            <TextView
+                android:id="@+id/tv_check_email_verification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증 완료"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/layout_find_id_pw_singup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btn_login"
+            android:layout_below="@id/layout_email_verification"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
 
