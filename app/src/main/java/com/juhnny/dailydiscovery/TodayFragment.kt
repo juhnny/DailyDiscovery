@@ -2,13 +2,23 @@ package com.juhnny.dailydiscovery
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
+import java.text.ParsePosition
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TodayFragment : Fragment() {
 
@@ -36,6 +46,8 @@ class TodayFragment : Fragment() {
         mainActivity.setSupportActionBar(b.toolbar)
         mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        loadTopic()
+
         b.ivNoti.setOnClickListener{
             childFragmentManager.beginTransaction().add(R.id.today_fragment_root, NotiFragment()).addToBackStack(null).commit()
         }
@@ -61,9 +73,50 @@ class TodayFragment : Fragment() {
 //            trans.show(mainActivity.fragments[1])
 //            trans.commit()
 //        }
-    }
+
+    }//onViewCreated
+
 
 
     //오늘의 주제를 발행하는 방법은?
+    private fun loadTopic(){
+        Log.e("TAG Today 8 am", "${Date()}")
+        Log.e("TAG Today 8 am", "${Date()}")
+        Log.e("TAG Today 8 am", "${Date()}")
+        Log.e("TAG Today 8 am", "${Date()}")
+        Log.e("TAG Today 8 am", "${Date()}")
+        Log.e("TAG Today 8 am", "${Date()}")
+
+        val firestore:FirebaseFirestore = FirebaseFirestore.getInstance()
+        val collectionTopics = firestore.collection("topics")
+        collectionTopics.get().addOnCompleteListener(object: OnCompleteListener<QuerySnapshot>{
+            override fun onComplete(task: Task<QuerySnapshot>) {
+                if(task.isSuccessful){
+                    val querySnapshots = task.getResult() //하나의 QuerySnapshot 안에 여러 개의 Document Snapshot이 들어있다.
+                    for(snapshot:DocumentSnapshot in querySnapshots){
+                        val topic:Map<String, Any>? = snapshot.data
+                        val no:String = topic!!["no"].toString()
+                        val topicName:String = topic!!["id"].toString()
+                        val issueDateTimestamp:Timestamp = topic!!["issue_date"] as Timestamp
+                        val issueDateSecs = issueDateTimestamp.toDate()
+
+                        val format = SimpleDateFormat("yyyyMMdd_hhmmss", Locale.KOREA)
+                        format.timeZone = TimeZone.getTimeZone("Asia/Seoul") //setTimeZone
+                        val issueDate = format.format(issueDateSecs)
+
+                        //매일 오전 08시를 Date 객체로 만들어서 비교
+                        var pos = ParsePosition(0)
+                        val parsedDate = format.parse("20220502_100000", pos)
+
+                        Log.e("TAG parsedDate", "$parsedDate")
+                        Log.e("TAG topic", "$no, $topicName, $issueDate")
+                    }
+
+                } else{
+                    Log.e("TAG loadTopic", "get() 실패 ${task.exception}")
+                }
+            }
+        })
+    }//loadTopic()
 
 }
