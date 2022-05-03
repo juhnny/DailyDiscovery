@@ -13,9 +13,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.juhnny.dailydiscovery.databinding.ActivityEditorBinding
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Url
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -81,31 +87,71 @@ class EditorActivity : AppCompatActivity() {
                     return true
                 }
 
+                val userId = FirebaseAuth.getInstance().currentUser?.email
+                if(userId == null) {
+                    Log.e("UserId is null","")
+                    Toast.makeText(this, "유저 정보 가져오기 실패", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+
+                val format = SimpleDateFormat("yyyyMMdd-hhmmss", Locale.KOREA)
+                val creationDate = format.format(Date())
+                val updateDate = format.format(Date())
+
                 //Firebase Storage에 사진 업로드
 //                uploadImage()
                 var fileName = "IMG_${SimpleDateFormat("yyyyMMdd_hhmmss", Locale.KOREA).format(Date())}_.png"
                 imgRef = storage.getReference("uploads/photos/$fileName")
                 imgRef.putFile(imgUri!!).addOnSuccessListener {
-                    Toast.makeText(this, "사진 업로드 성공", Toast.LENGTH_SHORT).show()
-
+                    //파일 참조객체로부터 이미지 URL을 얻어오기 - URL을 얻어올 수 있다면 저장에 성공한 것
                     imgRef.downloadUrl.addOnCompleteListener {
                         //업로드 성공 시 액티비티 종료
                         //실패시 알림창 띄우고 재시도 하도록
                         if(it.isSuccessful){
+                            imgFirebaseUrl = it.result.toString() //다운로드 주소 저장
                             Log.e("TAG 이미지 저장위치","${it.result}")
-                            Toast.makeText(this, "글 저장 완료", Toast.LENGTH_SHORT).show()
-                            setResult(RESULT_OK, intent)
-                            finish()
+                            Toast.makeText(this, "사진 저장 완료", Toast.LENGTH_SHORT).show()
+
+                            //Firebase Firestore에 전체 데이터 업로드
+                            val builder:Retrofit.Builder = Retrofit.Builder()
+                            builder.baseUrl("http://iwibest.dothome.co.kr")
+                            builder.addConverterFactory(GsonConverterFactory.create())
+                            val retrofit:Retrofit = builder.build()
+                            val retrofitInterface:RetrofitInterface = retrofit.create(RetrofitInterface::class.java)
+
+                            //요청 및 응답 처리
+                            val call:Call<Photo> = retrofitInterface.saveWriting(topic, msg, userId, creationDate, updateDate, imgFirebaseUrl)
+                            call.enqueue(object : Callback<Photo>{
+                                override fun onResponse(call: Call<Photo>, response: Response<Photo>) {
+                                    val photo:Photo? = response.body()
+                                    if(photo != null){
+                                        Log.e("TAG saveWriting Success", "${photo.no}, ${photo.topic}, " +
+                                                "${photo.message}, ${photo.creationDate}, ${photo.updateDate}, " +
+                                                "${photo.userId}, ${photo.imgUrl}")
+
+                                        setResult(RESULT_OK, intent)
+                                        finish()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<Photo>, t: Throwable) {
+                                    Log.e("TAG saveWriting Failure", "${t.message}")
+                                    Log.e("TAG saveWriting Failure", "${t.localizedMessage}")
+                                    Log.e("TAG saveWriting Failure", "${t.stackTrace}")
+                                    Log.e("TAG saveWriting Failure", "${t.suppressed}")
+                                    Log.e("TAG saveWriting Failure", "${t.cause}")
+                                    Log.e("TAG saveWriting Failure", "${t.suppressedExceptions}")
+                                }
+                            })
+
                         } else {
-                            Toast.makeText(this, "글 저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "사진 저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
 
-                //Firebase Firestore에 전체 데이터 업로드
 
-                //파일 참조객체로부터 이미지 URL을 얻어오기 - URL을 얻어올 수 있다면 저장에 성공한 것
-                //참조객체로부터 다운로드 URL을 얻어오는 작업을 수행하고 성공했을 경우에 대한 콜백 리스너 등록
+
 
 
             }
@@ -115,6 +161,9 @@ class EditorActivity : AppCompatActivity() {
     }
 
     //Back버튼 눌렀을 때도 바로 닫히지 않고 안내 뜨게 해야함 - 한번 더 누르면 닫히고 내용은 저장되지 않는다고.
+
+    //Firebase Storage에 업로드한 이미지의 URL
+    lateinit var imgFirebaseUrl:String
 
     //갤러리에서 이미지 선택
     var imgUri:Uri? = null

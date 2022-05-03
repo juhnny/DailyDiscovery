@@ -13,7 +13,7 @@ class GalleryRecyclerAdapter(val context:Context, var photos:MutableList<Photo>)
 
     inner class VH(val binding: RecyclerItemGalleryBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(photo:Photo){
-            Glide.with(context).load(photo.src).into(binding.ivPhoto)
+            Glide.with(context).load(photo.imgUrl).into(binding.ivPhoto)
             binding.tvTopicname.visibility = View.GONE
             binding.tvMsg.text = photo.message
 //            binding.tvNickname.text = photo.nickname

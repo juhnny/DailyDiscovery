@@ -6,10 +6,10 @@ import android.os.Parcelable
 data class Photo(var no:String,
                  var topic:String,
                  var message:String,
-                 val nickname:String,
+                 val userId:String,
                  var creationDate:String,
                  var updateDate:String,
-                 var src:String) : Parcelable{
+                 var imgUrl:String) : Parcelable{
 
     //Parcel을 Photo 객체로 변환하기 위한 보조생성자
     //콜론 뒤에는 주생성자
@@ -42,10 +42,10 @@ data class Photo(var no:String,
         p0?.writeString(no)
         p0?.writeString(topic)
         p0?.writeString(message)
-        p0?.writeString(nickname)
+        p0?.writeString(userId)
         p0?.writeString(creationDate)
         p0?.writeString(updateDate)
-        p0?.writeString(src)
+        p0?.writeString(imgUrl)
     }
 
     //Creator 객체는 다시 받은 Parcel 정보를 읽어서 Photo 객체를 만들어낸다.

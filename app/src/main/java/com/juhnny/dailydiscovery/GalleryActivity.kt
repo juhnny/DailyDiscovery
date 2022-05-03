@@ -3,8 +3,9 @@ package com.juhnny.dailydiscovery
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import com.juhnny.dailydiscovery.databinding.ActivityGalleryBinding
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class GalleryActivity : AppCompatActivity() {
 
@@ -31,8 +32,10 @@ class GalleryActivity : AppCompatActivity() {
 
         b.recycler.adapter = GalleryRecyclerAdapter(this, photos)
 
+
         loadPhotos()
 
+        loadPhotosStub()
 
     }
 
@@ -46,6 +49,17 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     fun loadPhotos(){
+//        val builder: Retrofit.Builder = Retrofit.Builder()
+//        builder.baseUrl("http://iwibest.dothome.co.kr")
+//        builder.addConverterFactory(GsonConverterFactory.create())
+//        val retrofit:Retrofit = builder.build()
+        val retrofit:Retrofit = Retrofit.Builder().baseUrl("http://iwibest.dothome.co.kr")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    }
+
+    fun loadPhotosStub(){
         photos.add(Photo("1", "주제명", "A material metaphor is the unifying theory of a rationalized space and a system of motion.\n" +
                 "\n" +
                 "        Components with\n" +
