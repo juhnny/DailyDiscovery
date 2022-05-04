@@ -2,14 +2,10 @@ package com.juhnny.dailydiscovery
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.juhnny.dailydiscovery.databinding.RecyclerItemPhotoBinding
 
@@ -19,7 +15,7 @@ class PhotoPagerAdapter(val context: Context, val photos:ArrayList<Photo>): Recy
         fun setData(photo:Photo){
             Glide.with(context).load(photo.imgUrl).into(binding.ivPhoto)
             binding.tvTopicname.text = photo.topic
-            binding.tvNickname.text = photo.userId //나중에 이 userId로 닉네임을 다시 불러와서 사용
+            binding.tvNickname.text = photo.userEmail //나중에 이 userId로 닉네임을 다시 불러와서 사용
             binding.tvMsg.text = photo.message
             binding.tvCreationDate.text = photo.creationDate
         }

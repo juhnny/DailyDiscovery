@@ -16,12 +16,9 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.juhnny.dailydiscovery.databinding.ActivityEditorBinding
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Url
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -120,14 +117,14 @@ class EditorActivity : AppCompatActivity() {
                             val retrofitInterface:RetrofitInterface = retrofit.create(RetrofitInterface::class.java)
 
                             //요청 및 응답 처리
-                            val call:Call<Photo> = retrofitInterface.saveWriting(topic, msg, userId, creationDate, updateDate, imgFirebaseUrl)
+                            val call:Call<Photo> = retrofitInterface.savePost(topic, msg, userId, imgFirebaseUrl)
                             call.enqueue(object : Callback<Photo>{
                                 override fun onResponse(call: Call<Photo>, response: Response<Photo>) {
                                     val photo:Photo? = response.body()
                                     if(photo != null){
                                         Log.e("TAG saveWriting Success", "${photo.no}, ${photo.topic}, " +
-                                                "${photo.message}, ${photo.creationDate}, ${photo.updateDate}, " +
-                                                "${photo.userId}, ${photo.imgUrl}")
+                                                "${photo.message}, ${photo.userEmail}, ${photo.nickname}, " +
+                                                "${photo.creationDate}, ${photo.updateDate}, ${photo.imgUrl}")
 
                                         setResult(RESULT_OK, intent)
                                         finish()

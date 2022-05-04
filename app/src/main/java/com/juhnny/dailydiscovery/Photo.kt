@@ -6,7 +6,8 @@ import android.os.Parcelable
 data class Photo(var no:String,
                  var topic:String,
                  var message:String,
-                 val userId:String,
+                 val userEmail:String,
+                 val nickname:String,
                  var creationDate:String,
                  var updateDate:String,
                  var imgUrl:String) : Parcelable{
@@ -16,6 +17,7 @@ data class Photo(var no:String,
     //constructor() : this()
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(), //혹시 파라미터 값으로 null이 들어왔어도 그냥 문자로 변환해 보여줘
+        parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -42,7 +44,8 @@ data class Photo(var no:String,
         p0?.writeString(no)
         p0?.writeString(topic)
         p0?.writeString(message)
-        p0?.writeString(userId)
+        p0?.writeString(userEmail)
+        p0?.writeString(nickname)
         p0?.writeString(creationDate)
         p0?.writeString(updateDate)
         p0?.writeString(imgUrl)
