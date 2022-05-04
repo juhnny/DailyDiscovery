@@ -2,7 +2,9 @@ package com.juhnny.dailydiscovery
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.icu.text.DateTimePatternGenerator
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,10 +18,16 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.type.DateTime
 import com.juhnny.dailydiscovery.databinding.ActivityEditorBinding
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
+import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.OffsetDateTime
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class EditorActivity : AppCompatActivity() {
@@ -40,6 +48,18 @@ class EditorActivity : AppCompatActivity() {
             intent.type = "image/*"
             resultLauncher.launch(intent)
         }
+
+        val updateDatetimeStr:String = "2022-05-04T17:19:36+09:00"
+        //SimpleDateFormat은 ISO 8601 포맷조차 최소 API레벨이 더 높아야 한다며 파싱을 못한다.
+//        val format = SimpleDateFormat("yyyy-MM-DD'T'hh:mm:ss.SSSX", Locale.KOREA)
+//        format.parse(updateDatetimeStr)
+        //자바 8+ API 디슈가링을 적용해서 DatTimeFormatter 사용
+        //최소 API 레벨이 낮더라도 최근 API 기술들을 사용하게 해줌.
+        //이왕이면 SimpleDateFormat보다 java.time 라이브러리를 쓰는 게 낫지.
+        //참고 문서 : https://developer.android.com/studio/write/java8-support#library-desugaring
+        val parsedDate:OffsetDateTime = OffsetDateTime.parse(updateDatetimeStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        Log.e("TAG datatime", "${parsedDate}, ${parsedDate.dayOfMonth}, ${parsedDate.month}")
+
 
     }//onCreate()
 
@@ -122,22 +142,18 @@ class EditorActivity : AppCompatActivity() {
                                 override fun onResponse(call: Call<Photo>, response: Response<Photo>) {
                                     val photo:Photo? = response.body()
                                     if(photo != null){
-                                        Log.e("TAG saveWriting Success", "${photo.no}, ${photo.topic}, " +
+                                        Log.e("TAG savePost Success", "${photo.no}, ${photo.topic}, " +
                                                 "${photo.message}, ${photo.userEmail}, ${photo.nickname}, " +
                                                 "${photo.creationDate}, ${photo.updateDate}, ${photo.imgUrl}")
 
+                                        Log.e("TAG savePost Success", "${photo.updateDate}")
                                         setResult(RESULT_OK, intent)
                                         finish()
                                     }
                                 }
 
                                 override fun onFailure(call: Call<Photo>, t: Throwable) {
-                                    Log.e("TAG saveWriting Failure", "${t.message}")
-                                    Log.e("TAG saveWriting Failure", "${t.localizedMessage}")
-                                    Log.e("TAG saveWriting Failure", "${t.stackTrace}")
-                                    Log.e("TAG saveWriting Failure", "${t.suppressed}")
-                                    Log.e("TAG saveWriting Failure", "${t.cause}")
-                                    Log.e("TAG saveWriting Failure", "${t.suppressedExceptions}")
+                                    Log.e("TAG savePost Failure", "${t.message}")
                                 }
                             })
 

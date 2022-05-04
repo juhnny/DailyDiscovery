@@ -15,7 +15,7 @@ class PhotoPagerAdapter(val context: Context, val photos:ArrayList<Photo>): Recy
         fun setData(photo:Photo){
             Glide.with(context).load(photo.imgUrl).into(binding.ivPhoto)
             binding.tvTopicname.text = photo.topic
-            binding.tvNickname.text = photo.userEmail //나중에 이 userId로 닉네임을 다시 불러와서 사용
+            binding.tvNickname.text = photo.nickname
             binding.tvMsg.text = photo.message
             binding.tvCreationDate.text = photo.creationDate
         }
