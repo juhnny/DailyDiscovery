@@ -13,5 +13,6 @@ interface RetrofitInterface {
                  @Query("imgUrl") imgUrl:String): Call<Photo> //제네릭으로는 파싱해서 변환할 클래스를 써준다. 메소드 이름은 마음대로..
 
     @GET("/DailyDiscovery/loadPost.php")
-    fun loadWriting(@Query("numOfRows") numofRows:Int=10):Call<String> //여기 수정
+    fun loadWriting(@Query("topic") topic:String,
+                    @Query("numOfRows") numofRows:Int=10):Call<Response<Photo>> //여기 수정
 }

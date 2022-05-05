@@ -2,9 +2,7 @@ package com.juhnny.dailydiscovery
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.icu.text.DateTimePatternGenerator
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -18,15 +16,12 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.type.DateTime
 import com.juhnny.dailydiscovery.databinding.ActivityEditorBinding
 import retrofit2.*
+import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
