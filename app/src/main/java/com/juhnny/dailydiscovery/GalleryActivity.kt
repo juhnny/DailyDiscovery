@@ -1,11 +1,15 @@
 package com.juhnny.dailydiscovery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.juhnny.dailydiscovery.databinding.ActivityGalleryBinding
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class GalleryActivity : AppCompatActivity() {
 
@@ -54,8 +58,63 @@ class GalleryActivity : AppCompatActivity() {
 //        builder.addConverterFactory(GsonConverterFactory.create())
 //        val retrofit:Retrofit = builder.build()
         val retrofit:Retrofit = Retrofit.Builder().baseUrl("http://iwibest.dothome.co.kr")
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+        val retrofitInterface = retrofit.create(RetrofitInterface::class.java)
+
+        val call:Call<Response<Photo>> = retrofitInterface.loadPost("gogogo", 1)
+        call.enqueue(object: Callback<Response<Photo>>{
+            override fun onResponse(
+                call: Call<Response<Photo>>,
+                response: retrofit2.Response<Response<Photo>>) {
+                Log.e("loadPost", "Success : ${response.body()}")
+
+                val response:Response<Photo>? = response.body()
+                if(response != null) {
+                    val resultMsg = response.responseHeader.resultMsg
+    ////                val posts = response.responseBody.items
+    ////                val itemCount = response.responseBody.itemCount
+    ////                val post = posts[0]
+    ////                Log.e("loadPost", "Success : $posts, $itemCount, ${post.topic}")
+                    Log.e("loadPost", "Success : $resultMsg")
+                }
+            }
+            override fun onFailure(call: Call<Response<Photo>>, t: Throwable) {
+            Log.e("loadPost", "Failed : ${t.message}")
+            }
+        })
+
+//        val call:Call<Photo> = retrofitInterface.loadPost("gogogo", 1)
+//        call.enqueue(object: Callback<Photo>{
+//        override fun onResponse(
+//            call: Call<Photo>,
+//            response: retrofit2.Response<Photo>) {
+//            val response:Photo? = response.body()
+//            if(response != null) {
+//                val topic = response.topic
+//                Log.e("loadPost", "${topic}")
+//            }
+//        }
+
+//        override fun onFailure(call: Call<Photo>, t: Throwable) {
+//            Log.e("loadPost", "Failed : ${t.message}")
+//        }
+//        })
+
+        val call2:Call<String> = retrofitInterface.loadPostString("gogogo", 1)
+        call2.enqueue(object: Callback<String> {
+            override fun onResponse(
+                call: Call<String>,
+                response: retrofit2.Response<String>
+            ) {
+                Log.e("loadPostString", "Success : ${response.body()}")
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("loadPostString", "Failed : ${t.message}")
+            }
+        })
 
     }
 

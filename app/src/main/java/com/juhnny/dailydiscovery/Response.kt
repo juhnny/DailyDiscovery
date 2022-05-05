@@ -1,9 +1,9 @@
 package com.juhnny.dailydiscovery
 
-data class Response<T>(val responseHeader: Response<T>.ResponseHeader,
-                       val responseBody: Response<T>.ResponseBody<T>) {
+data class Response<T>(val responseHeader: com.juhnny.dailydiscovery.ResponseHeader,
+                       val responseBody: com.juhnny.dailydiscovery.ResponseBody<T>) {
 
-    inner class ResponseHeader(val resultMsg:String) {
+    public inner class ResponseHeader(val resultMsg:String) {
     }
 
     inner class ResponseBody<T> (val items:List<T>,

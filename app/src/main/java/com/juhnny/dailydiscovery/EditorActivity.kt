@@ -143,7 +143,7 @@ class EditorActivity : AppCompatActivity() {
                                                 "${photo.message}, ${photo.userEmail}, ${photo.nickname}, " +
                                                 "${photo.creationDate}, ${photo.updateDate}, ${photo.imgUrl}")
 
-                                        Log.e("TAG savePost Success", "${photo.updateDate}")
+                                        Log.e("TAG savePost Success", photo.updateDate)
                                         setResult(RESULT_OK, intent)
                                         finish()
                                     }
