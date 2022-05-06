@@ -36,14 +36,10 @@ class GalleryActivity : AppCompatActivity() {
 
         b.recycler.adapter = GalleryRecyclerAdapter(this, photos)
 
-
         loadPhotos()
-
         loadPhotosStub()
+    }//onCreate()
 
-    }
-
-    //
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -68,20 +64,22 @@ class GalleryActivity : AppCompatActivity() {
             override fun onResponse(
                 call: Call<Response<Photo>>,
                 response: retrofit2.Response<Response<Photo>>) {
-                Log.e("loadPost", "Success : ${response.body()}")
+                Log.e("loadPost Success", "Body : ${response.body()}")
 
                 val response:Response<Photo>? = response.body()
                 if(response != null) {
                     val resultMsg = response.responseHeader.resultMsg
-    ////                val posts = response.responseBody.items
-    ////                val itemCount = response.responseBody.itemCount
-    ////                val post = posts[0]
-    ////                Log.e("loadPost", "Success : $posts, $itemCount, ${post.topic}")
-                    Log.e("loadPost", "Success : $resultMsg")
+                    val posts = response.responseBody.items
+                    val itemCount = response.responseBody.itemCount
+                    val post = posts[0]
+                    Log.e("loadPost Success", "Header : $resultMsg")
+                    Log.e("loadPost Success", "Body variables: $posts, $itemCount, ${post.topic}")
+
+                    photos.addAll(posts)
                 }
             }
             override fun onFailure(call: Call<Response<Photo>>, t: Throwable) {
-            Log.e("loadPost", "Failed : ${t.message}")
+            Log.e("loadPost Failed", "message : ${t.message}")
             }
         })
 
@@ -116,6 +114,7 @@ class GalleryActivity : AppCompatActivity() {
             }
         })
 
+        b.recycler.adapter?.notifyDataSetChanged()
     }
 
     fun loadPhotosStub(){
