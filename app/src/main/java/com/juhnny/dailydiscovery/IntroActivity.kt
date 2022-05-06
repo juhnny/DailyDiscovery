@@ -22,7 +22,13 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
 
-        //앱 설치 후 처음 한번만 Invitation Activity를 띄우기
+        /***** 앱 실행 시 확인사항 *****/
+        //필수 업데이트 여부(서버에서 읽어오기) - 더 이상 진행되지 않게 안내 후 앱 종료
+        //앱 첫 실행 여부 - 첫 실행에서만 초대장 화면 띄우기
+        //로그인 여부 - 돼있으면 DB에서 회원 정보 읽어와 User 객체에 저장 후 메인 화면으로, 안돼있으면 로그인 화면으로..
+
+
+        //앱 설치 후 처음 한번만 Invitation Activity 띄우기
         //sharedPreference에 저장해놓자
         //Main Activity가 만들어지면(둘러보기를 누르거나 로그인에 성공하면) isFirstRun = true로 변경
 
@@ -35,8 +41,8 @@ class IntroActivity : AppCompatActivity() {
         val prefs:SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor =  prefs.edit()
         if( ! prefs.contains("isFirstRun")) editor.putBoolean("isFirstRun", true).commit() //처음엔 항목이 없을테니..
-        val isFirstRun = prefs.getBoolean("isFirstRun", false)
-        Log.e("isFirstRun from IntroActivity: ", "$isFirstRun")
+        val isFirstRun = prefs.getBoolean("isFirstRun", true)
+        Log.e("isFirstRun IntroAc: ", "$isFirstRun")
 
         //첫 실행이면 Invitation Activity 실행
         if(isFirstRun) {
@@ -45,8 +51,10 @@ class IntroActivity : AppCompatActivity() {
             startActivity(intent, optionsCompat.toBundle())
             finish()
         }
+        /////////마무리////////
 
 
+        //MainActivity로 바로 연결.
         val openMainActivity = {
             val intent = Intent(this, MainActivity::class.java)
 //            val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, b.entrance, "introExpand")
@@ -55,9 +63,6 @@ class IntroActivity : AppCompatActivity() {
             startActivity(intent, optionsCompat.toBundle())
             finish()
         }
-
-        //TEST
-        startActivity(Intent(this, SignupActivity::class.java))
 
         b.entrance.setOnClickListener {
             openMainActivity()
@@ -68,10 +73,13 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        //로그인 여부 확인 후 회원 데이터 로드 및 화면 전환
+
         //한국어로 설정 - 인증메일 언어 로컬화
         auth.setLanguageCode("ko")
         //액티비티를 초기화할 때 사용자가 현재 로그인되어 있는지(nun-null) 확인하고 걸맞는 작업 해주기
         //FirebaseUser 객체는 앱 세션 내에서 캐시를 사용하므로 변경이 있을 수 있으니 reload() 권장
+        //어차피 여기는 앱 실행 후 첫 화면이라 기존 캐시 데이터가 없다.
         //인터넷이 끊긴 상황에서는? 로그인을 풀지는 말아보자. 어차피 글 업로드나 사진 로딩에 실패할 것..
         //그러려면 여기서는 reload()를 안 쓰는 게 낫겠네..
         val currentUser:FirebaseUser? = auth.currentUser
@@ -81,13 +89,16 @@ class IntroActivity : AppCompatActivity() {
             if(currentUser.isEmailVerified){ //인증 완료시에만 메인 액티비티 스타트
                 Log.e("TAG IntroAc", "인증 완료")
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             } else { //인증 미완료 시 로그인 화면으로 연결
                 Log.e("TAG IntroAc", "인증 미완료")
                 startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
         } else{ //로그인 안돼있을 시에도 로그인 화면으로 연결
             Log.e("TAG IntroAc", "로그인 X")
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 

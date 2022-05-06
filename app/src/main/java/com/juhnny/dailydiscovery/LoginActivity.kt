@@ -9,10 +9,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,7 +20,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.juhnny.dailydiscovery.databinding.ActivityLoginBinding
-import kotlin.math.sign
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,14 +34,23 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-
-
-
+        //로그인 화면에서 할 일
+        //이메일 로그인
+        //  인증메일 재발송
+        //  DB에 마지막 로그인 시간 업데이트
+        //회원가입
+        //  회원 정보 DB에 insert
+        //  인증메일 발송
+        //  인증메일 재발송
+        //간편로그인
+        //  회원 정보 DB에 insert
+        //둘러보기
+        //  메인 화면으로 이동
         b.btnLogin.setOnClickListener{ signIn() }
 
-        b.tvFindId.setOnClickListener { MyUtil.showAlert(this) }
+        b.tvFindId.setOnClickListener { MyUtil.showSorryAlert(this) }
 
-        b.tvFindPw.setOnClickListener { MyUtil.showAlert(this) }
+        b.tvFindPw.setOnClickListener { MyUtil.showSorryAlert(this) }
 
         b.tvSignup.setOnClickListener{
             val intent = Intent(this, SignupActivity::class.java )
@@ -106,6 +112,7 @@ class LoginActivity : AppCompatActivity() {
                 if(user != null){ //로그인 되어있을 경우
                     Log.e("TAG LoginAc", "currentUser != null, email:${user.email}")
 
+                    updateLastLogInDatetime()
                     //인증이 돼있나 확인
                     if(user.isEmailVerified){ //인증 완료시에만 로그인 처리, 메인 액티비티 스타트
                         Log.e("TAG LoginAc", "인증 완료")
@@ -163,6 +170,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }//signIn
+
+    fun updateLastLogInDatetime(){
+
+    }
 
 
     private fun saveLoggedInUserData(){

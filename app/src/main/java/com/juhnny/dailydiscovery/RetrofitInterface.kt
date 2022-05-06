@@ -1,10 +1,23 @@
 package com.juhnny.dailydiscovery
 
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RetrofitInterface {
+    @FormUrlEncoded
+    @POST("/DailyDiscovery/saveMember.php")
+    fun saveMember(@Field("userId") userId:String,
+                   @Field("email") email: String,
+                   @Field("nickname") nickname:String):Call<String>
+
+    @FormUrlEncoded
+    @POST("/DailyDiscovery/loadMember.php")
+    fun loadMember(@Field("email") email: String):Call<Response<User>>
+
+    @FormUrlEncoded
+    @POST("/DailyDiscovery/loadMember.php")
+    fun loadMemberString(@Field("email") email: String):Call<String>
+
     //@Query - 서버에서 인식할 식별자(GET 방식으로 날아갈 Key값)
     @GET("/DailyDiscovery/savePost.php")
     fun savePost(@Query("topic") topic:String,
@@ -14,13 +27,20 @@ interface RetrofitInterface {
 
     @GET("/DailyDiscovery/loadPost.php")
     fun loadPost(@Query("topic") topic:String,
-                    @Query("numOfItems") numOfItems:Int=10):Call<Response<Photo>> //여기 수정
+                    @Query("numOfItems") numOfItems:Int=10):Call<Response<Photo>>
 
     @GET("/DailyDiscovery/loadPost.php")
     fun loadPostString(@Query("topic") topic:String,
-                 @Query("numOfItems") numOfItems:Int=10):Call<String> //여기 수정
+                 @Query("numOfItems") numOfItems:Int=10):Call<String>
 
-//    @GET("/DailyDiscovery/loadPost.php")
-//    fun loadPost(@Query("topic") topic:String,
-//                    @Query("numOfItems") numOfItems:Int=10):Call<Photo> //여기 수정
+    /********** Album **********/
+    @GET("/DailyDiscovery/loadPostToAlbum.php")
+    fun loadPostToAlbum(@Query("userEmail") userEmail:String,
+                    @Query("numOfItems") numOfItems:Int=10):Call<Response<Photo>>
+
+    @GET("/DailyDiscovery/loadPostToAlbum.php")
+    fun loadPostToAlbumString(@Query("userEmail") userEmail:String,
+                 @Query("numOfItems") numOfItems:Int=10):Call<String>
+
+
 }

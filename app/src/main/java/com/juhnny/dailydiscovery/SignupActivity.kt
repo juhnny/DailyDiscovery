@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.ActivitySignupBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignupActivity : AppCompatActivity() {
 
@@ -19,6 +22,17 @@ class SignupActivity : AppCompatActivity() {
 
         setSupportActionBar(b.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        /***** 회원가입 화면에서 할 일 *****/
+        //이메일/비번 회원가입 시
+        //  닉네임 입력받기(중복 가능)
+        //  회원 정보 DB에 insert
+        //  인증메일 발송
+        //  인증메일 재발송
+
+        //간편로그인으로 회원가입 시
+        //  닉네임 입력받기
+        //  회원정보 DB에 insert
 
         b.btnSignup.setOnClickListener{ signUp() }
     }
@@ -72,7 +86,34 @@ class SignupActivity : AppCompatActivity() {
                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
                     if(it.isSuccessful) {
                         Toast.makeText(this, "전송된 이메일을 확인하고 인증에 성공하면 가입이 완료됩니다", Toast.LENGTH_SHORT).show()
-                        finish()
+
+                        //회원 정보 DB에 저장
+                        val user = auth.currentUser
+                        user?.getIdToken(false)?.addOnSuccessListener {
+                            val token = it.token //나중에 추가하던가 빼버릴 것
+                            Log.e("IdToken", "${it.token}")
+
+                            val userId = "Stub!"
+                            val retrofitInterface = RetrofitHelper.getRetrofitInterface()
+                            val call:Call<String> = retrofitInterface.saveMember(userId, email, nickname)
+                            call.enqueue(object : Callback<String>{
+                                override fun onResponse(
+                                    call: Call<String>,
+                                    response: Response<String>
+                                ) {
+                                    val resultStr = response.body()
+                                    Log.w("saveMember Success", "resultStr : $resultStr")
+                                    finish()
+                                }
+
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    Log.w("saveMember Failure", "${t.message}")
+                                }
+                            })//saveMember
+
+                        }
+
+
                     }
                     else {
                         Toast.makeText(this, "인증용 이메일 전송에 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()

@@ -66,11 +66,11 @@ class GalleryActivity : AppCompatActivity() {
                 response: retrofit2.Response<Response<Photo>>) {
                 Log.e("loadPost Success", "Body : ${response.body()}")
 
-                val response:Response<Photo>? = response.body()
-                if(response != null) {
-                    val resultMsg = response.responseHeader.resultMsg
-                    val posts = response.responseBody.items
-                    val itemCount = response.responseBody.itemCount
+                val myResponse:Response<Photo>? = response.body()
+                if(myResponse != null) {
+                    val resultMsg = myResponse.responseHeader.resultMsg
+                    val posts = myResponse.responseBody.items
+                    val itemCount = myResponse.responseBody.itemCount
                     val post = posts[0]
                     Log.e("loadPost Success", "Header : $resultMsg")
                     Log.e("loadPost Success", "Body variables: $posts, $itemCount, ${post.topic}")

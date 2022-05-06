@@ -43,6 +43,11 @@ class TodayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /***** 오늘의주제 화면에서 할 일 *****/
+        //오늘에 해당하는 주제 DB에서 찾아다가 보여주기
+        //글 작성 누르면 에디터 화면으로 주제 넘겨주기
+        //에디터 작성 완료 시 주제 탭으로 화면 넘어가기
+
         mainActivity.setSupportActionBar(b.toolbar)
         mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
@@ -79,12 +84,9 @@ class TodayFragment : Fragment() {
 
 
     //오늘의 주제를 발행하는 방법은?
+    //DB에 올려놓고 해당 날짜에 알맞는 주제를 읽어오는 방식은 적절
+
     private fun loadTopic(){
-        Log.e("TAG Today 8 am", "${Date()}")
-        Log.e("TAG Today 8 am", "${Date()}")
-        Log.e("TAG Today 8 am", "${Date()}")
-        Log.e("TAG Today 8 am", "${Date()}")
-        Log.e("TAG Today 8 am", "${Date()}")
         Log.e("TAG Today 8 am", "${Date()}")
 
         val firestore:FirebaseFirestore = FirebaseFirestore.getInstance()

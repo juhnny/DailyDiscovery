@@ -8,8 +8,12 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.manager.SupportRequestManagerFragment
 import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class MyBioFragment : Fragment(){
 
@@ -37,6 +41,8 @@ class MyBioFragment : Fragment(){
         appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
         b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
+
+        loadPhotosStub()
 
         loadPhotos()
 
@@ -85,8 +91,56 @@ class MyBioFragment : Fragment(){
         callback.remove()
     }
 
-
     fun loadPhotos(){
+        val retrofit:Retrofit = Retrofit.Builder()
+            .baseUrl("http://iwibest.dothome.co.kr")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val retrofitInterface = retrofit.create(RetrofitInterface::class.java)
+
+        val call:Call<String> = retrofitInterface.loadPostToAlbumString("iwibest@naver.com")
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val resultStr:String? = response.body()
+                if(resultStr != null){
+                    Log.e("loadPostToAlbumString Success", resultStr)
+                }
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(), "loadPostToAlbum Failed : ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })//loadPostToAlbumString
+
+        val call2:Call<Response<Photo>> = retrofitInterface.loadPostToAlbum("iwibest@naver.com")
+        call2.enqueue(object : Callback<Response<Photo>>{
+            override fun onResponse(
+                call: Call<Response<Photo>>,
+                response: retrofit2.Response<Response<Photo>>
+            ) {
+                val myResponse = response.body()
+                if(myResponse != null){
+                    val header:ResponseHeader = myResponse.responseHeader
+                    val body:ResponseBody<Photo> = myResponse.responseBody
+                    val resultMsg:String = header.resultMsg
+
+                    Log.e("loadPostToAlbum Success", "Header : $resultMsg")
+                    photos.addAll(body.items)
+                    Log.e("loadPostToAlbum Success", "Body : itemCount: ${body.itemCount}")
+
+                }
+            }
+
+            override fun onFailure(call: Call<Response<Photo>>, t: Throwable) {
+                Log.e("loadPostToAlbum Failure", "${t.message}")
+            }
+        })
+
+        b.recycler.adapter?.notifyDataSetChanged()
+
+    }//loadPhotos
+
+    fun loadPhotosStub(){
         photos.add(Photo("1", "주제명", "A material metaphor is the unifying theory of a rationalized space and a system of motion.\n" +
                 "\n" +
                 "        Components with\n" +
@@ -94,32 +148,6 @@ class MyBioFragment : Fragment(){
                 "        may encounter other components\n" +
                 "        as they move between.", "bbb@naver.com", "hong1", "20220101", "20220101",
             "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-//        photos.add(Photo("2", "주제명", "주제에 대한 설명", "hong2", "20220101", "20220101",
-//            "https://images.pexels.com/photos/1802268/pexels-photo-1802268.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-//        photos.add(Photo("3", "주제명", "주제에 대한 설명", "hong3", "20220101", "20220101",
-//            "https://images.unsplash.com/photo-1439405326854-014607f694d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2VhfGVufDB8fDB8fA%3D%3D&w=1000&q=80"))
-//        photos.add(Photo("4", "주제명", "주제에 대한 설명", "hong4", "20220101", "20220101",
-//            "https://cdn.pixabay.com/photo/2016/12/17/14/33/wave-1913559__480.jpg"))
-//        photos.add(Photo("5", "주제명", "주제에 대한 설명", "hong5", "20220101", "20220101",
-//            "https://image.bugsm.co.kr/album/images/500/151085/15108518.jpg"))
-//        photos.add(Photo("6", "주제명", "주제에 대한 설명", "hong6", "20220101", "20220101",
-//            "https://as2.ftcdn.net/v2/jpg/01/29/27/99/1000_F_129279909_yZfwKBPu4o4c6Mdt1fgXIX1tJY59258r.jpg"))
-//        photos.add(Photo("7", "주제명", "주제에 대한 설명", "hong7", "20220101", "20220101",
-//            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpfuXPYRo0AoLkM1sr8lTfu7hXxJzh9KQ-rQ&usqp=CAU"))
-//        photos.add(Photo("1", "주제명", "주제에 대한 설명", "hong1", "20220101", "20220101",
-//            "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-//        photos.add(Photo("2", "주제명", "주제에 대한 설명", "hong2", "20220101", "20220101",
-//            "https://images.pexels.com/photos/1802268/pexels-photo-1802268.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-//        photos.add(Photo("3", "주제명", "주제에 대한 설명", "hong3", "20220101", "20220101",
-//            "https://images.unsplash.com/photo-1439405326854-014607f694d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2VhfGVufDB8fDB8fA%3D%3D&w=1000&q=80"))
-//        photos.add(Photo("4", "주제명", "주제에 대한 설명", "hong4", "20220101", "20220101",
-//            "https://cdn.pixabay.com/photo/2016/12/17/14/33/wave-1913559__480.jpg"))
-//        photos.add(Photo("5", "주제명", "주제에 대한 설명", "hong5", "20220101", "20220101",
-//            "https://image.bugsm.co.kr/album/images/500/151085/15108518.jpg"))
-//        photos.add(Photo("6", "주제명", "주제에 대한 설명", "hong6", "20220101", "20220101",
-//            "https://as2.ftcdn.net/v2/jpg/01/29/27/99/1000_F_129279909_yZfwKBPu4o4c6Mdt1fgXIX1tJY59258r.jpg"))
-//        photos.add(Photo("7", "주제명", "주제에 대한 설명", "hong7", "20220101", "20220101",
-//            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpfuXPYRo0AoLkM1sr8lTfu7hXxJzh9KQ-rQ&usqp=CAU"))
 
         b.recycler.adapter?.notifyDataSetChanged()
     }

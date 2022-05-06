@@ -1,9 +1,12 @@
 package com.juhnny.dailydiscovery
 
-data class User(val no:String,
-                val id:String,
-                var nickname:String,
-                var introduce:String,
-                var signUpDate:String
+data class User(val memNo:String,
+                val memId:String,
+                val email:String,
+                val nickname:String,
+                val profileMsg:String,
+                val signUpDatetime:String,
+                val lastLoginDatetime:String
                 ) {
+
 }

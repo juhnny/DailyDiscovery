@@ -15,6 +15,11 @@ class InvitationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
 
+        /*****초대장 화면에서 할 일****/
+        //초대장 이미지 보여주기
+        //이용방법 설명
+        //로그인/회원가입/둘러보기 버튼
+
         b.tvLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
