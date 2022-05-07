@@ -15,7 +15,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
-class MyBioFragment : Fragment(){
+class MyBioFragment (var userEmail: String?,
+                     val mode:Int = OTHERS_BIO_MODE) : Fragment(){
+
+    constructor():this(userEmail=null){}
+
+    companion object{
+        val MY_BIO_MODE = 1
+        val OTHERS_BIO_MODE = 2
+    }
 
     val appCompatActivity by lazy { requireActivity() as AppCompatActivity }
     val b by lazy {FragmentBioMyBinding.inflate(layoutInflater)}
@@ -40,11 +48,46 @@ class MyBioFragment : Fragment(){
         appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
+        /***** Bio 화면에서 해야할 작업 *****/
+        //게스트인 경우
+        //로그인 안내 뷰 띄우기
 
-        loadPhotosStub()
+        //로그인 시 공통
+        //프로필 정보, 작성글 목록 보여주기
 
-        loadPhotos()
+        //내 프로필일 경우
+        //  프로필 수정 버튼
+
+        //타인 프로필인 경우
+        //  구독/구독해제 버튼
+
+        //액티비티에서 띄운 경우
+
+        //로그인/게스트 상태에 따른 UI update
+        if(userEmail == null){ //게스트 상태
+            b.layoutProfile.visibility = View.GONE
+            b.layoutSigninNotice.visibility = View.VISIBLE
+        } else { //로그인 상태
+            b.layoutProfile.visibility = View.VISIBLE
+            b.layoutSigninNotice.visibility = View.GONE
+
+            b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
+            showProfile(userEmail)
+            loadPhotosStub()
+            loadPhotos(userEmail)
+
+            when(mode){
+                MY_BIO_MODE -> {
+                    b.layoutSubscribe.visibility = View.GONE
+                }
+                OTHERS_BIO_MODE -> {
+                    b.layoutSubscribe.visibility = View.VISIBLE
+                }
+            }
+        }//로그인/게스트 상태에 따른 UI 업데이트
+
+
+
 
     }
 
@@ -91,7 +134,30 @@ class MyBioFragment : Fragment(){
         callback.remove()
     }
 
-    fun loadPhotos(){
+    private fun showProfile(userEmail: String){
+        val call:Call<Response<User>> = RetrofitHelper.getRetrofitInterface().loadProfile(userEmail)
+        call.enqueue(object : Callback<Response<User>>{
+            override fun onResponse(
+                call: Call<Response<User>>,
+                response: retrofit2.Response<Response<User>>
+            ) { val myResponse = response.body()
+                if(myResponse != null){
+                    val userProfile:User = myResponse.responseBody.items[0]
+                    Log.e("MyBioFrag loadProfile Success", "${userProfile.nickname}, ${userProfile.profileMsg}")
+
+
+                }
+            }
+
+            override fun onFailure(call: Call<Response<User>>, t: Throwable) {
+                Log.e("MyBioFrag loadProfile Failure", "${t.message}")
+            }
+        })
+    }
+
+    fun loadPhotos(queryEmail:String?){
+        if(queryEmail == null) return
+
         val retrofit:Retrofit = Retrofit.Builder()
             .baseUrl("http://iwibest.dothome.co.kr")
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -99,7 +165,7 @@ class MyBioFragment : Fragment(){
             .build()
         val retrofitInterface = retrofit.create(RetrofitInterface::class.java)
 
-        val call:Call<String> = retrofitInterface.loadPostToAlbumString("iwibest@naver.com")
+        val call:Call<String> = retrofitInterface.loadPostToAlbumString(queryEmail)
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 val resultStr:String? = response.body()

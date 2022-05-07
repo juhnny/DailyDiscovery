@@ -21,7 +21,7 @@ class Tab4Fragment : Fragment(){
 
     val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy {FragmentTab4Binding.inflate(layoutInflater)}
-    val fragments = listOf(MyBioFragment())
+    val fragments = listOf(MyBioFragment(FirebaseAuth.getInstance().currentUser?.email, MyBioFragment.MY_BIO_MODE)) //로그인 상태면 유저 이메일이, 아니면 null이 전달
 
     override fun onCreateView(
         inflater: LayoutInflater,

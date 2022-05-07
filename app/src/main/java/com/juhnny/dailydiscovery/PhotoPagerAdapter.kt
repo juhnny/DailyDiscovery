@@ -31,19 +31,19 @@ class PhotoPagerAdapter(val context: Context, val photos:ArrayList<Photo>): Recy
         var photo = photos[position]
         holder.setData(photo)
 
-        //앨범 이동
-        holder.binding.tvNickname.setOnClickListener {
-            val appCompatActivity = context as AppCompatActivity //맞다. 애초에 저 context의 정체가 adapter 생성자에 인수로 집어넣은 OOOActivity였지..
-            appCompatActivity.supportFragmentManager.beginTransaction()
-                .replace(R.id.photo_activity_root, MyBioFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-
         //갤러리 이동
         holder.binding.tvTopicname.setOnClickListener{
             context.startActivity(Intent(context, GalleryActivity::class.java)
                 .putExtra("topicSelected", holder.binding.tvTopicname.text))
+        }
+
+        //앨범 이동
+        holder.binding.tvNickname.setOnClickListener {
+            val appCompatActivity = context as AppCompatActivity //맞다. 애초에 저 context의 정체가 adapter 생성자에 인수로 집어넣은 OOOActivity였지..
+            appCompatActivity.supportFragmentManager.beginTransaction()
+                .replace(R.id.photo_activity_root, MyBioFragment(photo.userEmail))
+                .addToBackStack(null)
+                .commit()
         }
     }
 

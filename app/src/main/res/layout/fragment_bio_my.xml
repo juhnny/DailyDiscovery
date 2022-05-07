@@ -29,31 +29,79 @@
         android:gravity="center"
         android:layout_marginLeft="16dp"
         android:layout_below="@id/toolbar"/>
-    <TextView
-        android:id="@+id/tv_nickname"
-        android:layout_width="wrap_content"
+
+    <!--로그인 상태에서 보여줄 뷰-->
+    <RelativeLayout
+        android:id="@+id/layout_profile"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NICKNAME"
-        android:textSize="20sp"
-        android:layout_below="@+id/tv_title"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"/>
-    <TextView
-        android:id="@+id/tv_introduce"
-        android:layout_width="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NICKNAME"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_introduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nickname"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="INTRODUCE"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:id="@+id/layout_subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_subscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="구독"/>
+            <Button
+                android:id="@+id/btn_unsubscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="구독 해제"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--게스트 상태에서 보여줄 뷰-->
+    <RelativeLayout
+        android:id="@+id/layout_signin_notice"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="INTRODUCE"
-        android:textSize="16sp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="16dp"
-        android:layout_below="@+id/tv_nickname"
-        android:layout_marginLeft="16dp" />
+        android:layout_below="@id/toolbar">
+        <ImageView
+            android:id="@+id/iv_singin_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_centerHorizontal="true"/>
+        <Button
+            android:id="@+id/btn_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:layout_below="@id/iv_singin_img"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_introduce"
+        android:layout_below="@id/layout_profile"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="2" />

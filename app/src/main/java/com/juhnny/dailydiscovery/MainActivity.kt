@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                     val body:ResponseBody<User>? = myResponse.responseBody
                     if (body != null) {
                         val user:User = body.items[0]
-                        //SharedPreference에 저장
+                        //SharedPreference에 회원 정보 저장
                         val prefs = getSharedPreferences("user", MODE_PRIVATE) //덮어쓰기
                         prefs.edit().putString("no", user.memNo)
                             .putString("idToken", user.memId)

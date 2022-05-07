@@ -15,6 +15,10 @@ interface RetrofitInterface {
     fun loadMember(@Field("email") email: String):Call<Response<User>>
 
     @FormUrlEncoded
+    @POST("/DailyDiscovery/loadMemberProfile.php")
+    fun loadProfile(@Field("email") email: String):Call<Response<User>>
+
+    @FormUrlEncoded
     @POST("/DailyDiscovery/loadMember.php")
     fun loadMemberString(@Field("email") email: String):Call<String>
 
