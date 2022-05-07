@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_logo"
             android:hint="Email"
-            />
+            android:inputType="textEmailAddress"/>
 
         <TextView
             android:id="@+id/tv_guide1"
@@ -65,7 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_guide1"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="textPassword"/>
 
         <TextView
             android:id="@+id/tv_guide2"
@@ -183,6 +184,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_ganpyeon"
             android:text="구글 로그인" />
+
+        <TextView
+            android:id="@+id/tv_lookaround"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="둘러보기"
+            android:textStyle="bold"
+            android:layout_below="@id/btn_google_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"/>
 
 <!--        <com.google.android.gms.common.SignInButton-->
 <!--            android:layout_width="wrap_content"-->

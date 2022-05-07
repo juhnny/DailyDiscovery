@@ -1,6 +1,7 @@
 package com.juhnny.dailydiscovery
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,7 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
-class MyBioFragment (var userEmail: String?,
+class MyBioFragment (val userEmail: String?,
                      val mode:Int = OTHERS_BIO_MODE) : Fragment(){
 
     constructor():this(userEmail=null){}
@@ -63,8 +65,11 @@ class MyBioFragment (var userEmail: String?,
 
         //액티비티에서 띄운 경우
 
-        //로그인/게스트 상태에 따른 UI update
-        if(userEmail == null){ //게스트 상태
+        //파라미터로 받은 유저(이메일로 대체)의 로그인/게스트 상태에 따른 UI update
+        //비로그인 상태에서 볼 때
+        //로그인 상태에서 내 바이오를 볼 때
+        //로그인 상태에서 다른사람 바이오를 볼 때
+        if(FirebaseAuth.getInstance().currentUser == null){ //비로그인 상태
             b.layoutProfile.visibility = View.GONE
             b.layoutSigninNotice.visibility = View.VISIBLE
         } else { //로그인 상태
@@ -72,21 +77,26 @@ class MyBioFragment (var userEmail: String?,
             b.layoutSigninNotice.visibility = View.GONE
 
             b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
-            showProfile(userEmail)
-            loadPhotosStub()
-            loadPhotos(userEmail)
+            if(userEmail != null){
+                showProfile(userEmail)
+//                loadPhotosStub()
+                loadPhotos(userEmail)
+            }
 
             when(mode){
-                MY_BIO_MODE -> {
-                    b.layoutSubscribe.visibility = View.GONE
+                MY_BIO_MODE -> { //내 프로필일 때
+                    b.layoutSubscribe.visibility = View.GONE //구독 버튼 숨기기
                 }
-                OTHERS_BIO_MODE -> {
-                    b.layoutSubscribe.visibility = View.VISIBLE
+                OTHERS_BIO_MODE -> { //다른 사람 프로필일 때
+                    b.layoutSubscribe.visibility = View.VISIBLE //구독 버튼 보이기
                 }
             }
         }//로그인/게스트 상태에 따른 UI 업데이트
 
-
+        b.btnSignin.setOnClickListener {
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
 
 
     }
@@ -119,6 +129,8 @@ class MyBioFragment (var userEmail: String?,
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        if(context is MainActivity) Log.e("MyBioFrag Test is context MainAc?", "Yes")
+
         callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 Log.e("MyBio - onBack callback 받음", "")
@@ -145,7 +157,8 @@ class MyBioFragment (var userEmail: String?,
                     val userProfile:User = myResponse.responseBody.items[0]
                     Log.e("MyBioFrag loadProfile Success", "${userProfile.nickname}, ${userProfile.profileMsg}")
 
-
+                    b.tvNickname.text = userProfile.nickname
+                    b.tvIntroduce.text = userProfile.profileMsg
                 }
             }
 
@@ -178,7 +191,7 @@ class MyBioFragment (var userEmail: String?,
             }
         })//loadPostToAlbumString
 
-        val call2:Call<Response<Photo>> = retrofitInterface.loadPostToAlbum("iwibest@naver.com")
+        val call2:Call<Response<Photo>> = retrofitInterface.loadPostToAlbum(queryEmail)
         call2.enqueue(object : Callback<Response<Photo>>{
             override fun onResponse(
                 call: Call<Response<Photo>>,
@@ -194,6 +207,7 @@ class MyBioFragment (var userEmail: String?,
                     photos.addAll(body.items)
                     Log.e("loadPostToAlbum Success", "Body : itemCount: ${body.itemCount}")
 
+                    b.recycler.adapter?.notifyDataSetChanged()
                 }
             }
 
@@ -202,7 +216,6 @@ class MyBioFragment (var userEmail: String?,
             }
         })
 
-        b.recycler.adapter?.notifyDataSetChanged()
 
     }//loadPhotos
 

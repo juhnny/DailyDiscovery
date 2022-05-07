@@ -21,7 +21,9 @@
             android:layout_gravity="center"/>
     </androidx.appcompat.widget.Toolbar>
 
+    <!--로그인 상태에서 보여줄 뷰-->
     <LinearLayout
+        android:id="@+id/layout_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -33,14 +35,16 @@
             android:text="followings fragment"
             android:background="@color/orange"/>
         <Button
-            android:id="@+id/btn_add"
+            android:id="@+id/btn_add_frag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="add fragment"/>
         <Button
-            android:id="@+id/btn_replace"
+            android:id="@+id/btn_replace_frag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="replace fragment"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -51,6 +55,28 @@
             android:orientation="vertical" />
 
     </LinearLayout>
+
+    <!--게스트 상태에서 보여줄 뷰-->
+    <RelativeLayout
+        android:id="@+id/layout_signin_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+        <ImageView
+            android:id="@+id/iv_singin_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/btn_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_singin_img"
+            android:layout_centerHorizontal="true"
+            android:text="로그인" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

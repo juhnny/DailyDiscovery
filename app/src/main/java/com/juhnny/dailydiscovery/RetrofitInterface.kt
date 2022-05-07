@@ -23,6 +23,12 @@ interface RetrofitInterface {
     fun loadMemberString(@Field("email") email: String):Call<String>
 
     //@Query - 서버에서 인식할 식별자(GET 방식으로 날아갈 Key값)
+    @GET("/DailyDiscovery/addTopic.php")
+    fun addTopic(@Query("topic") newTopic:String):Call<String>
+
+    @GET("/DailyDiscovery/loadTopic.php")
+    fun loadTopic(@Query("numOfItems") numOfItems: Int=10):Call<Response<Topic>>
+
     @GET("/DailyDiscovery/savePost.php")
     fun savePost(@Query("topic") topic:String,
                  @Query("message") message:String,
@@ -45,6 +51,10 @@ interface RetrofitInterface {
     @GET("/DailyDiscovery/loadPostToAlbum.php")
     fun loadPostToAlbumString(@Query("userEmail") userEmail:String,
                  @Query("numOfItems") numOfItems:Int=10):Call<String>
+
+    @FormUrlEncoded
+    @POST("/DailyDiscovery/loadFollowing.php")
+    fun loadFollowing(@Field("userEmail") userEmail:String):Call<Response<Follow>>
 
 
 }

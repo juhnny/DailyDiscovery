@@ -41,10 +41,10 @@
             android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NICKNAME"
-            android:textSize="20sp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"/>
+            android:text="NICKNAME"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_introduce"
@@ -60,7 +60,10 @@
         <RelativeLayout
             android:id="@+id/layout_subscribe"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_nickname"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
 
             <Button
                 android:id="@+id/btn_subscribe"
@@ -88,13 +91,14 @@
             android:layout_height="150dp"
             android:src="@drawable/ic_launcher_foreground"
             android:layout_centerHorizontal="true"/>
+
         <Button
             android:id="@+id/btn_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="로그인"
             android:layout_below="@id/iv_singin_img"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:text="로그인" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -36,7 +36,7 @@ class GalleryActivity : AppCompatActivity() {
 
         b.recycler.adapter = GalleryRecyclerAdapter(this, photos)
 
-        loadPhotos()
+        loadPhotos(topicSelected!!)
         loadPhotosStub()
     }//onCreate()
 
@@ -48,18 +48,14 @@ class GalleryActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun loadPhotos(){
-//        val builder: Retrofit.Builder = Retrofit.Builder()
-//        builder.baseUrl("http://iwibest.dothome.co.kr")
-//        builder.addConverterFactory(GsonConverterFactory.create())
-//        val retrofit:Retrofit = builder.build()
+    fun loadPhotos(queryTopic:String){
         val retrofit:Retrofit = Retrofit.Builder().baseUrl("http://iwibest.dothome.co.kr")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitInterface = retrofit.create(RetrofitInterface::class.java)
 
-        val call:Call<Response<Photo>> = retrofitInterface.loadPost("gogogo", 1)
+        val call:Call<Response<Photo>> = retrofitInterface.loadPost(queryTopic, 1)
         call.enqueue(object: Callback<Response<Photo>>{
             override fun onResponse(
                 call: Call<Response<Photo>>,
@@ -71,11 +67,11 @@ class GalleryActivity : AppCompatActivity() {
                     val resultMsg = myResponse.responseHeader.resultMsg
                     val posts = myResponse.responseBody.items
                     val itemCount = myResponse.responseBody.itemCount
-                    val post = posts[0]
                     Log.e("loadPost Success", "Header : $resultMsg")
-                    Log.e("loadPost Success", "Body variables: $posts, $itemCount, ${post.topic}")
+                    Log.e("loadPost Success", "Body itemCount : $itemCount")
 
                     photos.addAll(posts)
+                    b.recycler.adapter?.notifyDataSetChanged()
                 }
             }
             override fun onFailure(call: Call<Response<Photo>>, t: Throwable) {
@@ -83,74 +79,23 @@ class GalleryActivity : AppCompatActivity() {
             }
         })
 
-//        val call:Call<Photo> = retrofitInterface.loadPost("gogogo", 1)
-//        call.enqueue(object: Callback<Photo>{
-//        override fun onResponse(
-//            call: Call<Photo>,
-//            response: retrofit2.Response<Photo>) {
-//            val response:Photo? = response.body()
-//            if(response != null) {
-//                val topic = response.topic
-//                Log.e("loadPost", "${topic}")
-//            }
-//        }
-
-//        override fun onFailure(call: Call<Photo>, t: Throwable) {
-//            Log.e("loadPost", "Failed : ${t.message}")
-//        }
-//        })
-
-        val call2:Call<String> = retrofitInterface.loadPostString("gogogo", 1)
+        val call2:Call<String> = retrofitInterface.loadPostString(queryTopic, 1)
         call2.enqueue(object: Callback<String> {
             override fun onResponse(
                 call: Call<String>,
                 response: retrofit2.Response<String>
-            ) {
-                Log.e("loadPostString", "Success : ${response.body()}")
-            }
+            ) { Log.e("loadPostString", "Success : ${response.body()}") }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("loadPostString", "Failed : ${t.message}")
-            }
+            override fun onFailure(call: Call<String>, t: Throwable) { Log.e("loadPostString", "Failed : ${t.message}") }
         })
 
-        b.recycler.adapter?.notifyDataSetChanged()
     }
 
+
     fun loadPhotosStub(){
-        photos.add(Photo("1", "주제명", "A material metaphor is the unifying theory of a rationalized space and a system of motion.\n" +
-                "\n" +
-                "        Components with\n" +
-                "        responsive elevations\n" +
-                "        may encounter other components\n" +
-                "        as they move between.", "aaa@naver.com", "Nicholas", "20220101", "20220101",
+        photos.add(Photo("1", "주제명", "A material metaphor is the unifying theory of a rationalized space and a system of motion.",
+            "aaa@naver.com", "Nicholas", "20220101", "20220101",
             "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-//        photos.add(Photo("2", "주제명", "주제에 대한 설명", "hong2", "20220101", "20220101",
-//            "https://images.pexels.com/photos/1802268/pexels-photo-1802268.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-//        photos.add(Photo("3", "주제명", "주제에 대한 설명", "hong3", "20220101", "20220101",
-//            "https://images.unsplash.com/photo-1439405326854-014607f694d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2VhfGVufDB8fDB8fA%3D%3D&w=1000&q=80"))
-//        photos.add(Photo("4", "주제명", "주제에 대한 설명", "hong4", "20220101", "20220101",
-//            "https://cdn.pixabay.com/photo/2016/12/17/14/33/wave-1913559__480.jpg"))
-//        photos.add(Photo("5", "주제명", "주제에 대한 설명", "hong5", "20220101", "20220101",
-//            "https://image.bugsm.co.kr/album/images/500/151085/15108518.jpg"))
-//        photos.add(Photo("6", "주제명", "주제에 대한 설명", "hong6", "20220101", "20220101",
-//            "https://as2.ftcdn.net/v2/jpg/01/29/27/99/1000_F_129279909_yZfwKBPu4o4c6Mdt1fgXIX1tJY59258r.jpg"))
-//        photos.add(Photo("7", "주제명", "주제에 대한 설명", "hong7", "20220101", "20220101",
-//            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpfuXPYRo0AoLkM1sr8lTfu7hXxJzh9KQ-rQ&usqp=CAU"))
-//        photos.add(Photo("1", "주제명", "주제에 대한 설명", "hong1", "20220101", "20220101",
-//            "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-//        photos.add(Photo("2", "주제명", "주제에 대한 설명", "hong2", "20220101", "20220101",
-//            "https://images.pexels.com/photos/1802268/pexels-photo-1802268.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-//        photos.add(Photo("3", "주제명", "주제에 대한 설명", "hong3", "20220101", "20220101",
-//            "https://images.unsplash.com/photo-1439405326854-014607f694d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2VhfGVufDB8fDB8fA%3D%3D&w=1000&q=80"))
-//        photos.add(Photo("4", "주제명", "주제에 대한 설명", "hong4", "20220101", "20220101",
-//            "https://cdn.pixabay.com/photo/2016/12/17/14/33/wave-1913559__480.jpg"))
-//        photos.add(Photo("5", "주제명", "주제에 대한 설명", "hong5", "20220101", "20220101",
-//            "https://image.bugsm.co.kr/album/images/500/151085/15108518.jpg"))
-//        photos.add(Photo("6", "주제명", "주제에 대한 설명", "hong6", "20220101", "20220101",
-//            "https://as2.ftcdn.net/v2/jpg/01/29/27/99/1000_F_129279909_yZfwKBPu4o4c6Mdt1fgXIX1tJY59258r.jpg"))
-//        photos.add(Photo("7", "주제명", "주제에 대한 설명", "hong7", "20220101", "20220101",
-//            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpfuXPYRo0AoLkM1sr8lTfu7hXxJzh9KQ-rQ&usqp=CAU"))
 
         b.recycler.adapter?.notifyDataSetChanged()
     }

@@ -31,7 +31,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(b.root)
 
         setSupportActionBar(b.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         //로그인 화면에서 할 일
@@ -58,6 +57,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         b.btnGoogleLogin.setOnClickListener { googleLogin() }
+
+        b.tvLookaround.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
         b.btnLogout.visibility = View.VISIBLE
         b.btnLogout.setOnClickListener{

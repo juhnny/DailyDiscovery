@@ -2,15 +2,17 @@ package com.juhnny.dailydiscovery
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.FragmentFollowingsBinding
-import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
 
 class FollowingsFragment : Fragment() {
 
@@ -52,24 +54,69 @@ class FollowingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /***** 팔로잉 화면에서 할 일 *****/
+        //게스트 상태일 때
+        //  로그인 안내 뷰 띄우기
+        //로그인 상태일 때
+        //  내가 구독한 사람들 DB에서 읽어서 다시 그들의 최근 사진 세 장을 가져오기
+
         val appCompatActivity = requireActivity() as AppCompatActivity
         appCompatActivity.setSupportActionBar(b.toolbar)
         appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        b.recycler.adapter = FollowRecyclerAdapter(requireContext(), this, follows)
+        val user = FirebaseAuth.getInstance().currentUser
+        if(user == null){ //비로그인 상태
+            b.layoutContent.visibility = View.GONE
+            b.layoutSigninNotice.visibility = View.VISIBLE
+        } else { //로그인 상태
+            b.layoutContent.visibility = View.VISIBLE
+            b.layoutSigninNotice.visibility = View.GONE
 
-        loadFollows()
-
-        b.btnAdd.setOnClickListener{
-            parentFragmentManager.beginTransaction().add(R.id.container_bnv, FollowingsFragment()).addToBackStack(null).commit()
+            b.recycler.adapter = FollowRecyclerAdapter(requireContext(), this, follows)
+            loadFollowsStub()
+            loadFollow(user.email!!)
         }
-        b.btnReplace.setOnClickListener{
-            parentFragmentManager.beginTransaction().replace(R.id.container_bnv, FollowingsFragment()).addToBackStack(null).commit()
+
+        b.btnSignin.setOnClickListener {
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
+
+        b.btnAddFrag.visibility = View.VISIBLE
+        b.btnReplaceFrag.visibility = View.VISIBLE
+        b.btnAddFrag.setOnClickListener{
+            parentFragmentManager.beginTransaction().add(R.id.follwings_fragment_root, FollowingsFragment()).addToBackStack(null).commit()
+        }
+        b.btnReplaceFrag.setOnClickListener{
+            parentFragmentManager.beginTransaction().replace(R.id.follwings_fragment_root, FollowingsFragment()).addToBackStack(null).commit()
         }
     }
 
-    fun loadFollows(){
-        for(i in 1..20){
+    private fun loadFollow(userEmail:String){
+        val call = RetrofitHelper.getRetrofitInterface().loadFollowing(userEmail)
+        call.enqueue(object : Callback<Response<Follow>>{
+            override fun onResponse(
+                call: Call<Response<Follow>>,
+                response: retrofit2.Response<Response<Follow>>
+            ) {
+                val header = response.body()?.responseHeader
+                val body = response.body()?.responseBody
+                if(header != null && body != null){
+                    val newFollows = body.items
+                    follows.addAll(newFollows)
+                    b.recycler.adapter?.notifyDataSetChanged()
+                    Log.e("FollowingsFrag loadFollow Success", "itemCount: ${body.itemCount}")
+                }
+            }
+
+            override fun onFailure(call: Call<Response<Follow>>, t: Throwable) {
+                Log.e("FollowingsFrag loadFollow Failure", "${t.message}")
+            }
+        })
+    }
+
+    fun loadFollowsStub(){
+        for(i in 1..1){
             follows.add(Follow("name${i}", "I am like... ${i}",
                 "https://a.cdn-hotels.com/gdcs/production87/d499/8196849a-5862-4e4f-86ec-a2c362157f74.jpg",
                 "https://www.qmul.ac.uk/media/qmul/London-Bridge.jpg",
