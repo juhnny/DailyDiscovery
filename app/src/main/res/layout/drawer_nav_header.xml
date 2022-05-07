@@ -18,5 +18,19 @@
         android:layout_height="wrap_content"
         android:text="ADDITIONAL INFO"
         android:layout_below="@id/tv_header_name"/>
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="로그인"/>
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="로그아웃"
+        android:visibility="invisible"/>
+
 
 </RelativeLayout>

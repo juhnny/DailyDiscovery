@@ -1,11 +1,155 @@
 package com.juhnny.dailydiscovery
 
+import android.content.Context
+import android.os.Bundle
+import android.util.Log
+import android.view.*
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
-class MyBioFragment : BioFragment() {
+class MyBioFragment : Fragment(){
 
-    //오버라이드 되도록 BioFragment의 b를 var로 바꿔보자
-    //그러면 여기서 바꿔진 바인딩으로 상속받은 메소드들이 작동하지 않을까?
-    val b by lazy { FragmentBioMyBinding.inflate(layoutInflater) }
+    val appCompatActivity by lazy { requireActivity() as AppCompatActivity }
+    val b by lazy {FragmentBioMyBinding.inflate(layoutInflater)}
+
+    var photos = mutableListOf<Photo>()
+
+   override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        setHasOptionsMenu(true) //잊지마
+        return b.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.e("myParentFragmentManager: ", "${parentFragmentManager}")
+
+        appCompatActivity.setSupportActionBar(b.toolbar)
+        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
+
+        loadPhotosStub()
+
+        loadPhotos()
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.options_my_bio, menu)
+    }
+
+//    업 버튼(홈 메뉴)을 누르면 프래그먼트가 닫히도록
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                Log.e("MyBio - home", "")
+//                parentFragmentManager.beginTransaction().remove(this).commit()
+                return true
+            }
+            R.id.menu_my_bio_menu1 ->
+                Log.e("MyBio - menu1", "")
+
+            else ->
+                Log.e("MyBio - else", "")
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //백 버튼. 현재는 업버튼에도 액티비티가 onBackPressed를 발동해 동작하고 있음..
+    //Activity에 onBackPressed 발생 시 Fragment에 콜백이 오도록 하고 그 때 handleOnBackPressed() 내 명령 실행
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                Log.e("MyBio - onBack callback 받음", "")
+                parentFragmentManager.beginTransaction().remove(this@MyBioFragment).commit()
+                Log.e("MyBio Frag removed", "")
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
+
+    fun loadPhotos(){
+        val retrofit:Retrofit = Retrofit.Builder()
+            .baseUrl("http://iwibest.dothome.co.kr")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val retrofitInterface = retrofit.create(RetrofitInterface::class.java)
+
+        val call:Call<String> = retrofitInterface.loadPostToAlbumString("iwibest@naver.com")
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val resultStr:String? = response.body()
+                if(resultStr != null){
+                    Log.e("loadPostToAlbumString Success", resultStr)
+                }
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(), "loadPostToAlbum Failed : ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })//loadPostToAlbumString
+
+        val call2:Call<Response<Photo>> = retrofitInterface.loadPostToAlbum("iwibest@naver.com")
+        call2.enqueue(object : Callback<Response<Photo>>{
+            override fun onResponse(
+                call: Call<Response<Photo>>,
+                response: retrofit2.Response<Response<Photo>>
+            ) {
+                val myResponse = response.body()
+                if(myResponse != null){
+                    val header:ResponseHeader = myResponse.responseHeader
+                    val body:ResponseBody<Photo> = myResponse.responseBody
+                    val resultMsg:String = header.resultMsg
+
+                    Log.e("loadPostToAlbum Success", "Header : $resultMsg")
+                    photos.addAll(body.items)
+                    Log.e("loadPostToAlbum Success", "Body : itemCount: ${body.itemCount}")
+
+                }
+            }
+
+            override fun onFailure(call: Call<Response<Photo>>, t: Throwable) {
+                Log.e("loadPostToAlbum Failure", "${t.message}")
+            }
+        })
+
+        b.recycler.adapter?.notifyDataSetChanged()
+
+    }//loadPhotos
+
+    fun loadPhotosStub(){
+        photos.add(Photo("1", "주제명", "A material metaphor is the unifying theory of a rationalized space and a system of motion.\n" +
+                "\n" +
+                "        Components with\n" +
+                "        responsive elevations\n" +
+                "        may encounter other components\n" +
+                "        as they move between.", "bbb@naver.com", "hong1", "20220101", "20220101",
+            "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
+
+        b.recycler.adapter?.notifyDataSetChanged()
+    }
 
 }
