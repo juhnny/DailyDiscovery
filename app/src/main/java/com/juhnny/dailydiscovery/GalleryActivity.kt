@@ -37,7 +37,8 @@ class GalleryActivity : AppCompatActivity() {
         b.recycler.adapter = GalleryRecyclerAdapter(this, photos)
 
         loadPhotos(topicSelected!!)
-        loadPhotosStub()
+//        loadPhotosStub()
+
     }//onCreate()
 
 

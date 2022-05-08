@@ -38,6 +38,7 @@ class EditorActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close)
 
+        //선택한 주제를 바로 EditText에 표시하기
         val todayTopic:String? = intent.getStringExtra("topic")
         b.etTopic.setText(todayTopic)
 
@@ -130,30 +131,18 @@ class EditorActivity : AppCompatActivity() {
                             Toast.makeText(this, "사진 저장 완료", Toast.LENGTH_SHORT).show()
 
                             //Firebase Firestore에 전체 데이터 업로드
-                            val builder:Retrofit.Builder = Retrofit.Builder()
-                            builder.baseUrl("http://iwibest.dothome.co.kr")
-                            builder.addConverterFactory(GsonConverterFactory.create())
-                            val retrofit:Retrofit = builder.build()
-                            val retrofitInterface:RetrofitInterface = retrofit.create(RetrofitInterface::class.java)
-
                             //요청 및 응답 처리
-                            val call:Call<Photo> = retrofitInterface.savePost(topic, msg, userId, imgFirebaseUrl)
-                            call.enqueue(object : Callback<Photo>{
-                                override fun onResponse(call: Call<Photo>, response: Response<Photo>) {
-                                    val photo:Photo? = response.body()
-                                    if(photo != null){
-                                        Log.e("TAG savePost Success", "${photo.no}, ${photo.topic}, " +
-                                                "${photo.message}, ${photo.userEmail}, ${photo.nickname}, " +
-                                                "${photo.creationDate}, ${photo.updateDate}, ${photo.imgUrl}")
-
-                                        Log.e("TAG savePost Success", photo.updateDate)
+                            val call= RetrofitHelper.getRetrofitInterface().savePost(topic, msg, userId, imgFirebaseUrl)
+                            call.enqueue(object : Callback<String>{
+                                override fun onResponse(call: Call<String>, response: Response<String>) {
+                                    val resultMsg = response.body()
+                                        Log.e("EditorAc savePost Success", "$resultMsg")
                                         setResult(RESULT_OK, intent)
                                         finish()
-                                    }
                                 }
 
-                                override fun onFailure(call: Call<Photo>, t: Throwable) {
-                                    Log.e("TAG savePost Failure", "${t.message}")
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    Log.e("EditorAc savePost Failure", "${t.message}")
                                 }
                             })
 

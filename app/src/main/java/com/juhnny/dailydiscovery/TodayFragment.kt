@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -18,7 +19,6 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,6 +51,21 @@ class TodayFragment : Fragment() {
         //오늘에 해당하는 주제 DB에서 찾아다가 보여주기
         //글 작성 누르면 에디터 화면으로 주제 넘겨주기
         //에디터 작성 완료 시 주제 탭으로 화면 넘어가기
+        //로그인/비로그인 UI 전환
+
+        val user = FirebaseAuth.getInstance().currentUser
+        if(user == null){
+            b.ivNoti.visibility = View.GONE
+            b.tvGotoWrite.setOnClickListener {
+                AlertDialog.Builder(requireContext()).setView(R.layout.recycler_item_topics).create().show()
+            }
+        } else {
+            b.tvGotoWrite.setOnClickListener {
+                val intent = Intent(context, EditorActivity::class.java)
+                intent.putExtra("topic", b.tvTopic.text)
+                mainActivity.editorResultLauncher.launch(intent)
+            }
+        }
 
         mainActivity.setSupportActionBar(b.toolbar)
         mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -60,18 +75,6 @@ class TodayFragment : Fragment() {
 
         b.ivNoti.setOnClickListener{
             childFragmentManager.beginTransaction().add(R.id.today_fragment_root, NotiFragment()).addToBackStack(null).commit()
-        }
-
-        b.tvGotoWrite.setOnClickListener {
-            val intent = Intent(context, EditorActivity::class.java)
-            intent.putExtra("topic", b.tvGotoWrite.text)
-            mainActivity.editorResultLauncher.launch(intent)
-        }
-
-        b.tvTopic.setOnClickListener {
-            val auth:FirebaseAuth = FirebaseAuth.getInstance()
-            auth.signOut()
-            Toast.makeText(requireContext(), "signOut", Toast.LENGTH_SHORT).show()
         }
 
 //        //해당 탭을 닫고 다른 탭으로 이동하는 방법
@@ -91,17 +94,38 @@ class TodayFragment : Fragment() {
     private fun loadTodayTopic(){
         val callStr = RetrofitHelper.getRetrofitInterface().loadTodayTopicString()
         callStr.enqueue(object : Callback<String>{
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                TODO("Not yet implemented")
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val resultMsg = response.body()
+                val code = response.code()
+                Log.e("TodayFrag loadTodayTopic Success", "$resultMsg")
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e("TodayFrag loadTodayTopic Failure", "${t.message}")
             }
         })
 
-//        todayTopic =
-//        b.tvTopic.text = todayTopic.topicName
+        val call = RetrofitHelper.getRetrofitInterface().loadTodayTopic()
+        call.enqueue(object : Callback<Response<Topic>>{
+            override fun onResponse(
+                call: Call<Response<Topic>>,
+                response: retrofit2.Response<Response<Topic>>
+            ) {
+                val header = response.body()?.responseHeader
+                val body = response.body()?.responseBody
+                if(header != null && body != null){
+                    Log.e("TodayFrag loadTodayTopic Success", "${header.resultMsg}")
+                    Log.e("TodayFrag loadTodayTopic Success", "${body}")
+                    todayTopic = body.items[0]
+                    b.tvTopic.text = todayTopic.topicName
+                }
+            }
+
+            override fun onFailure(call: Call<Response<Topic>>, t: Throwable) {
+                Log.e("TodayFrag loadTodayTopic Failure", "${t.message}")
+            }
+        })
+
     }
 
 

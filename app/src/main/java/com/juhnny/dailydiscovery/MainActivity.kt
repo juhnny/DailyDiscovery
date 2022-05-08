@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                             .putString("signUpDatetime", user.signUpDatetime)
                             .putString("lastLoginDatetime", user.lastLoginDatetime)
                             .commit()
-                        Log.e("loadMember MainAc Success",
+                        Log.e("MainAc loadMember Success",
                             "$resultMsg: ${prefs.getString("email", "load email failed")}, ${prefs.getString("nickname", "load nickname failed")}")
 
 //                    updateUI()
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<Response<User>>, t: Throwable) {
-                Log.e("loadMember MainAc Failure", "${t.message}")
+                Log.e("MainAc loadMember Failure", "${t.message}")
             }
         })//loadMember
 
@@ -179,7 +179,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                Log.e("MainActivity - home", "")
+                Log.e("MainActivity - Home", "")
                 onBackPressed()
                 return true //해당 (클릭) 이벤트를 다 소비했으면 true, 아직 다른 뷰들에서 사용해야 하면 false
             }

@@ -18,12 +18,23 @@ class FollowRecyclerAdapter(val context: Context, val fragment: Fragment, val fo
         fun setData(followItem:Follow){
             binding.tvNickname.text = followItem.nickname
             binding.tvIntroduce.text = followItem.profileMsg
-            Glide.with(context).load(followItem.src1).placeholder(R.mipmap.ic_launcher).error(R.drawable.ic_launcher_foreground).into(binding.ivPhoto1)
-            if(followItem.src2 != null) {
-                Glide.with(context).load(followItem.src2).into(binding.ivPhoto2)
+
+//            Glide.with(context).load(followItem.imgUrl1).placeholder(R.mipmap.ic_launcher).error(R.drawable.ic_launcher_foreground).into(binding.ivPhoto1)
+//            Glide.with(context).load(followItem.imgUrl2).into(binding.ivPhoto2)
+//            Glide.with(context).load(followItem.imgUrl3).into(binding.ivPhoto3)
+
+            if(followItem.imgUrl1 != null) {
+                Glide.with(context).load(followItem.imgUrl1).placeholder(R.mipmap.ic_launcher).error(R.drawable.ic_launcher_foreground).into(binding.ivPhoto1)
+                binding.frame1.visibility = View.VISIBLE
+            } else binding.frame1.visibility = View.INVISIBLE
+            if(followItem.imgUrl2 != null) {
+                Glide.with(context).load(followItem.imgUrl2).into(binding.ivPhoto2)
                 binding.frame2.visibility = View.VISIBLE
             } else binding.frame2.visibility = View.INVISIBLE
-            Glide.with(context).load(followItem.src3).into(binding.ivPhoto3)
+            if(followItem.imgUrl3 != null) {
+                Glide.with(context).load(followItem.imgUrl3).into(binding.ivPhoto3)
+                binding.frame3.visibility = View.VISIBLE
+            } else binding.frame3.visibility = View.INVISIBLE
 
             val constrainSet = ConstraintSet()
             constrainSet.clone(binding.layoutPhotos)

@@ -72,7 +72,6 @@ class FollowingsFragment : Fragment() {
             b.layoutSigninNotice.visibility = View.GONE
 
             b.recycler.adapter = FollowRecyclerAdapter(requireContext(), this, follows)
-            loadFollowsStub()
             loadFollow(user.email!!)
         }
 
@@ -81,14 +80,6 @@ class FollowingsFragment : Fragment() {
             requireActivity().finish()
         }
 
-        b.btnAddFrag.visibility = View.VISIBLE
-        b.btnReplaceFrag.visibility = View.VISIBLE
-        b.btnAddFrag.setOnClickListener{
-            parentFragmentManager.beginTransaction().add(R.id.follwings_fragment_root, FollowingsFragment()).addToBackStack(null).commit()
-        }
-        b.btnReplaceFrag.setOnClickListener{
-            parentFragmentManager.beginTransaction().replace(R.id.follwings_fragment_root, FollowingsFragment()).addToBackStack(null).commit()
-        }
     }
 
     private fun loadFollow(userEmail:String){

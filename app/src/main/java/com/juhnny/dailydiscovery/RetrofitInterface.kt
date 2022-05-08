@@ -32,11 +32,14 @@ interface RetrofitInterface {
     @GET("/DailyDiscovery/loadTodayTopic.php")
     fun loadTodayTopicString():Call<String>
 
+    @GET("/DailyDiscovery/loadTodayTopic.php")
+    fun loadTodayTopic():Call<Response<Topic>>
+
     @GET("/DailyDiscovery/savePost.php")
     fun savePost(@Query("topic") topic:String,
                  @Query("message") message:String,
                  @Query("email") email:String,
-                 @Query("imgUrl") imgUrl:String): Call<Photo> //제네릭으로는 파싱해서 변환할 클래스를 써준다. 메소드 이름은 마음대로..
+                 @Query("imgUrl") imgUrl:String): Call<String> //제네릭으로는 파싱해서 변환할 클래스를 써준다. 메소드 이름은 마음대로..
 
     @GET("/DailyDiscovery/loadPost.php")
     fun loadPost(@Query("topic") topic:String,
