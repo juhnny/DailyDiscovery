@@ -16,6 +16,9 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +27,7 @@ class TodayFragment : Fragment() {
 
     val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy { FragmentTodayBinding.inflate(layoutInflater) }
+    lateinit var todayTopic:Topic
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +55,8 @@ class TodayFragment : Fragment() {
         mainActivity.setSupportActionBar(b.toolbar)
         mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        loadTopic()
+        loadTodayTopic()
+//        loadTopic()
 
         b.ivNoti.setOnClickListener{
             childFragmentManager.beginTransaction().add(R.id.today_fragment_root, NotiFragment()).addToBackStack(null).commit()
@@ -81,10 +86,25 @@ class TodayFragment : Fragment() {
 
     }//onViewCreated
 
-
-
     //오늘의 주제를 발행하는 방법은?
-    //DB에 올려놓고 해당 날짜에 알맞는 주제를 읽어오는 방식은 적절
+    //DB에 올려놓고 해당 날짜에 알맞는 주제를 읽어오는 방식으로 일단 해보자
+    private fun loadTodayTopic(){
+        val callStr = RetrofitHelper.getRetrofitInterface().loadTodayTopicString()
+        callStr.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+
+//        todayTopic =
+//        b.tvTopic.text = todayTopic.topicName
+    }
+
+
 
     private fun loadTopic(){
         Log.e("TAG Today 8 am", "${Date()}")

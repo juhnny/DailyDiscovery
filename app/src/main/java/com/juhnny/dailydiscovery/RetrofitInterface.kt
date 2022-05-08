@@ -29,6 +29,9 @@ interface RetrofitInterface {
     @GET("/DailyDiscovery/loadTopic.php")
     fun loadTopic(@Query("numOfItems") numOfItems: Int=10):Call<Response<Topic>>
 
+    @GET("/DailyDiscovery/loadTodayTopic.php")
+    fun loadTodayTopicString():Call<String>
+
     @GET("/DailyDiscovery/savePost.php")
     fun savePost(@Query("topic") topic:String,
                  @Query("message") message:String,
