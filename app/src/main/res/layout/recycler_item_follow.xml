@@ -42,12 +42,13 @@
             app:layout_constraintRight_toLeftOf="@id/frame2"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintHorizontal_weight="1">
+
             <ImageView
                 android:id="@+id/iv_photo1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/london"/>
+                android:src="@drawable/london" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/frame2"
@@ -64,12 +65,13 @@
             app:layout_constraintHorizontal_weight="1"
 
             android:layout_marginHorizontal="4dp">
+
             <ImageView
                 android:id="@+id/iv_photo2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/london2"/>
+                android:src="@drawable/london2" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/frame3"

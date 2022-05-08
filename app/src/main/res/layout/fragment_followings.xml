@@ -63,17 +63,23 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar">
         <ImageView
-            android:id="@+id/iv_singin_img"
+            android:id="@+id/iv_signin_img"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/ic_launcher_foreground"
             android:layout_centerHorizontal="true"/>
-
+        <TextView
+            android:id="@+id/tv_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시선집 이용을 위해\n로그인이 필요합니다"
+            android:layout_below="@id/iv_signin_img"
+            android:layout_centerHorizontal="true"/>
         <Button
             android:id="@+id/btn_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_singin_img"
+            android:layout_below="@id/tv_signin"
             android:layout_centerHorizontal="true"
             android:text="로그인" />
     </RelativeLayout>

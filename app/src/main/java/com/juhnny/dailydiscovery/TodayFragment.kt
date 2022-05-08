@@ -59,7 +59,7 @@ class TodayFragment : Fragment() {
 
         b.tvGotoWrite.setOnClickListener {
             val intent = Intent(context, EditorActivity::class.java)
-//            intent.putExtra("topic", )
+            intent.putExtra("topic", b.tvGotoWrite.text)
             mainActivity.editorResultLauncher.launch(intent)
         }
 
@@ -112,7 +112,7 @@ class TodayFragment : Fragment() {
 
                         Log.e("TAG parsedDate", "$parsedDate")
                         Log.e("TAG topic", "$no, $topicName, $issueDate")
-                    }
+                    }//for
 
                 } else{
                     Log.e("TAG loadTopic", "get() 실패 ${task.exception}")

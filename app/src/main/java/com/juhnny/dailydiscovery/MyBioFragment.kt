@@ -23,6 +23,7 @@ class MyBioFragment (val userEmail: String?,
     constructor():this(userEmail=null){}
 
     companion object{
+        //차라리 isTab4 = true/false로 바꿀까
         val MY_BIO_MODE = 1
         val OTHERS_BIO_MODE = 2
     }
@@ -69,7 +70,8 @@ class MyBioFragment (val userEmail: String?,
         //비로그인 상태에서 볼 때
         //로그인 상태에서 내 바이오를 볼 때
         //로그인 상태에서 다른사람 바이오를 볼 때
-        if(FirebaseAuth.getInstance().currentUser == null){ //비로그인 상태
+        val user = FirebaseAuth.getInstance().currentUser
+        if(user == null){ //비로그인 상태
             b.layoutProfile.visibility = View.GONE
             b.layoutSigninNotice.visibility = View.VISIBLE
         } else { //로그인 상태
@@ -82,15 +84,12 @@ class MyBioFragment (val userEmail: String?,
 //                loadPhotosStub()
                 loadPhotos(userEmail)
             }
-
-            when(mode){
-                MY_BIO_MODE -> { //내 프로필일 때
-                    b.layoutSubscribe.visibility = View.GONE //구독 버튼 숨기기
-                }
-                OTHERS_BIO_MODE -> { //다른 사람 프로필일 때
-                    b.layoutSubscribe.visibility = View.VISIBLE //구독 버튼 보이기
-                }
+            if(userEmail.equals(user.email)){ //지금 보는 프로필이 내 프로필일 때
+                b.layoutSubscribe.visibility = View.GONE //구독 버튼 숨기기
+            } else { //다른 사람 프로필일 때
+                b.layoutSubscribe.visibility = View.VISIBLE //구독 버튼 보이기
             }
+
         }//로그인/게스트 상태에 따른 UI 업데이트
 
         b.btnSignin.setOnClickListener {
@@ -98,6 +97,8 @@ class MyBioFragment (val userEmail: String?,
             requireActivity().finish()
         }
 
+        b.btnSubscribe.setOnClickListener { saveFollow(userEmail!!) }
+        b.btnUnsubscribe.setOnClickListener { saveUnfollow(userEmail!!) }
 
     }
 
@@ -129,7 +130,9 @@ class MyBioFragment (val userEmail: String?,
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is MainActivity) Log.e("MyBioFrag Test is context MainAc?", "Yes")
+        if(context is MainActivity) Log.e("MyBioFrag Test: Is context MainAc?", "Yes")
+        if(context is LoginActivity) Log.e("MyBioFrag Test: Is context LoginAc?", "Yes")
+        else Log.e("MyBioFrag Test: Is context LoginAc?", "No")
 
         callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
@@ -168,15 +171,45 @@ class MyBioFragment (val userEmail: String?,
         })
     }
 
+    private fun saveFollow(targetEmail:String){
+        val myEmail = FirebaseAuth.getInstance().currentUser?.email ?:return
+        val call = RetrofitHelper.getRetrofitInterface().saveFollow(myEmail, targetEmail)
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val resultStr = response.body()
+                Log.e("MyBioFrag saveFollow Success", " $resultStr")
+                b.btnSubscribe.visibility = View.GONE
+                b.btnUnsubscribe.visibility = View.VISIBLE
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("MyBioFrag saveFollow Failure", "${t.message}")
+            }
+        })
+    }
+
+    private fun saveUnfollow(targetEmail: String){
+        val myEmail = FirebaseAuth.getInstance().currentUser?.email ?:return
+        val call = RetrofitHelper.getRetrofitInterface().saveUnfollow(myEmail, targetEmail)
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val resultMsg = response.body()
+                Log.e("MyBioFrag saveUnfollow Success", "$resultMsg")
+                b.btnSubscribe.visibility = View.VISIBLE
+                b.btnUnsubscribe.visibility = View.GONE
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("MyBioFrag saveUnfollow Failure", "${t.message}")
+            }
+        })
+
+    }
+
     fun loadPhotos(queryEmail:String?){
         if(queryEmail == null) return
 
-        val retrofit:Retrofit = Retrofit.Builder()
-            .baseUrl("http://iwibest.dothome.co.kr")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val retrofitInterface = retrofit.create(RetrofitInterface::class.java)
+        val retrofitInterface = RetrofitHelper.getRetrofitInterface()
 
         val call:Call<String> = retrofitInterface.loadPostToAlbumString(queryEmail)
         call.enqueue(object : Callback<String>{

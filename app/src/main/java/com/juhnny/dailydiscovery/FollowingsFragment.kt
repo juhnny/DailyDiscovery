@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.FragmentFollowingsBinding
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Retrofit
 
 class FollowingsFragment : Fragment() {
 
@@ -93,6 +92,18 @@ class FollowingsFragment : Fragment() {
     }
 
     private fun loadFollow(userEmail:String){
+        val call2 = RetrofitHelper.getRetrofitInterface().loadFollowingString(userEmail)
+        call2.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val resultStr = response.body()
+                Log.e("FollowingsFrag loadFollwingString Success", "$resultStr")
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("FollowingsFrag loadFollwingString Failure", "${t.message}")
+            }
+        })
+
         val call = RetrofitHelper.getRetrofitInterface().loadFollowing(userEmail)
         call.enqueue(object : Callback<Response<Follow>>{
             override fun onResponse(
@@ -103,9 +114,11 @@ class FollowingsFragment : Fragment() {
                 val body = response.body()?.responseBody
                 if(header != null && body != null){
                     val newFollows = body.items
-                    follows.addAll(newFollows)
-                    b.recycler.adapter?.notifyDataSetChanged()
-                    Log.e("FollowingsFrag loadFollow Success", "itemCount: ${body.itemCount}")
+                    Log.e("FollowingsFrag loadFollow Success", "itemCount: ${body.itemCount}, ${body.items}")
+                    if(body.itemCount != 0) {
+                        follows.addAll(newFollows)
+                        b.recycler.adapter?.notifyDataSetChanged()
+                    }
                 }
             }
 
@@ -117,7 +130,7 @@ class FollowingsFragment : Fragment() {
 
     fun loadFollowsStub(){
         for(i in 1..1){
-            follows.add(Follow("name${i}", "I am like... ${i}",
+            follows.add(Follow("bcde@naver.co", "name${i}", "I am like... ${i}",
                 "https://a.cdn-hotels.com/gdcs/production87/d499/8196849a-5862-4e4f-86ec-a2c362157f74.jpg",
                 "https://www.qmul.ac.uk/media/qmul/London-Bridge.jpg",
                 "https://i.natgeofe.com/n/99790646-c5a4-4637-8f10-1d1c41ce3705/london_travel_2x3.jpg"))

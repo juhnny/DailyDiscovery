@@ -16,8 +16,6 @@ class GalleryRecyclerAdapter(val context:Context, var photos:MutableList<Photo>)
             Glide.with(context).load(photo.imgUrl).into(binding.ivPhoto)
             binding.tvTopicname.visibility = View.GONE
             binding.tvMsg.text = photo.message
-//            binding.tvNickname.text = photo.nickname
-//            binding.tvCreationDate.text = photo.creationDate
         }
     }
 

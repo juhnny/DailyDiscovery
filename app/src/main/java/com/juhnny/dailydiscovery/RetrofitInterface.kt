@@ -53,8 +53,22 @@ interface RetrofitInterface {
                  @Query("numOfItems") numOfItems:Int=10):Call<String>
 
     @FormUrlEncoded
+    @POST("/DailyDiscovery/saveFollow.php")
+    fun saveFollow(@Field("userEmail") userEmail:String,
+                   @Field("targetEmail") targetEmail:String):Call<String>
+
+    @FormUrlEncoded
+    @POST("/DailyDiscovery/saveUnfollow.php")
+    fun saveUnfollow(@Field("userEmail") userEmail:String,
+                     @Field("targetEmail") targetEmail:String):Call<String>
+
+    @FormUrlEncoded
     @POST("/DailyDiscovery/loadFollowing.php")
     fun loadFollowing(@Field("userEmail") userEmail:String):Call<Response<Follow>>
+
+    @FormUrlEncoded
+    @POST("/DailyDiscovery/loadFollowing.php")
+    fun loadFollowingString(@Field("userEmail") userEmail:String):Call<String>
 
 
 }

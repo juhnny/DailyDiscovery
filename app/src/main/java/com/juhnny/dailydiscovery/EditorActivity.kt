@@ -38,6 +38,9 @@ class EditorActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close)
 
+        val todayTopic:String? = intent.getStringExtra("topic")
+        b.etTopic.setText(todayTopic)
+
         b.ivPhoto.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
