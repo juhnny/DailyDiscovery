@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/bnv_tab1"
         android:title="tab1"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_camera_24"/>
     <item android:id="@+id/bnv_tab2"
         android:title="tab2"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_signpost_24"/>
     <item android:id="@+id/bnv_tab3"
         android:title="tab3"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_favorite_24"/>
     <item android:id="@+id/bnv_tab4"
         android:title="tab4"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_class_24"/>
 </menu>

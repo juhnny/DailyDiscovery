@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:title="About">
+
+        <Preference app:key="about_app"
+            app:title="시선집 소개"
+            app:summary="앱 소개"
+            app:icon="@drawable/ic_photo_album_24"/>
+
+        <Preference app:key="open_source_licenses"
+            app:title="오픈 소스"
+            app:summary="오픈소스 사용 내역"
+            app:useSimpleSummaryProvider="true"
+            app:icon="@drawable/ic_groups_24"/>
+
+        <Preference app:key="version"
+            app:title="버전"
+            app:summary="Version : 0.0"
+            app:icon="@drawable/ic_build_24"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:key="kinds_of_prefs"
+        app:title="eee"
+        app:summary="this is a function"
+        app:isPreferenceVisible="false">
+
+        <MultiSelectListPreference app:key="fff"
+            app:title="fff"
+            app:summary="this is a function"/>
+
+        <ListPreference app:key="ggg"
+            app:title="ggg"
+            app:summary="this is a function"/>
+
+        <DropDownPreference app:key="hhh"
+            app:title="hhh"
+            app:summary="this is a function"/>
+
+        <SeekBarPreference app:key="iii"
+            app:title="iii"
+            app:summary="this is a function"/>
+
+        <SwitchPreferenceCompat app:key="jjj"
+            app:title="jjj"
+            app:summary="this is a function"/>
+
+        <EditTextPreference app:key="kkk"
+            app:title="kkk"
+            app:summary="this is a function"/>
+
+        <CheckBoxPreference app:key="lll"
+            app:title="lll"
+            app:summary="this is a function"/>
+
+        <PreferenceScreen app:key="mmm"
+            app:title="mmm"
+            app:summary="this is a function"/>
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

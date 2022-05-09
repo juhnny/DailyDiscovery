@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/editor_photo_bg.xml" value="0.1635" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_close.xml" value="0.1485" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_email_24.xml" value="0.1885" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_grade_24.xml" value="0.1885" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_intro.xml" value="0.2315" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/topic_bg.xml" value="0.1635" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/topic_bg_circle.xml" value="0.1485" />
@@ -41,26 +43,20 @@
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/recycler_item_gallery.xml" value="0.20625" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/recycler_item_photo.xml" value="0.20625" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/recycler_item_topics.xml" value="0.25" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/menu/bnv.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/menu/drawer_nav.xml" value="0.33425925925925926" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/menu/options_editor.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/menu/options_my_bio.xml" value="0.25833333333333336" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/menu/options_tab4.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1485" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1485" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/xml/settings.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/ic_image_search_200.xml" value="0.187" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_editor.xml" value="0.29444444444444445" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_login.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_signup.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/drawer_nav_header.xml" value="0.2630208333333333" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_bio_my.xml" value="0.18854166666666666" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_followings.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_tab4.xml" value="0.2630208333333333" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_today.xml" value="0.29444444444444445" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_topics.xml" value="0.29444444444444445" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/recycler_item_follow.xml" value="0.30277777777777776" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/recycler_item_gallery.xml" value="0.21458333333333332" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/recycler_item_topics.xml" value="0.30277777777777776" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/menu/options_my_bio.xml" value="0.32916666666666666" />
       </map>
     </option>
   </component>

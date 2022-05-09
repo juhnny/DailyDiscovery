@@ -41,7 +41,6 @@ class TopicsFragment : Fragment() {
         }
 
         b.recycler.adapter = TopicsRecyclerAdapter(requireContext(), topics)
-        loadTopicStub()
         loadTopic()
 //        b.recycler.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
@@ -84,12 +83,5 @@ class TopicsFragment : Fragment() {
         })
     }
 
-    private fun loadTopicStub(){
-        for(i in 0..2){
-            var n = i + 1
-            topics.add(Topic("$n", "주제$n", true, "2022/1/${n}", "2022/1/${n}"))
-        }
-        b.recycler.adapter?.notifyDataSetChanged()
-    }
 
 }

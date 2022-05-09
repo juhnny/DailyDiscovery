@@ -13,9 +13,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.FragmentBioMyBinding
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class MyBioFragment (val userEmail: String?,
                      val mode:Int = OTHERS_BIO_MODE) : Fragment(){
@@ -30,6 +27,7 @@ class MyBioFragment (val userEmail: String?,
 
     val appCompatActivity by lazy { requireActivity() as AppCompatActivity }
     val b by lazy {FragmentBioMyBinding.inflate(layoutInflater)}
+    val auth by lazy { FirebaseAuth.getInstance() }
 
     var photos = mutableListOf<Photo>()
 
@@ -79,16 +77,12 @@ class MyBioFragment (val userEmail: String?,
             b.layoutSigninNotice.visibility = View.GONE
 
             b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
-            if(userEmail != null){
-                showProfile(userEmail)
-//                loadPhotosStub()
-                loadPhotos(userEmail)
-            }
-            if(userEmail.equals(user.email)){ //지금 보는 프로필이 내 프로필일 때
-                b.layoutSubscribe.visibility = View.GONE //구독 버튼 숨기기
-            } else { //다른 사람 프로필일 때
-                b.layoutSubscribe.visibility = View.VISIBLE //구독 버튼 보이기
-            }
+            showProfile(userEmail!!)
+            loadPhotos(userEmail!!)
+
+            //지금 보는 프로필이 내 프로필일 때 -> 구독 버튼 숨기기
+            //다른 사람 프로필일 때 -> 내가 구독중인 사람이면 '구독해제' 버튼, 아니면 '구독'버튼 보이기
+            updateUiOnFollow(userEmail!!)
 
         }//로그인/게스트 상태에 따른 UI 업데이트
 
@@ -104,7 +98,7 @@ class MyBioFragment (val userEmail: String?,
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.options_my_bio, menu)
+//        inflater.inflate(R.menu.options_my_bio, menu)
     }
 
 //    업 버튼(홈 메뉴)을 누르면 프래그먼트가 닫히도록
@@ -169,6 +163,34 @@ class MyBioFragment (val userEmail: String?,
                 Log.e("MyBioFrag loadProfile Failure", "${t.message}")
             }
         })
+    }
+
+    private fun updateUiOnFollow(targetEmail:String){
+        val myEmail = auth.currentUser?.email
+        //기본적으로 다 가려놨다가..
+        b.btnSubscribe.visibility = View.GONE
+        b.btnUnsubscribe.visibility = View.GONE
+        //띄워진 앨범이 내 앨범이면 그대로 놔두고,
+        if(userEmail.equals(myEmail)) return
+        //다른사람 앨범이면
+        val call = RetrofitHelper.getRetrofitInterface().isFollowing(myEmail!!, targetEmail)
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val booleanStr = response.body()
+                Log.e("MyBioFrag isFollowing Success", "$booleanStr")
+                val isFollowing:Boolean = booleanStr.toBoolean() //String이 "true"이면 true, 나머지는 어떤 값이든 false
+                if(isFollowing){ //내가 팔로우 중이면
+                    b.btnUnsubscribe.visibility = View.VISIBLE
+                } else { //내가 팔로우 중이 아니거나 예상치 못한 응답 값이면
+                    b.btnSubscribe.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("MyBioFrag isFollowing Failure", "${t.message}")
+            }
+        })
+
     }
 
     private fun saveFollow(targetEmail:String){

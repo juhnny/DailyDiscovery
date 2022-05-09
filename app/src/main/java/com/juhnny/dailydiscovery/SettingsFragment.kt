@@ -1,45 +1,69 @@
 package com.juhnny.dailydiscovery
 
-import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.preference.*
 import com.juhnny.dailydiscovery.databinding.FragmentSettingsBinding
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : PreferenceFragmentCompat() {
 
-    val mainActivity by lazy { requireActivity() as MainActivity }
-    val b by lazy { FragmentSettingsBinding.inflate(layoutInflater)}
+    val settingsActivity by lazy { requireActivity() as SettingsActivity }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return b.root
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.settings, rootKey)
+//        findPreference<EditTextPreference>("bbb")?.layoutResource = R.layout.recycler_item_follow
+//        findPreference<EditTextPreference>("bbb")?.widgetLayoutResource = R.layout.recycler_item_follow
+//        findPreference<EditTextPreference>("bbb")?.dialogLayoutResource = R.layout.recycler_item_follow
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        b.tv.setOnClickListener{
-            val accountFragment = AccountFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container_bnv, accountFragment).addToBackStack(null).commit()
-        }
-        //처음엔 SettingsFragment 안에 있는 container 영역에 AccountFragment를 띄웠는데
-        //AccountFragment에서 설정한 툴바까지도 그 영역 안에 만들어져서 툴바가 바깥에 하나 안에 하나씩 두개가 돼버리는 문제가..
-        //아예 SettingsFragment가 만들어지는 동일한 container에 AccountFragment를 만들어 덮어씌우는 게 정답이었다.
-
-        b.tvActivity.setOnClickListener(){
-            requireActivity().startActivity(Intent(context, AccountActivity::class.java))
-        }
-    }
+    //각 항목들의 설정값이 항목명 아래 summary에 바로 보여지게 하고 싶다면 리스너로 값을 바꿔줘야 한다.
+    //onResume, onPause 양족에서 쓰기 위해 멤버변수로 만들어주고
+    val prefs by lazy { PreferenceManager.getDefaultSharedPreferences(requireContext()) }
 
     override fun onResume() {
         super.onResume()
 
+        //summary 값을 바꾸고 싶을 떄
+        findPreference<SwitchPreferenceCompat>("aaa")?.summaryProvider = Preference.SummaryProvider { preference:SwitchPreferenceCompat ->
+            "이 항목은..."
+        }
+
+        //항목이 바뀌었을 때
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+
+        //항목이 클릭되었을 때
+        findPreference<EditTextPreference>("bbb")?.setOnPreferenceClickListener(object : Preference.OnPreferenceClickListener{
+            override fun onPreferenceClick(preference: Preference): Boolean {
+//                Toast.makeText(requireContext(), "bbb", Toast.LENGTH_SHORT).show()
+                return true //구글 문서 예제에 true
+            }
+        })
     }
+
+    override fun onPause() {
+        super.onPause()
+
+
+    }
+
+    val listener = object : SharedPreferences.OnSharedPreferenceChangeListener{
+        override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
+            //두번째 파라미터는 변경된 항목의 key값
+            val buffer = StringBuffer()
+            when(p1){
+                "about_app" -> {
+
+                }
+            }
+            MyUtil.showSorryAlert(requireContext())
+        }
+    }
+
+
 }

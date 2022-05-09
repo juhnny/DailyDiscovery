@@ -19,7 +19,7 @@ class PhotoActivity : AppCompatActivity() {
 
         setSupportActionBar(b.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         photos = intent.getParcelableArrayListExtra<Photo>("photos")!! //얘한테 null 안들어오게 해줘라
         val currentPos = intent.getIntExtra("position", 0)

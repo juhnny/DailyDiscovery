@@ -119,7 +119,12 @@ class Tab4Fragment : Fragment(){
                     Toast.makeText(context, "Tab4 - dd", Toast.LENGTH_SHORT).show()
                     //설정 액티비티 열기
                     startActivity(Intent(context, SettingsActivity::class.java))
-
+                    //설정 프래그먼트 열기
+//                    childFragmentManager.beginTransaction()
+//                        .hide(fragments[0])
+//                        .add(R.id.tab4_fragment_root, SettingsFragment(), "SETTINGS_FRAG")
+//                        .addToBackStack(null)
+//                        .commit()
                 }
             }
             b.root.closeDrawer(b.nav, true)

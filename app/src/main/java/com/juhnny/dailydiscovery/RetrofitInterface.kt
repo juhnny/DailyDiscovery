@@ -59,6 +59,11 @@ interface RetrofitInterface {
                  @Query("numOfItems") numOfItems:Int=10):Call<String>
 
     @FormUrlEncoded
+    @POST("/DailyDiscovery/isFollowing.php")
+    fun isFollowing(@Field("userEmail") userEmail: String,
+                    @Field("targetEmail") targetEmail: String):Call<String> //Boolean이 아닌 String으로 받아서 처리. 오류 코드 보기 더 쉬워서
+
+    @FormUrlEncoded
     @POST("/DailyDiscovery/saveFollow.php")
     fun saveFollow(@Field("userEmail") userEmail:String,
                    @Field("targetEmail") targetEmail:String):Call<String>
