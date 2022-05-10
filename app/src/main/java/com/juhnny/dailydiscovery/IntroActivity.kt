@@ -4,6 +4,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import androidx.core.app.ActivityOptionsCompat
 import androidx.preference.PreferenceManager
@@ -17,6 +20,9 @@ class IntroActivity : AppCompatActivity() {
     val auth by lazy { FirebaseAuth.getInstance() }
     //FirebaseApp이라는 앱 실행과 함께 자동실행되는 Content Provider의 객체를 소환
     //비슷한 애로 FirebaseInitProvider라는 Content Provider도 있다.
+    val optionsCompat by lazy { ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, b.entrance.width/2, b.entrance.height/2, 0, 0) }
+    //둘째, 셋째 파라미터 : //The coordinates of the beginning of stretching
+    //넷째, 다섯째 파라미터 : //The size of the area at which the stretch begins, where (0, 0) is used to indicate from scratch to full screen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,29 +53,36 @@ class IntroActivity : AppCompatActivity() {
         //첫 실행이면 Invitation Activity 실행
         if(isFirstRun) {
             val intent = Intent(this, InvitationActivity::class.java)
-            val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, 42, 75, 1, 1)
+            val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, b.entrance.width/2, b.entrance.height/2, 0, 0)
             startActivity(intent, optionsCompat.toBundle())
             finish()
         }
         /////////마무리////////
 
+        //작업에 딜레이를 주는 방법들
+        //TimerTask 사용
+        //handlerToMain.sendEmptyMessageDelayed(123, 1000)
+        //AlarmManager 사용
 
-        //MainActivity로 바로 연결.
-        val openMainActivity = {
-            val intent = Intent(this, MainActivity::class.java)
-//            val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, b.entrance, "introExpand")
-            val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, 42, 75, 1, 1)
-//            val optionsCompat = ActivityOptionsCompat.makeThumbnailScaleUpAnimation(b.entrance, )
-            startActivity(intent, optionsCompat.toBundle())
-            finish()
-        }
+        //위 방식들은 모두 별도스레드로 동작
+        //Thread.sleep()은 스레드를 멈춰서 화면이 멈춰버리기 때문에 안돼
 
-        b.entrance.setOnClickListener {
-            openMainActivity()
-        }
+        //TimeUnit.SECONDS.sleep(5)도 가능한 거 같은데?
 
+        //handler에게 일정 시간 뒤에 스레드로 빈 메시지를 전해달라고 하는 방법
+        //이것과 로그인 검증을 어떻게 합쳐야 좋을까?
 
     }//onCreate()
+
+    inner class OpenActivityHandler(looper:Looper, val activityClassToOpen:Class<*>):Handler(looper){
+        override fun handleMessage(msg: Message) {
+            startActivity(Intent(baseContext, activityClassToOpen), optionsCompat.toBundle())
+            finish()
+//            this@IntroActivity.finish()
+        }
+    }
+
+    lateinit var activityClass:Class<*>
 
     override fun onStart() {
         super.onStart()
@@ -88,18 +101,21 @@ class IntroActivity : AppCompatActivity() {
             //인증이 돼있나 확인
             if(currentUser.isEmailVerified){ //인증 완료시에만 메인 액티비티 스타트
                 Log.e("TAG IntroAc", "인증 완료")
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                activityClass = MainActivity::class.java
             } else { //인증 미완료 시 로그인 화면으로 연결
                 Log.e("TAG IntroAc", "인증 미완료")
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                activityClass = LoginActivity::class.java
             }
         } else{ //로그인 안돼있을 시에도 로그인 화면으로 연결
             Log.e("TAG IntroAc", "로그인 X")
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            activityClass = LoginActivity::class.java
+//            handlerToMain.sendEmptyMessageDelayed(123, 1500)
         }
-    }
+
+        val handler = OpenActivityHandler(Looper.getMainLooper(), activityClass)
+        handler.sendEmptyMessageDelayed(123, 1500)
+    }//onStart()
+
+
 
 }
