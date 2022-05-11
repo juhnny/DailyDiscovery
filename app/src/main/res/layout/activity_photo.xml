@@ -21,12 +21,12 @@
         android:orientation="vertical"
         android:layout_below="@id/toolbar">
 
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Photo Activity"
-            android:background="@color/lightgreen"/>
+<!--        <TextView-->
+<!--            android:id="@+id/tv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Photo Activity"-->
+<!--            android:background="@color/lightgreen"/>-->
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager_photo"

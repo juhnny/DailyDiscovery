@@ -19,11 +19,11 @@
             android:textSize="20sp"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="gallery activity"
-        android:background="@color/tangerine"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="gallery activity"-->
+<!--        android:background="@color/tangerine"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

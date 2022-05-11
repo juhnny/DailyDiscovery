@@ -20,13 +20,13 @@
             android:textSize="20sp"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="noti fragment"
-        android:background="@color/lightgreen"
-        android:layout_below="@id/toolbar"/>
+<!--    <TextView-->
+<!--        android:id="@+id/tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="noti fragment"-->
+<!--        android:background="@color/lightgreen"-->
+<!--        android:layout_below="@id/toolbar"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
@@ -34,6 +34,6 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        android:layout_below="@id/tv"/>
+        android:layout_below="@id/toolbar"/>
 
 </RelativeLayout>

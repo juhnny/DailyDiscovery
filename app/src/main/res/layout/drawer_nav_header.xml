@@ -9,26 +9,24 @@
         android:id="@+id/tv_header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="USER_NAME"
         android:textSize="20sp"
         android:layout_marginTop="10dp"/>
     <TextView
         android:id="@+id/tv_header_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ADDITIONAL INFO"
         android:layout_below="@id/tv_header_name"/>
     <Button
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
         android:text="로그인"/>
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
         android:text="로그아웃"
         android:visibility="invisible"/>
 

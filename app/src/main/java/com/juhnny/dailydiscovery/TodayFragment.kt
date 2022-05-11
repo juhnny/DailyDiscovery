@@ -113,12 +113,12 @@ class TodayFragment : Fragment() {
             ) {
                 val header = response.body()?.responseHeader
                 val body = response.body()?.responseBody
-                if(header != null && body != null){
-                    Log.e("TodayFrag loadTodayTopic Success", "${header.resultMsg}")
+                if(body != null){
+                    Log.e("TodayFrag loadTodayTopic Success", "${header?.resultMsg}")
                     Log.e("TodayFrag loadTodayTopic Success", "${body}")
                     todayTopic = body.items[0]
                     b.tvTopic.text = todayTopic.topicName
-                }
+                } //null이면 기본적으로 써있는 "자유주제"가 나오도록
             }
 
             override fun onFailure(call: Call<Response<Topic>>, t: Throwable) {
