@@ -20,11 +20,11 @@
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings Activity"
-        android:background="@color/lemon"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Settings Activity"-->
+<!--        android:background="@color/lemon"/>-->
 
     <RelativeLayout
         android:id="@+id/container_settings_ac"

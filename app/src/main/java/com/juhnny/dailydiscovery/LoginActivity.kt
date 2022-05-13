@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        b.btnLogout.visibility = View.VISIBLE
+//        b.btnLogout.visibility = View.VISIBLE
         b.btnLogout.setOnClickListener{
             auth.signOut()
 

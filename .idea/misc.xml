@@ -12,7 +12,10 @@
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_intro.xml" value="0.2315" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/topic_bg.xml" value="0.1635" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/topic_bg_circle.xml" value="0.1485" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/actionbar_account.xml" value="0.36614583333333334" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_account.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_editor.xml" value="0.36614583333333334" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_follow.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_gallery.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_intro.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_invitation.xml" value="0.25" />
@@ -22,8 +25,10 @@
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_settings.xml" value="0.25833333333333336" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_signup.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/drawer_nav_header.xml" value="0.33425925925925926" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_account.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_bio.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_bio_my.xml" value="0.25" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_bio_others.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_followers.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_followings.xml" value="0.240625" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_invitation.xml" value="0.36614583333333334" />

@@ -70,7 +70,7 @@ class IntroActivity : AppCompatActivity() {
         //TimeUnit.SECONDS.sleep(5)도 가능한 거 같은데?
 
         //handler에게 일정 시간 뒤에 스레드로 빈 메시지를 전해달라고 하는 방법
-        //이것과 로그인 검증을 어떻게 합쳐야 좋을까?
+        //이것과 로그인 검증을 어떻게 합쳐야 좋을까? 해결!
 
     }//onCreate()
 
