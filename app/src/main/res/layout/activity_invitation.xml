@@ -12,6 +12,23 @@
 <!--        android:text="Invitation Activity"-->
 <!--        android:background="@color/lemon"/>-->
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/page1"
+                layout="@layout/activity_inviation_page1"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"

@@ -47,9 +47,10 @@ class IntroActivity : AppCompatActivity() {
         val prefs:SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor =  prefs.edit()
         if( ! prefs.contains("isFirstRun")) editor.putBoolean("isFirstRun", true).commit() //처음엔 항목이 없을테니..
-        val isFirstRun = prefs.getBoolean("isFirstRun", true)
+        var isFirstRun = prefs.getBoolean("isFirstRun", true)
         Log.e("isFirstRun IntroAc: ", "$isFirstRun")
 
+        isFirstRun = true
         //첫 실행이면 Invitation Activity 실행
         if(isFirstRun) {
             val intent = Intent(this, InvitationActivity::class.java)
