@@ -118,7 +118,9 @@ class TodayFragment : Fragment() {
                     Log.e("TodayFrag loadTodayTopic Success", "${body}")
                     todayTopic = body.items[0]
                     b.tvTopic.text = todayTopic.topicName
-                } //null이면 기본적으로 써있는 "자유주제"가 나오도록
+                } else { //null이면 기본적으로 써있는 "자유주제"가 나오도록
+                    b.tvTopic.text = "자유 주제"
+                }
             }
 
             override fun onFailure(call: Call<Response<Topic>>, t: Throwable) {

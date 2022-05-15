@@ -77,6 +77,15 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_profile"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        app:spanCount="2" />
+
     <!--게스트 상태에서 보여줄 뷰-->
     <RelativeLayout
         android:id="@+id/layout_signin_notice"
@@ -96,6 +105,7 @@
             android:text="시선집 이용을 위해\n로그인이 필요합니다"
             android:layout_below="@id/iv_signin_img"
             android:layout_centerHorizontal="true"/>
+
         <Button
             android:id="@+id/btn_signin"
             android:layout_width="wrap_content"
@@ -104,14 +114,5 @@
             android:layout_centerHorizontal="true"
             android:text="로그인" />
     </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/layout_profile"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        app:spanCount="2" />
 
 </RelativeLayout>

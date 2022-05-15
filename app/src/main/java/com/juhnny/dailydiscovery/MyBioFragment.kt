@@ -274,16 +274,5 @@ class MyBioFragment (val userEmail: String?,
 
     }//loadPhotos
 
-    fun loadPhotosStub(){
-        photos.add(Photo("1", "주제명", "A material metaphor is the unifying theory of a rationalized space and a system of motion.\n" +
-                "\n" +
-                "        Components with\n" +
-                "        responsive elevations\n" +
-                "        may encounter other components\n" +
-                "        as they move between.", "bbb@naver.com", "hong1", "20220101", "20220101",
-            "https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
-
-        b.recycler.adapter?.notifyDataSetChanged()
-    }
 
 }

@@ -70,12 +70,14 @@
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/ic_stories_24.xml" value="0.1915" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/ic_today_24.xml" value="0.1915" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_editor.xml" value="0.29444444444444445" />
-        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_invitation.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_invitation.xml" value="0.27605633802816903" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_login.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_signup.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/drawer_nav_header.xml" value="0.2630208333333333" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_bio_my.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_inviation_page1.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_tab4.xml" value="0.2630208333333333" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_today.xml" value="0.32916666666666666" />
       </map>
     </option>
   </component>
