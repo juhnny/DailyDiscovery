@@ -57,6 +57,7 @@ class TodayFragment : Fragment() {
         if(user == null){
             b.ivNoti.visibility = View.GONE
             b.tvGotoWrite.setOnClickListener {
+                //Custom View로 로그인 안내 띄우기 //TODO
                 AlertDialog.Builder(requireContext()).setView(R.layout.recycler_item_topics).create().show()
             }
         } else {
