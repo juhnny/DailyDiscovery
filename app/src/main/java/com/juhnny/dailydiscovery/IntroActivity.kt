@@ -79,7 +79,6 @@ class IntroActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
             startActivity(Intent(baseContext, activityClassToOpen), optionsCompat.toBundle())
             finish()
-//            this@IntroActivity.finish()
         }
     }
 
