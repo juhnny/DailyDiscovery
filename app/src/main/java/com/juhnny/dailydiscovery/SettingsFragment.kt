@@ -48,8 +48,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onPause() {
         super.onPause()
-
-
     }
 
     val listener = object : SharedPreferences.OnSharedPreferenceChangeListener{
@@ -64,6 +62,5 @@ class SettingsFragment : PreferenceFragmentCompat() {
             MyUtil.showSorryAlert(requireContext())
         }
     }
-
 
 }

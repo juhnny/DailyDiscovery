@@ -127,7 +127,11 @@ class MyBioFragment (val userEmail: String?,
         if(context is MainActivity) Log.e("MyBioFrag Test: Is context MainAc?", "Yes")
         if(context is LoginActivity) Log.e("MyBioFrag Test: Is context LoginAc?", "Yes")
         else Log.e("MyBioFrag Test: Is context LoginAc?", "No")
+        if(requireActivity() is MainActivity) Log.e("MyBioFrag Test: Is requireActivity MainAc?", "Yes")
+        if(requireContext() is MainActivity) Log.e("MyBioFrag Test: Is requireContext MainAc?", "Yes")
+        if(requireContext() is LoginActivity) Log.e("MyBioFrag Test: Is requireContext LoginAc?", "Yes")
 
+        //BackPressed 이벤트 발생 시 Activity로부터 콜백
         callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 Log.e("MyBio - onBack callback 받음", "")
