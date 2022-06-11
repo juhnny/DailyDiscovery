@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -34,6 +36,8 @@ class TodayFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        loadMainPhotos()
+
         return b.root
         //이 프래그먼트는 replace를 당해도 addToBackStack() 이후 다시 Back 해서 확인해보면 뷰들이 그대로 남아있다.
         //원래 replace는 remove & add 이기 때문에 프래그먼트가 remove되면서 그에 속한 view들도 container로부터 remove 되는 게 일반적.
@@ -56,12 +60,12 @@ class TodayFragment : Fragment() {
         val user = FirebaseAuth.getInstance().currentUser
         if(user == null){
             b.ivNoti.visibility = View.GONE
-            b.tvGotoWrite.setOnClickListener {
+            b.fabSubmit.setOnClickListener {
                 //Custom View로 로그인 안내 띄우기 //TODO
                 AlertDialog.Builder(requireContext()).setView(R.layout.recycler_item_topics).create().show()
             }
         } else {
-            b.tvGotoWrite.setOnClickListener {
+            b.fabSubmit.setOnClickListener {
                 val intent = Intent(context, EditorActivity::class.java)
                 intent.putExtra("topic", b.tvTopic.text)
                 mainActivity.editorResultLauncher.launch(intent)
@@ -87,6 +91,12 @@ class TodayFragment : Fragment() {
 //            trans.show(mainActivity.fragments[1])
 //            trans.commit()
 //        }
+
+        b.fabSubmit.setOnClickListener {
+            val intent = Intent(context, EditorActivity::class.java)
+            intent.putExtra("topic", b.tvTopic.text)
+            mainActivity.editorResultLauncher.launch(intent)
+        }
 
     }//onViewCreated
 
@@ -167,5 +177,30 @@ class TodayFragment : Fragment() {
             }
         })
     }//loadTopic()
+
+    private fun loadMainPhotos(){
+        val call:Call<Response<Photo>> = RetrofitHelper.getRetrofitInterface().loadMainPhotos()
+        call.enqueue(object : Callback<Response<Photo>>{
+            override fun onResponse(
+                call: Call<Response<Photo>>,
+                response: retrofit2.Response<Response<Photo>>
+            ) {
+                val myResponse = response.body()
+                val resultMsg = myResponse?.responseHeader?.resultMsg ?: ""
+                val itemCnt = myResponse?.responseBody?.itemCount ?: 0
+                val photos = myResponse?.responseBody?.items ?: mutableListOf()
+                b.tvPostcard1.text = "#" + photos[0].topic
+                b.tvPostcard2.text = photos[1].topic
+                b.tvPostcard3.text = photos[2].topic
+                Glide.with(requireContext()).load(photos[0].imgUrl).into(b.ivPostcard1)
+                Glide.with(requireContext()).load(photos[1].imgUrl).into(b.ivPostcard2)
+                Glide.with(requireContext()).load(photos[2].imgUrl).into(b.ivPostcard3)
+            }
+
+            override fun onFailure(call: Call<Response<Photo>>, t: Throwable) {
+                Log.e("TodayFrag loadMainPhotos() Failure", "${t.message}")
+            }
+        })
+    }
 
 }

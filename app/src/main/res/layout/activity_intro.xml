@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IntroActivity"
-    android:background="#D3CEA6">
+    tools:context=".IntroActivity">
 
     <View
         android:id="@+id/entrance"
         android:layout_width="85dp"
         android:layout_height="150dp"
         android:layout_centerInParent="true"
-        android:background="#FFF37A" />
+        android:background="#F7C500" />
 
     <ImageView
         android:id="@+id/shadow"

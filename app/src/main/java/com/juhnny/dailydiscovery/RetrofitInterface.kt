@@ -35,6 +35,12 @@ interface RetrofitInterface {
     @GET("/DailyDiscovery/loadTodayTopic.php")
     fun loadTodayTopic():Call<Response<Topic>>
 
+    @GET("/DailyDiscovery/loadMainPhotos.php")
+    fun loadMainPhotosString():Call<String>
+
+    @GET("/DailyDiscovery/loadMainPhotos.php")
+    fun loadMainPhotos():Call<Response<Photo>>
+
     @GET("/DailyDiscovery/savePost.php")
     fun savePost(@Query("topic") topic:String,
                  @Query("message") message:String,

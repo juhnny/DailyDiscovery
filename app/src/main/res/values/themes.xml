@@ -17,7 +17,7 @@
     <!--  툴바의 배경색, 제목 글씨 색상 등의 스타일을 한번에 설정  -->
     <style name="MyToolbarStyle">
         <!--  그냥 background를 쓰면 app:background를 의미 -->
-        <item name="android:background">@color/transparent00</item>
+        <item name="android:background">@color/transparent</item>
         <item name="titleTextColor">@color/black</item>
     </style>
 
@@ -27,5 +27,9 @@
     </style>
 
     <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    </style>
+
+    <style name="TodayFragmentTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor"  tools:targetApi="l">@color/dahong</item>
     </style>
 </resources>

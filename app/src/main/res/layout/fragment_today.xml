@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D2DFDE"
-    android:id="@+id/today_fragment_root">
+    android:background="@drawable/bg_wood0_horizontal"
+    android:id="@+id/today_fragment_root"
+    android:theme="@style/TodayFragmentTheme">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,91 +19,168 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="오늘의 주제"
-                android:textSize="20sp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:text=""
+                android:textSize="20sp" />
             <ImageView
                 android:id="@+id/iv_noti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_notifications"
                 android:layout_gravity="right"
-                android:layout_marginRight="20dp"/>
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_notifications" />
         </androidx.appcompat.widget.Toolbar>
 
-        <ImageView
-            android:layout_width="250dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp"
-            android:elevation="10dp"
-            android:src="@drawable/postcard1"
-            android:rotation="-20"/>
-
-<!--        <ImageView-->
-<!--            android:layout_width="300dp"-->
-<!--            android:layout_height="300dp"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_marginBottom="20dp"-->
-<!--            android:src="@drawable/chair2" />-->
-<!--        <ImageView-->
-<!--            android:layout_width="400dp"-->
-<!--            android:layout_height="400dp"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_marginRight="-130dp"-->
-<!--            android:layout_marginBottom="20dp"-->
-<!--            android:elevation="10dp"-->
-<!--            android:src="@drawable/light3" />-->
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/camera_black"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="150dp"/>
-
         <androidx.cardview.widget.CardView
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            app:cardElevation="8dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="250dp">
-                <TextView
-                    android:id="@+id/tv_topic"
-                    android:layout_width="200dp"
-                    android:layout_height="150dp"
-                    android:textSize="30sp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/topic_bg"
-                    android:padding="30dp"
-                    android:autoSizeTextType="uniform"
-                    android:text="편지"
-                    android:textColor="#151515"
-                    android:gravity="center"
-                    android:fontFamily="@font/bm_euljiro"/>
-
+            android:layout_width="240dp"
+            android:layout_height="160dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="145dp"
+            android:layout_marginLeft="-20dp"
+            android:rotation="-15"
+            app:cardElevation="2dp">
             <ImageView
-                android:layout_width="1000dp"
-                android:layout_height="1000dp"
-                android:layout_marginTop="-120dp"
-                android:alpha="0.5"
-                android:elevation="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/light2" />
-
+                android:id="@+id/iv_postcard1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="40dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/grey224"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:id="@+id/tv_postcard1"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="3dp"
+                android:gravity="center_horizontal"
+                android:text="가나다라마"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/eastseadokdo_regular"/>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="240dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:rotation="3"
+            app:cardElevation="4dp">
+            <ImageView
+                android:id="@+id/iv_postcard2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="60dp"
+                android:background="@color/grey224"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:id="@+id/tv_postcard2"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="3dp"
+                android:gravity="center_horizontal"
+                android:text="가나다라마"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/eastseadokdo_regular"/>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="240dp"
+            android:layout_height="160dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="140dp"
+            android:layout_marginRight="-20dp"
+            android:rotation="8"
+            app:cardElevation="6dp">
+            <ImageView
+                android:id="@+id/iv_postcard3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="60dp"
+                android:background="@color/grey224"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:id="@+id/tv_postcard3"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="3dp"
+                android:gravity="center_horizontal"
+                android:text="가나다라마"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/eastseadokdo_regular"/>
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/tv_goto_write"
+        <ImageView
+            android:layout_width="360dp"
+            android:layout_height="240dp"
+            android:layout_marginLeft="-90dp"
+            android:layout_marginTop="420dp"
+            android:rotation="10"
+            android:src="@drawable/letter_bag_yellow" />
+        <ImageView
+            android:layout_width="360dp"
+            android:layout_height="240dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="380dp"
+            android:layout_marginRight="-80dp"
+            android:rotation="10"
+            android:src="@drawable/letter_bag2" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="240dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="290dp"
+            app:cardElevation="8dp"
+            android:rotationX="5">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:text="오늘의 주제"
+                android:textColor="@color/champaigngold_dark"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/tv_topic"
+                android:layout_width="240dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:padding="30dp"
+                android:gravity="center"
+                android:text="가나다라마바"
+                android:fontFamily="@font/eastseadokdo_regular"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:autoSizeTextType="uniform" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:layout_width="1000dp"
+            android:layout_height="1000dp"
+            android:layout_centerInParent="true"
+            android:alpha="0.3"
+            android:elevation="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/light2" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="참가하기"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="100dp"/>
-
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="86dp"
+            android:contentDescription="submit"
+            android:src="@drawable/ic_add_24"
+            app:tint="@color/grey240"
+            app:fabSize="normal"
+            android:backgroundTint="@color/dahong"
+            app:rippleColor="@color/tangerine" />
     </RelativeLayout>
 
 
