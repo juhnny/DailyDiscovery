@@ -20,21 +20,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
-
-
 <!--            <View-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="200dp"-->
 <!--                android:background="@drawable/gradient_invitation"/>-->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="100dp"
                 android:layout_marginLeft="-50dp"
                 android:background="#404040"/>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="-50dp"
                 android:layout_marginRight="-50dp"
@@ -42,7 +39,7 @@
                 android:background="@color/grey128"/>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="-50dp"
                 android:layout_marginRight="-50dp"
@@ -50,20 +47,21 @@
                 android:background="@color/grey192"/>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginLeft="-50dp"
                 android:layout_marginRight="-50dp"
                 android:rotation="5"
                 android:background="@color/grey224"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_marginTop="110dp"
                 android:layout_marginLeft="-50dp"
+                android:layout_marginTop="110dp"
                 android:layout_marginRight="-50dp"
-                android:rotation="7"
-                android:background="@color/grey240"/>
+                android:background="@color/grey240"
+                android:rotation="7" />
 
 <!--            <ImageView-->
 <!--                android:layout_width="600dp"-->
@@ -80,17 +78,18 @@
                 android:layout_marginLeft="50dp"
                 android:text="매일의 발견,"
                 android:textSize="30dp"/>
+
             <TextView
                 android:id="@+id/title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title1"
-                android:layout_marginTop="0dp"
                 android:layout_marginLeft="50dp"
-                android:textColor="@color/tangerine"
-                android:text="시선집"
+                android:layout_marginTop="0dp"
                 android:fontFamily="@font/eastseadokdo_regular"
-                android:textSize="100dp"/>
+                android:text="시선집"
+                android:textColor="@color/black"
+                android:textSize="100dp" />
 
             <TextView
                 android:id="@+id/copy"
@@ -98,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title2"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="서로 다른 시선을 발견하는 즐거움"
                 android:textSize="20dp" />
 
@@ -107,18 +106,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/copy"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginLeft="20dp"
                 app:cardElevation="8dp"
                 app:cardBackgroundColor="@color/champaigngold_dark"
                 android:padding="20dp">
                 <ImageView
-                    android:layout_width="200dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:padding="20dp"
+                    android:padding="25dp"
                     android:background="@color/white"
-                    android:src="@drawable/london3"
+                    android:src="@drawable/unsplash_ash_ashley"
                     android:adjustViewBounds="true"/>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
@@ -137,19 +136,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
-                        android:text="알람"
+                        android:text="열매"
                         android:textSize="12sp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="김작가"
+                        android:text="김대리"
                         android:textSize="8sp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="지각하기 싫어서 새로 마련했어요"
+                        android:text="꽃 피기도 전에 \n매실이 열렸네"
                         android:textSize="8sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -166,13 +165,13 @@
                 app:cardBackgroundColor="@color/champaigngold_dark"
                 app:cardElevation="8dp">
                 <ImageView
-                    android:layout_width="200dp"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:adjustViewBounds="true"
                     android:background="@color/white"
-                    android:padding="30dp"
-                    android:src="@drawable/london" />
+                    android:padding="20dp"
+                    android:src="@drawable/unsplash_pineapple_supply_co" />
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
@@ -190,19 +189,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
-                        android:text="알람"
+                        android:text="헤어스타일"
                         android:textSize="12sp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="김작가"
+                        android:text="산다라"
                         android:textSize="8sp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="지각하기 싫어서 새로 마련했어요"
+                        android:text="에에 에에 에 \n에에 에에 에 \n에에"
                         android:textSize="8sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -219,13 +218,13 @@
                 app:cardBackgroundColor="@color/champaigngold_dark"
                 app:cardElevation="8dp">
                 <ImageView
-                    android:layout_width="300dp"
+                    android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:adjustViewBounds="true"
                     android:background="@color/white"
                     android:padding="30dp"
-                    android:src="@drawable/london2" />
+                    android:src="@drawable/unsplash_jakob_owens" />
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
@@ -243,19 +242,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
-                        android:text="알람"
+                        android:text="부모님"
                         android:textSize="12sp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="김작가"
+                        android:text="막내작가"
                         android:textSize="8sp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="지각하기 싫어서 새로 마련했어요"
+                        android:text="막내가 어느새 \n부모가 되었다"
                         android:textSize="8sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -264,10 +263,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="470dp"
                 android:layout_below="@id/frame3"
-                android:layout_marginTop="40dp"
                 android:layout_marginLeft="-50dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginRight="-50dp"
-                android:background="@color/tangerine"/>
+                android:background="@color/tangerine" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -277,8 +276,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="70dp"
-                    android:src="@drawable/letter"
-                    android:adjustViewBounds="true"/>
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/letter" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
