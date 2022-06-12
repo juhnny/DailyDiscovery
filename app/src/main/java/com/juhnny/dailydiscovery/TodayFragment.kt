@@ -36,9 +36,10 @@ class TodayFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view = b.root
         loadMainPhotos()
 
-        return b.root
+        return view
         //이 프래그먼트는 replace를 당해도 addToBackStack() 이후 다시 Back 해서 확인해보면 뷰들이 그대로 남아있다.
         //원래 replace는 remove & add 이기 때문에 프래그먼트가 remove되면서 그에 속한 view들도 container로부터 remove 되는 게 일반적.
         //알고보니 그 이유는 return b.root로 넘긴 뷰들이 멤버변수에 속해있는 뷰들이기 때문

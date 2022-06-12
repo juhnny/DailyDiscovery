@@ -61,6 +61,7 @@
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1915" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/bg_all_round.xml" value="0.216" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/bg_all_round_black.xml" value="0.216" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/bg_all_round_square.xml" value="0.2105" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/bg_all_round_square_btn.xml" value="0.216" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/bg_bnv.xml" value="0.216" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/drawable/bg_square_all.xml" value="0.216" />
@@ -95,9 +96,13 @@
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/activity_singup2.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/drawer_nav_header.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_bio_my.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_followings.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_inviation_page1.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_tab4.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_today.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/fragment_topics.xml" value="0.32277834525025534" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/recycler_item_follow.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/recycler_item_topics.xml" value="0.32277834525025534" />
       </map>
     </option>
   </component>

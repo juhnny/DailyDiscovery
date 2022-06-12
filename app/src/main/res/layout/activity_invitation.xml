@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginLeft="-50dp"
-                android:background="#404040"/>
+                android:background="#141414"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -36,7 +36,7 @@
                 android:layout_marginLeft="-50dp"
                 android:layout_marginRight="-50dp"
                 android:rotation="1"
-                android:background="@color/grey128"/>
+                android:background="#1E1E1E"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -44,7 +44,7 @@
                 android:layout_marginLeft="-50dp"
                 android:layout_marginRight="-50dp"
                 android:rotation="3"
-                android:background="@color/grey192"/>
+                android:background="#282828"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -52,15 +52,14 @@
                 android:layout_marginLeft="-50dp"
                 android:layout_marginRight="-50dp"
                 android:rotation="5"
-                android:background="@color/grey224"/>
-
+                android:background="#323232"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:layout_marginLeft="-50dp"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginRight="-50dp"
-                android:background="@color/grey240"
+                android:background="#3E3E3E"
                 android:rotation="7" />
 
 <!--            <ImageView-->
@@ -74,10 +73,11 @@
                 android:id="@+id/title1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
                 android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
                 android:text="매일의 발견,"
-                android:textSize="30dp"/>
+                android:textColor="@color/white"
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/title2"
@@ -88,7 +88,7 @@
                 android:layout_marginTop="0dp"
                 android:fontFamily="@font/eastseadokdo_regular"
                 android:text="시선집"
-                android:textColor="@color/black"
+                android:textColor="@color/tangerine"
                 android:textSize="100dp" />
 
             <TextView
@@ -99,6 +99,7 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="8dp"
                 android:text="서로 다른 시선을 발견하는 즐거움"
+                android:textColor="@color/white"
                 android:textSize="20dp" />
 
             <androidx.cardview.widget.CardView
@@ -106,50 +107,54 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/copy"
-                android:layout_marginTop="50dp"
                 android:layout_marginLeft="20dp"
-                app:cardElevation="8dp"
+                android:layout_marginTop="50dp"
+                android:padding="20dp"
                 app:cardBackgroundColor="@color/champaigngold_dark"
-                android:padding="20dp">
+                app:cardElevation="8dp">
+
                 <ImageView
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:padding="25dp"
+                    android:adjustViewBounds="true"
                     android:background="@color/white"
-                    android:src="@drawable/unsplash_ash_ashley"
-                    android:adjustViewBounds="true"/>
+                    android:padding="25dp"
+                    android:src="@drawable/unsplash_ash_ashley" />
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_alignBottom="@id/frame1"
-                android:layout_toRightOf="@id/frame1"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginBottom="10dp"
+                android:layout_toRightOf="@id/frame1"
                 app:cardElevation="8dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="열매"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:text="김대리"
-                        android:textSize="8sp"/>
+                        android:textSize="8sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="꽃 피기도 전에 \n매실이 열렸네"
-                        android:textSize="8sp"/>
+                        android:textSize="8sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -165,7 +170,7 @@
                 app:cardBackgroundColor="@color/champaigngold_dark"
                 app:cardElevation="8dp">
                 <ImageView
-                    android:layout_width="230dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:adjustViewBounds="true"
@@ -173,36 +178,39 @@
                     android:padding="20dp"
                     android:src="@drawable/unsplash_pineapple_supply_co" />
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_alignBottom="@id/frame2"
-                android:layout_toLeftOf="@id/frame2"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
+                android:layout_toLeftOf="@id/frame2"
                 app:cardElevation="8dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="헤어스타일"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:text="산다라"
-                        android:textSize="8sp"/>
+                        android:textSize="8sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="에에 에에 에 \n에에 에에 에 \n에에"
-                        android:textSize="8sp"/>
+                        android:textSize="8sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -218,7 +226,7 @@
                 app:cardBackgroundColor="@color/champaigngold_dark"
                 app:cardElevation="8dp">
                 <ImageView
-                    android:layout_width="240dp"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:adjustViewBounds="true"
@@ -231,7 +239,7 @@
                 android:layout_height="100dp"
                 android:layout_alignBottom="@id/frame3"
                 android:layout_toRightOf="@id/frame3"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginRight="-50dp"
                 app:cardElevation="8dp">
                 <LinearLayout
@@ -242,60 +250,64 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
-                        android:text="부모님"
+                        android:text="사진"
                         android:textSize="12sp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="막내작가"
+                        android:text="앙리"
                         android:textSize="8sp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="막내가 어느새 \n부모가 되었다"
+                        android:text="오늘 내게 \n단 한 컷만 \n주어진다면"
                         android:textSize="8sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="470dp"
+                android:layout_height="430dp"
                 android:layout_below="@id/frame3"
                 android:layout_marginLeft="-50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginRight="-50dp"
                 android:background="@color/tangerine" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/frame3">
+
                 <ImageView
-                    android:layout_width="400dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="70dp"
+                    android:layout_marginTop="50dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/letter" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="200dp"
+                    android:layout_marginTop="185dp"
                     android:gravity="center_horizontal"
                     android:text="전시 초대장"
-                    android:textStyle="bold"
-                    android:textSize="32sp"/>
+                    android:textColor="@color/champaigngold"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="260dp"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="240dp"
+                    android:fontFamily="@font/eastseadokdo_regular"
                     android:gravity="center_horizontal"
-                    android:text="오늘의 주제가 발표됐습니다. 작가님만의 시선을 \n시선집에 공유해주세요. "
                     android:lineSpacingExtra="8sp"
-                    android:textSize="32sp"
-                    android:fontFamily="@font/eastseadokdo_regular"/>
+                    android:text="오늘의 주제가 발표됐습니다. 작가님만의 시선을 \n시선집에 공유해주세요. "
+                    android:textColor="@color/black"
+                    android:textSize="32sp" />
             </RelativeLayout>
 
             <TextView
@@ -304,12 +316,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/frame3"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="400dp"
+                android:layout_marginTop="380dp"
                 android:background="@drawable/bg_all_round_black"
                 android:gravity="center"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:text="참가하기"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
         </RelativeLayout>
