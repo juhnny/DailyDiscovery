@@ -16,59 +16,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/page1"
-                layout="@layout/activity_inviation_page1"/>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="600dp"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="50dp"
+                android:text="매일의 발견,\n시선집"
+                android:textSize="30dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="50dp"
+                android:text="서로 다른 시선을 발견하는 즐거움"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_lookaround"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="16dp"
+                android:background="@drawable/bg_all_round_black"
+                android:text="시작하기"
+                android:textSize="16sp"
+                android:gravity="center"/>
+
+        </RelativeLayout>
 
     </ScrollView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
-        android:background="#E4E4E4">
-
-        <TextView
-            android:id="@+id/tv_login"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:background="@color/grey192"
-            android:text="로그인"
-            android:textSize="32dp"
-            android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"/>
-
-        <TextView
-            android:id="@+id/tv_signup"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:background="@color/grey192"
-            android:text="회원가입"
-            android:textSize="32dp"
-            android:gravity="center"
-            android:layout_below="@id/tv_login"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"/>
-
-        <TextView
-            android:id="@+id/tv_lookaround"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:text="둘러보기"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_below="@id/tv_signup"
-            android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
 
 </RelativeLayout>

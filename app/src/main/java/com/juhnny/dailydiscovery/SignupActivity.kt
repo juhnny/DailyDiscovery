@@ -6,14 +6,14 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.juhnny.dailydiscovery.databinding.ActivitySignupBinding
+import com.juhnny.dailydiscovery.databinding.ActivitySingupBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SignupActivity : AppCompatActivity() {
 
-    val b by lazy { ActivitySignupBinding.inflate(layoutInflater) }
+    val b by lazy { ActivitySingupBinding.inflate(layoutInflater) }
     val auth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +22,7 @@ class SignupActivity : AppCompatActivity() {
 
         setSupportActionBar(b.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         /***** 회원가입 화면에서 할 일 *****/
         //이메일/비번 회원가입 시

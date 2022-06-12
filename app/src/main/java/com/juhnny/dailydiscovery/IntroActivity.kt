@@ -75,9 +75,11 @@ class IntroActivity : AppCompatActivity() {
 
     }//onCreate()
 
-    inner class OpenActivityHandler(looper:Looper, val activityClassToOpen:Class<*>):Handler(looper){
+    private inner class OpenActivityHandler(looper:Looper, val activityClassToOpen:Class<*>):Handler(looper){
         override fun handleMessage(msg: Message) {
-            startActivity(Intent(baseContext, activityClassToOpen), optionsCompat.toBundle())
+            val intent = Intent(baseContext, activityClassToOpen)
+            val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, b.entrance.width/2, b.entrance.height/2, 0, 0)
+            startActivity(intent, optionsCompat.toBundle())
             finish()
         }
     }

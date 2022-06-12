@@ -18,18 +18,10 @@ class InvitationActivity : AppCompatActivity() {
         /*****초대장 화면에서 할 일****/
         //초대장 이미지 보여주기
         //이용방법 설명
-        //로그인/회원가입/둘러보기 버튼
-
-        b.tvLogin.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
-
-        b.tvSignup.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
-        }
+        //계속하기 버튼
 
         b.tvLookaround.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }

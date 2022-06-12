@@ -20,6 +20,6 @@
         android:layout_below="@id/entrance"
         android:layout_alignRight="@id/entrance"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_intro" />
+        android:src="@drawable/shade_intro" />
 
 </RelativeLayout>
