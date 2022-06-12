@@ -20,39 +20,298 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
+
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:background="@drawable/gradient_invitation"/>-->
             <View
-                android:layout_width="wrap_content"
-                android:layout_height="600dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="-50dp"
+                android:background="#404040"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginRight="-50dp"
+                android:rotation="1"
+                android:background="@color/grey128"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginRight="-50dp"
+                android:rotation="3"
+                android:background="@color/grey192"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginRight="-50dp"
+                android:rotation="5"
+                android:background="@color/grey224"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="110dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginRight="-50dp"
+                android:rotation="7"
+                android:background="@color/grey240"/>
 
+<!--            <ImageView-->
+<!--                android:layout_width="600dp"-->
+<!--                android:layout_height="600dp"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:layout_marginTop="-80dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:src="@drawable/light2" />-->
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/title1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginLeft="50dp"
-                android:text="매일의 발견,\n시선집"
+                android:text="매일의 발견,"
                 android:textSize="30dp"/>
-
             <TextView
+                android:id="@+id/title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title"
-                android:layout_marginTop="16dp"
+                android:layout_below="@id/title1"
+                android:layout_marginTop="0dp"
                 android:layout_marginLeft="50dp"
+                android:textColor="@color/tangerine"
+                android:text="시선집"
+                android:fontFamily="@font/eastseadokdo_regular"
+                android:textSize="100dp"/>
+
+            <TextView
+                android:id="@+id/copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title2"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="16dp"
                 android:text="서로 다른 시선을 발견하는 즐거움"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frame1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/copy"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/champaigngold_dark"
+                android:padding="20dp">
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="20dp"
+                    android:background="@color/white"
+                    android:src="@drawable/london3"
+                    android:adjustViewBounds="true"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@id/frame1"
+                android:layout_toRightOf="@id/frame1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
+                        android:text="알람"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="김작가"
+                        android:textSize="8sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="지각하기 싫어서 새로 마련했어요"
+                        android:textSize="8sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frame2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/frame1"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="20dp"
+                android:padding="20dp"
+                app:cardBackgroundColor="@color/champaigngold_dark"
+                app:cardElevation="8dp">
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white"
+                    android:padding="30dp"
+                    android:src="@drawable/london" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@id/frame2"
+                android:layout_toLeftOf="@id/frame2"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
+                        android:text="알람"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="김작가"
+                        android:textSize="8sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="지각하기 싫어서 새로 마련했어요"
+                        android:textSize="8sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frame3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/frame2"
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="10dp"
+                android:padding="20dp"
+                app:cardBackgroundColor="@color/champaigngold_dark"
+                app:cardElevation="8dp">
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white"
+                    android:padding="30dp"
+                    android:src="@drawable/london2" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@id/frame3"
+                android:layout_toRightOf="@id/frame3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="-50dp"
+                app:cardElevation="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
+                        android:text="알람"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="김작가"
+                        android:textSize="8sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="지각하기 싫어서 새로 마련했어요"
+                        android:textSize="8sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="470dp"
+                android:layout_below="@id/frame3"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginRight="-50dp"
+                android:background="@color/tangerine"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/frame3">
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/letter"
+                    android:adjustViewBounds="true"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="200dp"
+                    android:gravity="center_horizontal"
+                    android:text="전시 초대장"
+                    android:textStyle="bold"
+                    android:textSize="32sp"/>
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="260dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="오늘의 주제가 발표됐습니다. 작가님만의 시선을 \n시선집에 공유해주세요. "
+                    android:lineSpacingExtra="8sp"
+                    android:textSize="32sp"
+                    android:fontFamily="@font/eastseadokdo_regular"/>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_lookaround"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:paddingVertical="8dp"
-                android:paddingHorizontal="16dp"
+                android:layout_below="@id/frame3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="400dp"
                 android:background="@drawable/bg_all_round_black"
-                android:text="시작하기"
-                android:textSize="16sp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="참가하기"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
