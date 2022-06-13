@@ -107,7 +107,7 @@ class EditorActivity : AppCompatActivity() {
 
                 val userId = FirebaseAuth.getInstance().currentUser?.email
                 if(userId == null) {
-                    Log.e("UserId is null","")
+                    Log.e("EditorAc UserId is null","")
                     Toast.makeText(this, "유저 정보 가져오기 실패", Toast.LENGTH_SHORT).show()
                     return true
                 }
@@ -123,12 +123,11 @@ class EditorActivity : AppCompatActivity() {
                 imgRef.putFile(imgUri!!).addOnSuccessListener {
                     //파일 참조객체로부터 이미지 URL을 얻어오기 - URL을 얻어올 수 있다면 저장에 성공한 것
                     imgRef.downloadUrl.addOnCompleteListener {
-                        //업로드 성공 시 액티비티 종료
+                        //업로드 성공 시 다음 작업
                         //실패시 알림창 띄우고 재시도 하도록
                         if(it.isSuccessful){
                             imgFirebaseUrl = it.result.toString() //다운로드 주소 저장
-                            Log.e("TAG 이미지 저장위치","${it.result}")
-                            Toast.makeText(this, "사진 저장 완료", Toast.LENGTH_SHORT).show()
+                            Log.e("EditorAc 이미지 저장위치","${it.result}")
 
                             //Firebase Firestore에 전체 데이터 업로드
                             //요청 및 응답 처리
@@ -136,9 +135,9 @@ class EditorActivity : AppCompatActivity() {
                             call.enqueue(object : Callback<String>{
                                 override fun onResponse(call: Call<String>, response: Response<String>) {
                                     val resultMsg = response.body()
-                                        Log.e("EditorAc savePost Success", "$resultMsg")
-                                        setResult(RESULT_OK, intent)
-                                        finish()
+                                    Log.e("EditorAc savePost Success", "$resultMsg")
+                                    setResult(RESULT_OK, intent)
+                                    finish()
                                 }
 
                                 override fun onFailure(call: Call<String>, t: Throwable) {
@@ -151,15 +150,9 @@ class EditorActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-
-
-
-
             }
         }
         return super.onOptionsItemSelected(item)
-
     }
 
     //Back버튼 눌렀을 때도 바로 닫히지 않고 안내 뜨게 해야함 - 한번 더 누르면 닫히고 내용은 저장되지 않는다고.

@@ -41,8 +41,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:background="@color/white"
             android:text="NICKNAME"
-            android:textSize="20sp" />
+            android:textStyle="bold"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/tv_introduce"
@@ -50,10 +54,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_nickname"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="48dp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:background="@color/white"
             android:text="INTRODUCE"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <RelativeLayout
             android:id="@+id/layout_subscribe"
@@ -67,12 +74,17 @@
                 android:id="@+id/btn_subscribe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/tangerine"
+                android:textColor="@color/black"
                 android:text="구독"/>
+
             <Button
                 android:id="@+id/btn_unsubscribe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="구독 해제"/>
+                android:backgroundTint="@color/tangerine"
+                android:textColor="@color/black"
+                android:text="구독 해제" />
 
         </RelativeLayout>
     </RelativeLayout>
