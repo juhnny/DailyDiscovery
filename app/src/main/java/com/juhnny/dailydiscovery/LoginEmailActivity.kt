@@ -24,6 +24,10 @@ class LoginEmailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        b.tvGuide.visibility = View.GONE
+        b.tvGuideEmailVerification.visibility = View.GONE
+        b.layoutEmailVerification.visibility = View.GONE
+
         b.btnLogin.setOnClickListener{ signIn() }
 
         b.tvFindId.setOnClickListener { MyUtil.showSorryAlert(this) }
@@ -100,7 +104,7 @@ class LoginEmailActivity : AppCompatActivity() {
                                         Toast.makeText(this, "인증 확인", Toast.LENGTH_SHORT).show()
                                         saveLoggedInUserData()
                                         startActivity(Intent(this, MainActivity::class.java))
-                                    }else{
+                                    } else {
                                         Toast.makeText(this, "이메일 인증이 완료되지 않았습니다. 인증 메일의 링크를 클릭하시면 인증이 완료됩니다.", Toast.LENGTH_LONG).show()
                                     }
                                 }

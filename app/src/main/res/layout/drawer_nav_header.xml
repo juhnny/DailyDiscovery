@@ -2,9 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="#CDDC39"
+    android:background="@drawable/gradient_purple_blue"
     android:padding="16dp">
 
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon2"/>
     <TextView
         android:id="@+id/tv_header_name"
         android:layout_width="wrap_content"
@@ -21,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="로그인"/>
+        android:text="로그인"
+        android:visibility="invisible"/>
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="wrap_content"

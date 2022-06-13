@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey205"
+    android:background="@color/grey224"
 
     android:id="@+id/my_bio_fragment_root">
 
@@ -92,17 +92,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar">
+
         <ImageView
             android:id="@+id/iv_signin_img"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/ic_launcher_foreground"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/icon2" />
         <TextView
             android:id="@+id/tv_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:text="시선집 이용을 위해\n로그인이 필요합니다"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
             android:layout_below="@id/iv_signin_img"
             android:layout_centerHorizontal="true"/>
 
@@ -112,6 +117,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_signin"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/tangerine"
+            android:textColor="@color/black"
             android:text="로그인" />
     </RelativeLayout>
 

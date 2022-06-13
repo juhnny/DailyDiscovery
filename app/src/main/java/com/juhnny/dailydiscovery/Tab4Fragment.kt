@@ -55,30 +55,30 @@ class Tab4Fragment : Fragment(){
 ////        drawerToggle.toolbarNavigationClickListener.onClick(null)
         b.root.addDrawerListener(drawerToggle)
 
-        val tvHeaderName = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_name)
-        val tvHeaderInfo = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_info)
-
-        val btnLogin = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_login)
-        val btnLogout = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_logout)
-        //추가하기. 로그인 돼있는 상태면 버튼 숨기고 다른 헤더 정보 띄우기
-        if(FirebaseAuth.getInstance().currentUser == null) {
-            btnLogin.visibility = View.VISIBLE
-            btnLogout.visibility = View.GONE
-        } else {
-            btnLogin.visibility = View.GONE
-            btnLogout.visibility = View.VISIBLE
-        }
-        btnLogin.setOnClickListener {
-            b.root.closeDrawer(b.nav)
-            startActivity(Intent(context, LoginActivity::class.java))
-        }
-        btnLogout.setOnClickListener {
-            b.root.closeDrawer(b.nav)
-            FirebaseAuth.getInstance().signOut()
-            Toast.makeText(requireContext(), "로그아웃 완료", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(context, MainActivity::class.java))
-            requireActivity().finish()
-        }
+//        val tvHeaderName = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_name)
+//        val tvHeaderInfo = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_info)
+//
+//        val btnLogin = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_login)
+//        val btnLogout = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_logout)
+//        //추가하기. 로그인 돼있는 상태면 버튼 숨기고 다른 헤더 정보 띄우기
+//        if(FirebaseAuth.getInstance().currentUser == null) {
+//            btnLogin.visibility = View.VISIBLE
+//            btnLogout.visibility = View.GONE
+//        } else {
+//            btnLogin.visibility = View.GONE
+//            btnLogout.visibility = View.VISIBLE
+//        }
+//        btnLogin.setOnClickListener {
+//            b.root.closeDrawer(b.nav) //animation은 기본이 true
+//            startActivity(Intent(context, LoginActivity::class.java))
+//        }
+//        btnLogout.setOnClickListener {
+//            b.root.closeDrawer(b.nav)
+//            FirebaseAuth.getInstance().signOut()
+//            Toast.makeText(requireContext(), "로그아웃 완료", Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(context, MainActivity::class.java))
+//            requireActivity().finish()
+//        }
 
 
         //교체할 container가 내 layout 안에 있다면 childFragmentManager를 쓴다.

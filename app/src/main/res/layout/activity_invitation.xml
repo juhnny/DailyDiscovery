@@ -287,7 +287,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/letter" />
+                    android:src="@drawable/letter"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -306,7 +306,7 @@
                     android:gravity="center_horizontal"
                     android:lineSpacingExtra="8sp"
                     android:text="오늘의 주제가 발표됐습니다. 작가님만의 시선을 \n시선집에 공유해주세요. "
-                    android:textColor="@color/black"
+                    android:textColor="@color/champaigngold_dark"
                     android:textSize="32sp" />
             </RelativeLayout>
 

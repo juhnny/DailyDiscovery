@@ -175,12 +175,12 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="86dp"
+            android:backgroundTint="#FF5722"
             android:contentDescription="submit"
             android:src="@drawable/ic_add_24"
-            app:tint="@color/grey240"
             app:fabSize="normal"
-            android:backgroundTint="@color/dahong"
-            app:rippleColor="@color/tangerine" />
+            app:rippleColor="@color/tangerine"
+            app:tint="@color/grey240" />
     </RelativeLayout>
 
 

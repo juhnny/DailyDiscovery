@@ -9,17 +9,19 @@
             app:title="시선집 소개"
             app:summary="앱 소개"
             app:icon="@drawable/ic_photo_album_24"/>
-
         <Preference app:key="open_source_licenses"
             app:title="오픈 소스"
             app:summary="오픈소스 사용 내역"
             app:useSimpleSummaryProvider="true"
             app:icon="@drawable/ic_groups_24"/>
-
         <Preference app:key="version"
             app:title="버전"
             app:summary="Version : 0.0"
             app:icon="@drawable/ic_build_24"/>
+        <Preference app:key="signout"
+            app:title="로그아웃"
+            app:summary="앱에서 로그아웃 합니다"
+            app:icon="@drawable/ic_exit_to_app_24"/>
 
     </PreferenceCategory>
 

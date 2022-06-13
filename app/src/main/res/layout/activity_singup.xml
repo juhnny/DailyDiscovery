@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignupActivity"
-    android:background="@drawable/gradient1">
+    android:background="@drawable/gradient_purple_blue">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="이메일로 사용자 계정 만들기"
             android:textColor="@color/white"
-            android:textSize="28sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/et_email"
@@ -43,6 +43,7 @@
             android:background="@drawable/bg_all_round_square"
             android:hint="이메일"
             android:inputType="textEmailAddress"
+            android:imeOptions="actionDone"
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
             android:textColor="@color/black" />
@@ -55,8 +56,8 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_all_round_square"
             android:hint="작가명"
-            android:inputType="textEmailAddress"
             android:imeOptions="normal"
+            android:inputType="textEmailAddress"
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
             android:textColor="@color/black" />
@@ -97,11 +98,10 @@
             android:layout_marginTop="8dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
-            android:text="아이디/비밀번호 인내"
+            android:text="아이디/비밀번호 안내"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:visibility="gone" />
-
 
         <!--        <TextView-->
         <!--            android:id="@+id/tv_guide_email_verification"-->

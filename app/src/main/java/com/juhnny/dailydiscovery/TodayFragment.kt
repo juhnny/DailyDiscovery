@@ -1,5 +1,6 @@
 package com.juhnny.dailydiscovery
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -62,8 +63,14 @@ class TodayFragment : Fragment() {
         if(user == null){
             b.ivNoti.visibility = View.GONE
             b.fabSubmit.setOnClickListener {
-                //Custom View로 로그인 안내 띄우기 //TODO
-                AlertDialog.Builder(requireContext()).setView(R.layout.recycler_item_topics).create().show()
+                //로그인 안내 띄우기
+                AlertDialog.Builder(requireContext()).setTitle("시선집")
+                    .setMessage("시선집 이용을 위해\n로그인이 필요합니다")
+                    .setPositiveButton("로그인", object : DialogInterface.OnClickListener{
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            Toast.makeText(requireContext(), "ddd", Toast.LENGTH_SHORT).show()
+                        }
+                    }).create().show()
             }
         } else {
             b.fabSubmit.setOnClickListener {

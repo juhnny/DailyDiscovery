@@ -1,14 +1,10 @@
 package com.juhnny.dailydiscovery
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
-import com.juhnny.dailydiscovery.databinding.FragmentSettingsBinding
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -33,17 +29,31 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<SwitchPreferenceCompat>("aaa")?.summaryProvider = Preference.SummaryProvider { preference:SwitchPreferenceCompat ->
             "이 항목은..."
         }
+        findPreference<Preference>("version")?.summaryProvider = Preference.SummaryProvider {prefernce:Preference ->
+            val versionName = BuildConfig.VERSION_NAME
+            val versionCode = BuildConfig.VERSION_CODE
+            "Version: $versionName($versionCode)"
+        }
 
         //항목이 바뀌었을 때
         prefs.registerOnSharedPreferenceChangeListener(listener)
 
+        //로그인 돼있는 상태면 버튼 숨기기
+        findPreference<Preference>("signout")?.isVisible = G.user != null //로그인돼있으면 true, 안돼있으면 false로 입력됨
+        findPreference<Preference>("signout")?.isVisible = true //테스트용으로 무조건 보이도록
+
         //항목이 클릭되었을 때
-        findPreference<EditTextPreference>("bbb")?.setOnPreferenceClickListener(object : Preference.OnPreferenceClickListener{
+        findPreference<Preference>("signout")?.onPreferenceClickListener = object : Preference.OnPreferenceClickListener{
             override fun onPreferenceClick(preference: Preference): Boolean {
-//                Toast.makeText(requireContext(), "bbb", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+
                 return true //구글 문서 예제에 true
             }
-        })
+        }
     }
 
     override fun onPause() {
