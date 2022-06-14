@@ -36,12 +36,12 @@ class FollowRecyclerAdapter(val context: Context, val fragment: Fragment, val fo
                 binding.frame3.visibility = View.VISIBLE
             } else binding.frame3.visibility = View.INVISIBLE
 
-            val constrainSet = ConstraintSet()
-            constrainSet.clone(binding.layoutPhotos)
-            constrainSet.setVerticalBias(R.id.frame1, Random().nextFloat())
-            constrainSet.setVerticalBias(R.id.frame2, Random().nextFloat())
-            constrainSet.setVerticalBias(R.id.frame3, Random().nextFloat())
-            constrainSet.applyTo(binding.layoutPhotos)
+//            val constrainSet = ConstraintSet()
+//            constrainSet.clone(binding.layoutPhotos)
+//            constrainSet.setVerticalBias(R.id.frame1, Random().nextFloat())
+//            constrainSet.setVerticalBias(R.id.frame2, Random().nextFloat())
+//            constrainSet.setVerticalBias(R.id.frame3, Random().nextFloat())
+//            constrainSet.applyTo(binding.layoutPhotos)
 
         }
     }
