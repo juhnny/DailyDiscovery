@@ -237,18 +237,18 @@ class MyBioFragment (val userEmail: String?,
 
         val retrofitInterface = RetrofitHelper.getRetrofitInterface()
 
-        val call:Call<String> = retrofitInterface.loadPostToAlbumString(queryEmail)
-        call.enqueue(object : Callback<String>{
-            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                val resultStr:String? = response.body()
-                if(resultStr != null){
-                    Log.e("loadPostToAlbumString Success", resultStr)
-                }
-            }
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(), "loadPostToAlbum Failed : ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })//loadPostToAlbumString
+//        val call:Call<String> = retrofitInterface.loadPostToAlbumString(queryEmail)
+//        call.enqueue(object : Callback<String>{
+//            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+//                val resultStr:String? = response.body()
+//                if(resultStr != null){
+//                    Log.e("loadPostToAlbumString Success", resultStr)
+//                }
+//            }
+//            override fun onFailure(call: Call<String>, t: Throwable) {
+//                Toast.makeText(requireContext(), "loadPostToAlbum Failed : ${t.message}", Toast.LENGTH_SHORT).show()
+//            }
+//        })//loadPostToAlbumString
 
         val call2:Call<Response<Photo>> = retrofitInterface.loadPostToAlbum(queryEmail)
         call2.enqueue(object : Callback<Response<Photo>>{

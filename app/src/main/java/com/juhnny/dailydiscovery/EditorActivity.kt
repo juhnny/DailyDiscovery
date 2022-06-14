@@ -100,8 +100,8 @@ class EditorActivity : AppCompatActivity() {
                     Toast.makeText(this, "주제는 1~20자 사이로 입력해주세요", Toast.LENGTH_SHORT).show()
                     return true
                 }
-                if(msg.length !in 1..20){
-                    Toast.makeText(this, "설명은 0~20자 사이로 입력해주세요", Toast.LENGTH_SHORT).show()
+                if(msg.length !in 0..50){
+                    Toast.makeText(this, "설명은 0~50자 사이로 입력해주세요", Toast.LENGTH_SHORT).show()
                     return true
                 }
 

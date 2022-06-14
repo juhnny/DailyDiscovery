@@ -80,25 +80,26 @@
                         android:textSize="22dp"
                         android:textColor="@color/champaigngold_dark"
                         android:gravity="center_horizontal"/>
+
                     <EditText
                         android:id="@+id/et_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/et_topic"
+                        android:ems="15"
+                        android:gravity="center_horizontal"
+                        android:hint="사진에 담긴 \n작가님의 생각을 \n글로 표현해주세요\n(최대 50자)"
+                        android:imeOptions="actionDone"
+                        android:inputType="textImeMultiLine"
+                        android:lineSpacingExtra="4dp"
+                        android:lines="4"
+                        android:maxLength="50"
+                        android:paddingHorizontal="8dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="20dp"
-                        android:paddingHorizontal="8dp"
-                        android:inputType="textMultiLine"
-                        android:imeOptions="actionDone"
-                        android:hint="사진에 담긴 \n작가님의 생각을 \n글로 표현해주세요\n(최대 50자)"
-                        android:textColorHint="@color/champaigngold"
-                        android:ems="15"
-                        android:maxLength="50"
-                        android:lines="4"
-                        android:textSize="22dp"
                         android:textColor="@color/champaigngold_dark"
-                        android:gravity="center_horizontal"
-                        android:lineSpacingExtra="4dp"/>
+                        android:textColorHint="@color/champaigngold"
+                        android:textSize="22dp" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 

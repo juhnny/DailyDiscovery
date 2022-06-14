@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".PhotoActivity"
     android:orientation="vertical"
-    android:background="@color/grey205"
-
+    android:background="@color/grey224"
     android:id="@+id/photo_activity_root">
 
     <androidx.appcompat.widget.Toolbar
