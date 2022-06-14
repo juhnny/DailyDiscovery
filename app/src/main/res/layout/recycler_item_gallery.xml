@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="4dp"
-    android:layout_marginHorizontal="4dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/frame_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp"
         app:cardElevation="4dp"
         app:cardCornerRadius="0dp">
         <FrameLayout
@@ -23,7 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_launcher_background"/>
+                android:src="@drawable/ic_image_search_200_trans"
+                android:background="@color/champaigngold"/>
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 
@@ -31,23 +33,26 @@
         android:id="@+id/tv_topicname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="주제명"
-        android:textSize="16sp"
-        android:textStyle="bold"
         android:layout_below="@id/frame_cardview"
-        android:layout_marginTop="4dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="8dp"/>
+        android:layout_marginHorizontal="8dp"
+        android:fontFamily="@font/eastseadokdo_regular"
+        android:text="주제명"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/tv_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="설명"
-        android:textSize="12sp"
         android:layout_below="@id/tv_topicname"
-        android:layout_marginTop="4dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="8dp"/>
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="6dp"
+        android:padding="6dp"
+        android:lineSpacingExtra="4dp"
+        android:text="설명"
+        android:textSize="12sp" />
 
 <!--        <TextView-->
 <!--            android:id="@+id/tv_nickname"-->

@@ -51,7 +51,7 @@ class EditorActivity : AppCompatActivity() {
         //ISO 8601 포맷의 Day Time 스트링을 파싱하기
         val updateDatetimeStr:String = "2022-05-04T17:19:36+09:00"
         val parsedDate:OffsetDateTime = OffsetDateTime.parse(updateDatetimeStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        Log.e("TAG datetime", "${parsedDate}, ${parsedDate.dayOfMonth}, ${parsedDate.month}")
+        Log.e("EditorAc datetime", "${parsedDate}, ${parsedDate.dayOfMonth}, ${parsedDate.month}")
         //SimpleDateFormat은 ISO 8601 포맷조차 최소 API레벨이 더 높아야 한다며 파싱을 못한다.
 //        val format = SimpleDateFormat("yyyy-MM-DD'T'hh:mm:ss.SSSX", Locale.KOREA)
 //        format.parse(updateDatetimeStr)

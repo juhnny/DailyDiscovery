@@ -2,12 +2,19 @@ package com.juhnny.dailydiscovery
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.juhnny.dailydiscovery.databinding.RecyclerItemPhotoBinding
+import java.time.OffsetDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PhotoPagerAdapter(val context: Context, val photos:ArrayList<Photo>): RecyclerView.Adapter<PhotoPagerAdapter.VH>() {
 

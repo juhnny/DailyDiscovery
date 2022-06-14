@@ -22,7 +22,7 @@ class BioRecyclerAdapter(val context:Context, var photos:MutableList<Photo>): Re
 //        }
 //    }
     inner class VH(itemView:View):RecyclerView.ViewHolder(itemView){
-        val binding = RecyclerItemBioBinding.bind(itemView) //itemView로 넘어온 뷰를 내 binding으로 삼겠다.
+        val binding = RecyclerItemGalleryBinding.bind(itemView) //itemView로 넘어온 뷰를 내 binding으로 삼겠다.
     }
 
 //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -30,7 +30,7 @@ class BioRecyclerAdapter(val context:Context, var photos:MutableList<Photo>): Re
 //        return VH(binding)
 //    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.recycler_item_bio, parent, false)
+        val itemView = LayoutInflater.from(context).inflate(R.layout.recycler_item_gallery, parent, false)
         return VH(itemView)
     }
 
