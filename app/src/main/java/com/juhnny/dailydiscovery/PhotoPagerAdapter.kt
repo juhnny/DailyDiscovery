@@ -20,7 +20,10 @@ class PhotoPagerAdapter(val context: Context, val photos:ArrayList<Photo>): Recy
 
     inner class VH(val binding:RecyclerItemPhotoBinding):RecyclerView.ViewHolder(binding.root){
         fun setData(photo:Photo){
-            Glide.with(context).load(photo.imgUrl).into(binding.ivPhoto)
+            Glide.with(context).load(photo.imgUrl)
+                .placeholder(R.drawable.ic_image_search_200_trans)
+                .error(R.drawable.ic_image_search_200_trans)
+                .into(binding.ivPhoto)
             binding.tvTopicname.text = photo.topic
             binding.tvNickname.text = photo.nickname
             binding.tvMsg.text = photo.message

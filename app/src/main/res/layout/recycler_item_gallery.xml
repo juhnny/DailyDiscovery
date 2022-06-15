@@ -38,6 +38,7 @@
         android:layout_marginHorizontal="8dp"
         android:fontFamily="@font/eastseadokdo_regular"
         android:text="주제명"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -52,6 +53,7 @@
         android:padding="6dp"
         android:lineSpacingExtra="4dp"
         android:text="설명"
+        android:textColor="@color/black"
         android:textSize="12sp" />
 
 <!--        <TextView-->

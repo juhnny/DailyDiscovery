@@ -64,12 +64,12 @@
                         android:id="@+id/tv_topicname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/eastseadokdo_regular"
                         android:gravity="center_horizontal"
                         android:paddingVertical="4dp"
                         android:text="주제명"
-                        android:fontFamily="@font/eastseadokdo_regular"
                         android:textColor="@color/black"
-                        android:textSize="28sp"
+                        android:textSize="32sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -77,9 +77,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_topicname"
-                        android:layout_marginRight="16dp"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
                         android:text="작가명"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <TextView
@@ -91,7 +92,8 @@
                         android:lineSpacingExtra="4dp"
                         android:paddingVertical="8dp"
                         android:text="@string/medium_text"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
 
                     <TextView
                         android:id="@+id/tv_creationDate"

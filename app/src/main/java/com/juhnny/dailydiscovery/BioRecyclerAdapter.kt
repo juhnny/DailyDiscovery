@@ -49,7 +49,10 @@ class BioRecyclerAdapter(val context:Context, var photos:MutableList<Photo>): Re
     override fun onBindViewHolder(holder: VH, position: Int) {
         var photo = photos[position]
 
-        Glide.with(context).load(photo.imgUrl).into(holder.binding.ivPhoto)
+        Glide.with(context).load(photo.imgUrl)
+            .placeholder(R.drawable.ic_image_search_200_trans)
+            .error(R.drawable.ic_image_search_200_trans)
+            .into(holder.binding.ivPhoto)
         holder.binding.tvTopicname.text = photo.topic
         holder.binding.tvMsg.text = photo.message
 //            binding.tvNickname.text = photo.nickname

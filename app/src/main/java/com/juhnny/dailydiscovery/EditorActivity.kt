@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,8 +36,9 @@ class EditorActivity : AppCompatActivity() {
         setContentView(b.root)
 
         setSupportActionBar(b.toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
 
         //선택한 주제를 바로 EditText에 표시하기
         val todayTopic:String? = intent.getStringExtra("topic")
@@ -117,6 +119,7 @@ class EditorActivity : AppCompatActivity() {
                 val updateDate = format.format(Date())
 
                 //Firebase Storage에 사진 업로드
+                b.progressCircular.visibility = View.VISIBLE
 //                uploadImage()
                 var fileName = "IMG_${SimpleDateFormat("yyyyMMdd_hhmmss", Locale.KOREA).format(Date())}_.png"
                 imgRef = storage.getReference("uploads/photos/$fileName")
@@ -136,6 +139,7 @@ class EditorActivity : AppCompatActivity() {
                                 override fun onResponse(call: Call<String>, response: Response<String>) {
                                     val resultMsg = response.body()
                                     Log.e("EditorAc savePost Success", "$resultMsg")
+                                    b.progressCircular.visibility = View.GONE
                                     setResult(RESULT_OK, intent)
                                     finish()
                                 }

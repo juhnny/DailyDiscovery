@@ -10,8 +10,6 @@
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_email_24.xml" value="0.1885" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_grade_24.xml" value="0.1885" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_intro.xml" value="0.2315" />
-        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/ic_preview_24.xml" value="0.136" />
-        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/shade_intro.xml" value="0.136" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/topic_bg.xml" value="0.1635" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/drawable/topic_bg_circle.xml" value="0.1485" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/actionbar_account.xml" value="0.36614583333333334" />
@@ -19,7 +17,7 @@
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_editor.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_follow.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_gallery.xml" value="0.36614583333333334" />
-        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_intro.xml" value="0.9" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_intro.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_invitation.xml" value="0.25" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_login.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/activity_main.xml" value="0.3515625" />
@@ -44,7 +42,7 @@
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_tab2.xml" value="0.275" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_tab3.xml" value="0.25" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_tab4.xml" value="0.25" />
-        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_today.xml" value="0.13959234095120446" />
+        <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_today.xml" value="0.33" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_topic.xml" value="0.36614583333333334" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/fragment_topics.xml" value="0.20625" />
         <entry key="..\:/Android/Projects/DailyDiscovery/app/src/main/res/layout/recycler_item_bio.xml" value="0.36614583333333334" />
@@ -109,6 +107,7 @@
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/recycler_item_gallery.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/recycler_item_photo.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/layout/recycler_item_topics.xml" value="0.32277834525025534" />
+        <entry key="..\:/Users/JuhnnyKo/AndroidStudioProjects/DailyDiscovery/app/src/main/res/menu/bnv.xml" value="0.32916666666666666" />
       </map>
     </option>
   </component>

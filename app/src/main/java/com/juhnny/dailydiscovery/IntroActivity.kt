@@ -114,7 +114,7 @@ class IntroActivity : AppCompatActivity() {
         }
 
         val handler = OpenActivityHandler(Looper.getMainLooper(), activityClass)
-        handler.sendEmptyMessageDelayed(123, 10000)
+        handler.sendEmptyMessageDelayed(123, 1500)
     }//onStart()
 
 

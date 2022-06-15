@@ -24,15 +24,15 @@ class FollowRecyclerAdapter(val context: Context, val fragment: Fragment, val fo
 //            Glide.with(context).load(followItem.imgUrl3).into(binding.ivPhoto3)
 
             if(followItem.imgUrl1 != null) {
-                Glide.with(context).load(followItem.imgUrl1).placeholder(R.mipmap.ic_launcher).error(R.drawable.ic_launcher_foreground).into(binding.ivPhoto1)
+                Glide.with(context).load(followItem.imgUrl1).placeholder(R.drawable.ic_image_search_200_trans).error(R.drawable.ic_image_search_200_trans).into(binding.ivPhoto1)
                 binding.frame1.visibility = View.VISIBLE
             } else binding.frame1.visibility = View.INVISIBLE
             if(followItem.imgUrl2 != null) {
-                Glide.with(context).load(followItem.imgUrl2).into(binding.ivPhoto2)
+                Glide.with(context).load(followItem.imgUrl2).placeholder(R.drawable.ic_image_search_200_trans).error(R.drawable.ic_image_search_200_trans).into(binding.ivPhoto2)
                 binding.frame2.visibility = View.VISIBLE
             } else binding.frame2.visibility = View.INVISIBLE
             if(followItem.imgUrl3 != null) {
-                Glide.with(context).load(followItem.imgUrl3).into(binding.ivPhoto3)
+                Glide.with(context).load(followItem.imgUrl3).placeholder(R.drawable.ic_image_search_200_trans).error(R.drawable.ic_image_search_200_trans).into(binding.ivPhoto3)
                 binding.frame3.visibility = View.VISIBLE
             } else binding.frame3.visibility = View.INVISIBLE
 
@@ -42,12 +42,10 @@ class FollowRecyclerAdapter(val context: Context, val fragment: Fragment, val fo
 //            constrainSet.setVerticalBias(R.id.frame2, Random().nextFloat())
 //            constrainSet.setVerticalBias(R.id.frame3, Random().nextFloat())
 //            constrainSet.applyTo(binding.layoutPhotos)
-
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-
         return VH(RecyclerItemFollowBinding.inflate(LayoutInflater.from(context), parent, false))
     }
 
