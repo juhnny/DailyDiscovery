@@ -316,7 +316,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/frame3"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="380dp"
+                android:layout_marginTop="375dp"
                 android:background="@drawable/bg_all_round_black"
                 android:gravity="center"
                 android:paddingHorizontal="16dp"

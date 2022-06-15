@@ -20,7 +20,7 @@ class IntroActivity : AppCompatActivity() {
     val auth by lazy { FirebaseAuth.getInstance() }
     //FirebaseApp이라는 앱 실행과 함께 자동실행되는 Content Provider의 객체를 소환
     //비슷한 애로 FirebaseInitProvider라는 Content Provider도 있다.
-    val optionsCompat by lazy { ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, b.entrance.width/2, b.entrance.height/2, 0, 0) }
+    val activityOptions by lazy { ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, b.entrance.width/2, b.entrance.height/2, 0, 0) }
     //둘째, 셋째 파라미터 : //The coordinates of the beginning of stretching
     //넷째, 다섯째 파라미터 : //The size of the area at which the stretch begins, where (0, 0) is used to indicate from scratch to full screen
 
@@ -50,15 +50,14 @@ class IntroActivity : AppCompatActivity() {
         var isFirstRun = prefs.getBoolean("isFirstRun", true)
         Log.e("isFirstRun IntroAc: ", "$isFirstRun")
 
-        isFirstRun = true
+//        isFirstRun = true
         //첫 실행이면 Invitation Activity 실행
         if(isFirstRun) {
             val intent = Intent(this, InvitationActivity::class.java)
-            val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, b.entrance.width/2, b.entrance.height/2, 0, 0)
-            startActivity(intent, optionsCompat.toBundle())
+            startActivity(intent, activityOptions.toBundle())
             finish()
         }
-        /////////마무리////////
+        /***** 이상 확인사항 *****/
 
         //작업에 딜레이를 주는 방법들
         //TimerTask 사용
@@ -115,7 +114,7 @@ class IntroActivity : AppCompatActivity() {
         }
 
         val handler = OpenActivityHandler(Looper.getMainLooper(), activityClass)
-        handler.sendEmptyMessageDelayed(123, 1500)
+        handler.sendEmptyMessageDelayed(123, 10000)
     }//onStart()
 
 

@@ -180,7 +180,8 @@
             android:src="@drawable/ic_add_24"
             app:fabSize="normal"
             app:rippleColor="@color/tangerine"
-            app:tint="@color/grey240" />
+            app:tint="@color/grey240"
+            app:borderWidth="0dp"/>
     </RelativeLayout>
 
 
