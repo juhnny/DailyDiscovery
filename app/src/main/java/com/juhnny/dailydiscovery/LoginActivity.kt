@@ -105,6 +105,8 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(baseContext, "resultLauncer came back", Toast.LENGTH_SHORT).show()
             try {
                 //로그인 창을 그냥 닫아버리면 예외 발생
+                if(result?.resultCode == RESULT_CANCELED) return
+
                 val intent = result?.data
                 val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
                 val account = task.getResult()
