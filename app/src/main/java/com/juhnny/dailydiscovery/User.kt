@@ -6,7 +6,10 @@ data class User(val memNo:String,
                 val nickname:String,
                 val profileMsg:String,
                 val signUpDatetime:String,
-                val lastLoginDatetime:String
+                val lastLoginDatetime:String,
+                val snsType:String,
+                val snsId:String,
+                val snsConnectDate:String
                 ) {
 
 }

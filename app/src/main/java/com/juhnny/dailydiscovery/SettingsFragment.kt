@@ -46,6 +46,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("signout")?.onPreferenceClickListener = object : Preference.OnPreferenceClickListener{
             override fun onPreferenceClick(preference: Preference): Boolean {
                 Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
+
+                //로그아웃 처리////////
+
+
+
+                //////////////
+
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

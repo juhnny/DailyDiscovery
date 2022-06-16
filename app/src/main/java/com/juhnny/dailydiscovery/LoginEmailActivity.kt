@@ -152,6 +152,14 @@ class LoginEmailActivity : AppCompatActivity() {
             Log.e("TAG currentUser: ", "email: $email, name: $name, photoUri: $photoUri, uid: $uid, emailVerified: $emailVerified")
             Log.e("TAG currentUser: ", "creationTime: $creationTime, lastSignInTime: $lastSignInTime")
             Log.e("TAG currentUser: ", ": ${user.getIdToken(false).result.token}, : ${user.getIdToken(false).result.claims.values}")
+
+            //내 DB에 마지막 로그인 시각 업데이트 & 회원 정보 읽어오기
+            //성공 시 prefs 와 G.user에 저장
+
+
+
+
+
         }
 
     }

@@ -87,17 +87,17 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(this, "Kakao login", Toast.LENGTH_SHORT).show()
     }
 
+    private fun loginWithNaver(){
+        Toast.makeText(this, "Naver login", Toast.LENGTH_SHORT).show()
+    }
+
     private fun loginWithGoogle(){
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestEmail()
-                                .build()
+            .requestEmail()
+            .build()
         val client:GoogleSignInClient = GoogleSignIn.getClient(this, signInOptions)
         val intent = client.signInIntent
         resultLauncher.launch(intent)
-    }
-
-    private fun loginWithNaver(){
-        Toast.makeText(this, "Naver login", Toast.LENGTH_SHORT).show()
     }
 
     val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object: ActivityResultCallback<ActivityResult>{
@@ -111,8 +111,8 @@ class LoginActivity : AppCompatActivity() {
                 val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
                 val account = task.getResult()
 
-                val email = account.email
-                Log.e("TAG Google sign in account", "$email")
+                Log.e("TAG Google sign in account", "${account.email}, ${account.id}, ${account.idToken}")
+
 
                 startActivity(Intent(baseContext, MainActivity::class.java))
                 finish()
