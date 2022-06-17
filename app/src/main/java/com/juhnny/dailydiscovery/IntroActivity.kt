@@ -48,9 +48,9 @@ class IntroActivity : AppCompatActivity() {
         //sharedPreference에 저장해놓자
         //Main Activity가 만들어지면(둘러보기를 누르거나 로그인에 성공하면) isFirstRun = true로 변경
         val editor =  prefs.edit()
-        if( ! prefs.contains("isFirstRun")) editor.putBoolean("isFirstRun", true).commit() //처음엔 항목이 없을테니..
+        if( ! prefs.contains("isFirstRun")) editor.putBoolean("isFirstRun", true).apply() //처음엔 항목이 없을테니..
         var isFirstRun = prefs.getBoolean("isFirstRun", true)
-        Log.e("isFirstRun IntroAc: ", "$isFirstRun")
+        Log.e("IntroAc isFirstRun ", "$isFirstRun")
 
 //        isFirstRun = true //test
         //첫 실행이면 Invitation Activity 실행
@@ -78,9 +78,9 @@ class IntroActivity : AppCompatActivity() {
 
     private inner class OpenActivityHandler(looper:Looper, val activityClassToOpen:Class<*>):Handler(looper){
         override fun handleMessage(msg: Message) {
+            Log.e("IntroAc handler", "${msg.arg1}")
             val intent = Intent(baseContext, activityClassToOpen)
-            val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(b.entrance, b.entrance.width/2, b.entrance.height/2, 0, 0)
-            startActivity(intent, optionsCompat.toBundle())
+            startActivity(intent, activityOptions.toBundle())
             finish()
         }
     }
@@ -103,27 +103,31 @@ class IntroActivity : AppCompatActivity() {
             .putString("snsType", "")
             .putString("snsId", "")
             .putString("snsConnectDate", "")
-            .commit()
+            .apply()
 
         if( ! prefs.getBoolean("isLoggedIn", false)){ //로그인 안돼있었으면 로그인 화면으로 연결
-            Log.e("TAG IntroAc", "로그인 X")
+            Log.e("IntroAc isLoggedIn", "false")
             nextActivityClass = LoginActivity::class.java
+            OpenActivityHandler(mainLooper, nextActivityClass).sendEmptyMessageDelayed(119, 1500)
         } else { //로그인 돼있으면
-            Log.e("TAG IntroAc", "로그인 O")
+            Log.e("IntroAc isLoggedIn", "true")
 
             //어떤 방식으로 로그인 했었는지 확인해서 알맞게 처리
-            when(prefs.getString("snsType", "error")){
-                "error" -> {Log.e("IntroAc snsType", "error")}
-                "" -> { checkEmailLoginStatus() /*이메일 로그인*/ }
+            val snsType = prefs.getString("snsType", "error")
+            when(snsType){
+                "error" -> { handleError() }
+                "" -> { checkEmailLoginStatus() }
                 "kakao" -> { checkKakaoLoginStatus() }
                 "google" -> { checkGoogleLoginStatus() }
                 "naver" -> { checkNaverLoginStatus() }
             }
         }
 
-        val handler = OpenActivityHandler(Looper.getMainLooper(), nextActivityClass)
-        handler.sendEmptyMessageDelayed(123, 1500)
     }//onStart()
+
+    private fun handleError(){
+        Log.e("IntroAc snsType", "error")
+    }
 
     private fun checkEmailLoginStatus(){
         //한국어로 설정 - 인증메일 언어 로컬화
@@ -135,10 +139,10 @@ class IntroActivity : AppCompatActivity() {
         //그러려면 여기서는 reload()를 안 쓰는 게 낫겠네..
         val currentUser:FirebaseUser? = auth.currentUser
         if(currentUser != null){ //로그인 되어있을 경우
-            Log.e("TAG IntroAc", "로그인 O, email:${currentUser.email}")
+            Log.e("IntroAc checkEmailLoginStatus()", "로그인 O, email:${currentUser.email}")
             //인증이 돼있나 확인
             if(currentUser.isEmailVerified){ //인증 완료시에만 메인 액티비티 스타트
-                Log.e("TAG IntroAc", "인증 완료")
+                Log.e("IntroAc isEmailVerified", "인증 완료")
                 val email = currentUser.email
                 //아래 내용 함수로 만들 것
                 //로그인 날짜 업데이트
@@ -151,13 +155,16 @@ class IntroActivity : AppCompatActivity() {
 
                 nextActivityClass = MainActivity::class.java
             } else { //인증 미완료 시 로그인 화면으로 연결
-                Log.e("TAG IntroAc", "인증 미완료")
+                Log.e("IntroAc isEmailVerified", "인증 미완료")
                 nextActivityClass = LoginActivity::class.java
             }
         } else{ //로그인 안돼있을 시에도
-            Log.e("TAG IntroAc", "로그인 X")
+            Log.e("IntroAc checkEmailLoginStatus()", "로그인 X")
             nextActivityClass = LoginActivity::class.java
         }
+
+        val handler = OpenActivityHandler(Looper.getMainLooper(), nextActivityClass)
+        handler.sendEmptyMessageDelayed(123, 1500)
     }
 
     private fun checkKakaoLoginStatus(){

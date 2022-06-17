@@ -96,7 +96,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
                 }
             }
-            MyUtil.showSorryAlert(requireContext())
+//            MyUtil.showSorryAlert(requireContext())
         }
     }
 
