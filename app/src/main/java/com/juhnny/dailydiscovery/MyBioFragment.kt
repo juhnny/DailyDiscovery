@@ -28,6 +28,7 @@ class MyBioFragment (val userEmail: String?,
     val appCompatActivity by lazy { requireActivity() as AppCompatActivity }
     val b by lazy {FragmentBioMyBinding.inflate(layoutInflater)}
     val auth by lazy { FirebaseAuth.getInstance() }
+    val userEmail2:String by lazy { arguments?.getString("email") ?: "null@null.com" }
 
     var photos = mutableListOf<Photo>()
 
@@ -68,31 +69,48 @@ class MyBioFragment (val userEmail: String?,
         //비로그인 상태에서 볼 때
         //로그인 상태에서 내 바이오를 볼 때
         //로그인 상태에서 다른사람 바이오를 볼 때
-        val user = FirebaseAuth.getInstance().currentUser
-        if(user == null){ //비로그인 상태
+//        val user = FirebaseAuth.getInstance().currentUser
+//        if(user == null){ //비로그인 상태
+//            b.layoutProfile.visibility = View.GONE
+//            b.layoutSigninNotice.visibility = View.VISIBLE
+//        } else { //로그인 상태
+//            b.layoutProfile.visibility = View.VISIBLE
+//            b.layoutSigninNotice.visibility = View.GONE
+//
+//            b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
+//            showProfile(userEmail!!)
+//            loadPhotos(userEmail!!)
+//
+//            //지금 보는 프로필이 내 프로필일 때 -> 구독 버튼 숨기기
+//            //다른 사람 프로필일 때 -> 내가 구독중인 사람이면 '구독해제' 버튼, 아니면 '구독'버튼 보이기
+//            updateUiOnFollow(userEmail!!)
+//
+//        }//로그인/게스트 상태에 따른 UI 업데이트
+
+        if(G.user == null) {//비로그인 상태
             b.layoutProfile.visibility = View.GONE
             b.layoutSigninNotice.visibility = View.VISIBLE
-        } else { //로그인 상태
+        } else {//로그인 상태
             b.layoutProfile.visibility = View.VISIBLE
             b.layoutSigninNotice.visibility = View.GONE
 
             b.recycler.adapter = BioRecyclerAdapter(requireContext(), photos)
-            showProfile(userEmail!!)
-            loadPhotos(userEmail!!)
+
+            showProfile(userEmail2)
+            loadPhotos(userEmail2)
 
             //지금 보는 프로필이 내 프로필일 때 -> 구독 버튼 숨기기
             //다른 사람 프로필일 때 -> 내가 구독중인 사람이면 '구독해제' 버튼, 아니면 '구독'버튼 보이기
-            updateUiOnFollow(userEmail!!)
-
-        }//로그인/게스트 상태에 따른 UI 업데이트
+            updateUiOnFollow(userEmail2)
+        }
 
         b.btnSignin.setOnClickListener {
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
         }
 
-        b.btnSubscribe.setOnClickListener { saveFollow(userEmail!!) }
-        b.btnUnsubscribe.setOnClickListener { saveUnfollow(userEmail!!) }
+        b.btnSubscribe.setOnClickListener { saveFollow(userEmail2) }
+        b.btnUnsubscribe.setOnClickListener { saveUnfollow(userEmail2) }
 
     }
 
@@ -155,6 +173,7 @@ class MyBioFragment (val userEmail: String?,
                 response: retrofit2.Response<Response<User>>
             ) { val myResponse = response.body()
                 if(myResponse != null){
+                    Log.e("MyBioFrag userEmail: $userEmail", "")
                     val userProfile:User = myResponse.responseBody.items[0]
                     Log.e("MyBioFrag loadProfile Success", "${userProfile.nickname}, ${userProfile.profileMsg}")
 
@@ -175,7 +194,7 @@ class MyBioFragment (val userEmail: String?,
         b.btnSubscribe.visibility = View.GONE
         b.btnUnsubscribe.visibility = View.GONE
         //띄워진 앨범이 내 앨범이면 그대로 놔두고,
-        if(userEmail.equals(myEmail)) return
+        if(userEmail2.equals(myEmail)) return
         //다른사람 앨범이면
         val call = RetrofitHelper.getRetrofitInterface().isFollowing(myEmail!!, targetEmail)
         call.enqueue(object : Callback<String>{

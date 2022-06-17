@@ -1,5 +1,6 @@
 package com.juhnny.dailydiscovery
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
@@ -107,6 +109,8 @@ class IntroActivity : AppCompatActivity() {
             Log.e("TAG IntroAc", "로그인 X")
             nextActivityClass = LoginActivity::class.java
         } else { //로그인 돼있으면
+            Log.e("TAG IntroAc", "로그인 O")
+
             //어떤 방식으로 로그인 했었는지 확인해서 알맞게 처리
             when(prefs.getString("snsType", "error")){
                 "error" -> {Log.e("IntroAc snsType", "error")}
@@ -135,6 +139,16 @@ class IntroActivity : AppCompatActivity() {
             //인증이 돼있나 확인
             if(currentUser.isEmailVerified){ //인증 완료시에만 메인 액티비티 스타트
                 Log.e("TAG IntroAc", "인증 완료")
+                val email = currentUser.email
+                //아래 내용 함수로 만들 것
+                //로그인 날짜 업데이트
+
+                //성공 시 prefs에 저장
+                prefs.edit().putBoolean("isLoggedIn", true)
+                    .commit()
+                //prefs 저장 성공 시 G에 저장
+                if(prefs.getBoolean("isLoggedIn", false)) G.user = User("1", "asdf", "$email", "nick", "Hello", "19891111", "19891201", "", "", "19891231")
+
                 nextActivityClass = MainActivity::class.java
             } else { //인증 미완료 시 로그인 화면으로 연결
                 Log.e("TAG IntroAc", "인증 미완료")

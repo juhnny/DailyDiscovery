@@ -111,10 +111,7 @@ class SignupActivity : AppCompatActivity() {
                                     Log.w("saveMember Failure", "${t.message}")
                                 }
                             })//saveMember
-
                         }
-
-
                     }
                     else {
                         Toast.makeText(this, "인증용 이메일 전송에 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()

@@ -1,6 +1,7 @@
 package com.juhnny.dailydiscovery
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +57,9 @@ class FollowRecyclerAdapter(val context: Context, val fragment: Fragment, val fo
         holder.binding.root.setOnClickListener{
             val appCompatActivity = context as AppCompatActivity //context의 정체는 adapter 생성자로 받아온 OOOActivity. 그러니 다운캐스팅 가능
 //            appCompatActivity.supportFragmentManager.beginTransaction().replace(R.id.container_follwings_fragment, MyBioFragment()).addToBackStack(null).commit()
-            fragment.childFragmentManager.beginTransaction().replace(R.id.follwings_fragment_root, MyBioFragment(follow.email)).addToBackStack(null).commit()
+            val bundle:Bundle = Bundle()
+            bundle.putString("email", follow.email)
+            fragment.childFragmentManager.beginTransaction().replace(R.id.follwings_fragment_root, MyBioFragment::class.java, bundle).addToBackStack(null).commit()
         }
     }
 

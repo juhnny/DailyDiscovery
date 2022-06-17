@@ -78,80 +78,6 @@ class MainActivity : AppCompatActivity() {
 
     }//onCreate()
 
-    override fun onStart() {
-        super.onStart()
-
-        var user:FirebaseUser? = auth.currentUser
-        if(user != null){ //로그인이 돼있는 상태면
-            //DB의 멤버 데이터를 Global 변수로 저장, 유저 정보를 보여주는 화면마다 DB에서 매번 가져오긴 번거롭다.
-            loadAndSaveUserData(user)
-
-        } else { //로그인이 안돼있는 상태면 - 둘러보기로 들어온 경우 혹은 signOut 한 경우
-
-        }
-    }
-
-    //유저 정보를 DB로부터 로드해 SharedPreference에 저장해놓는 메소드
-    fun loadAndSaveUserData(user:FirebaseUser){
-        //email을 기준으로 SELECT
-//        val email = "bcde@naver.co"
-        val email = user.email
-        Log.e("user email", "$email")
-
-        val retrofitInterface = RetrofitHelper.getRetrofitInterface()
-
-        val call2 = retrofitInterface.loadMemberString(email!!)
-        call2.enqueue(object : Callback<String>{
-            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                val resultStr:String? = response.body()
-                if(resultStr != null){
-                    Log.e("loadMemberString MainAc Success", resultStr)
-                }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("loadMemberString MainAc Failure", "${t.message}")
-            }
-        })
-
-
-        val call = retrofitInterface.loadMember(email!!)
-        call.enqueue(object : Callback<Response<User>>{
-            override fun onResponse(call: Call<Response<User>>, response: retrofit2.Response<Response<User>>) {
-                val myResponse:Response<User>? = response.body()
-                if(myResponse != null){
-                    val resultMsg = myResponse.responseHeader.resultMsg
-                    val body:ResponseBody<User>? = myResponse.responseBody
-                    if (body != null) {
-                        val user:User = body.items[0]
-                        //SharedPreference에 회원 정보 저장
-                        val prefs = getSharedPreferences("user", MODE_PRIVATE) //덮어쓰기
-                        prefs.edit().putString("no", user.memNo)
-                            .putString("idToken", user.memId)
-                            .putString("email", user.email)
-                            .putString("nickname", user.nickname)
-                            .putString("profileMsg", user.profileMsg)
-                            .putString("signUpDatetime", user.signUpDatetime)
-                            .putString("lastLoginDatetime", user.lastLoginDatetime)
-                            .commit()
-                        Log.e("MainAc loadMember Success",
-                            "$resultMsg: ${prefs.getString("email", "load email failed")}, ${prefs.getString("nickname", "load nickname failed")}")
-
-//                    updateUI()
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<Response<User>>, t: Throwable) {
-                Log.e("MainAc loadMember Failure", "${t.message}")
-            }
-        })//loadMember
-
-
-
-    }//loadUserData
-
-
     //글쓰기가 완료되면 두번째 탭 열기
     val editorResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ActivityResultCallback {
         Toast.makeText(this, "resultLauncher came back", Toast.LENGTH_SHORT).show()
@@ -209,6 +135,11 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
 //    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(this, "MainAc onDestroy()", Toast.LENGTH_SHORT).show()
+    }
 
 
 }

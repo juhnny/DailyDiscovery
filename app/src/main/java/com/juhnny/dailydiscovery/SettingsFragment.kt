@@ -1,5 +1,6 @@
 package com.juhnny.dailydiscovery
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -40,7 +41,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         //로그인 돼있는 상태면 버튼 숨기기
         findPreference<Preference>("signout")?.isVisible = G.user != null //로그인돼있으면 true, 안돼있으면 false로 입력됨
-        findPreference<Preference>("signout")?.isVisible = true //테스트용으로 무조건 보이도록
+
+        //테스트용으로 무조건 보이도록
+        findPreference<Preference>("signout")?.isVisible = true
 
         //항목이 클릭되었을 때
         findPreference<Preference>("signout")?.onPreferenceClickListener = object : Preference.OnPreferenceClickListener{
@@ -48,10 +51,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
 
                 //로그아웃 처리////////
+                if(G.user == null) Toast.makeText(requireContext(), "SettingsFrag G.user is null while logged in", Toast.LENGTH_SHORT).show()
+                when(G.user?.snsType){
+                    "" -> {
 
+                    }
+                    "kakao" -> {
 
+                    }
+                    "google" -> {
 
+                    }
+                    "naver" -> {
+
+                    }
+                }
                 //////////////
+
+                Toast.makeText(requireContext(), "G.user: ${G.user}", Toast.LENGTH_SHORT).show()
+                G.user = null
+                val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                prefs.edit().putBoolean("isLoggedIn", false).commit()
 
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

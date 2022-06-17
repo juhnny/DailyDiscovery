@@ -59,24 +59,25 @@ class TodayFragment : Fragment() {
         //에디터 작성 완료 시 주제 탭으로 화면 넘어가기
         //로그인/비로그인 UI 전환
 
-        val user = FirebaseAuth.getInstance().currentUser
-        if(user == null){
+        if(G.user == null){
             b.ivNoti.visibility = View.GONE
             b.fabSubmit.setOnClickListener {
-                //로그인 안내 띄우기
-                AlertDialog.Builder(requireContext()).setTitle("시선집")
-                    .setMessage("시선집 이용을 위해\n로그인이 필요합니다")
-                    .setPositiveButton("로그인", object : DialogInterface.OnClickListener{
-                        override fun onClick(p0: DialogInterface?, p1: Int) {
-                            Toast.makeText(requireContext(), "ddd", Toast.LENGTH_SHORT).show()
-                        }
-                    }).create().show()
-            }
-        } else {
-            b.fabSubmit.setOnClickListener {
-                val intent = Intent(context, EditorActivity::class.java)
-                intent.putExtra("topic", b.tvTopic.text)
-                mainActivity.editorResultLauncher.launch(intent)
+                if(G.user == null){
+                    //로그인 안내 띄우기
+                    AlertDialog.Builder(requireContext()).setTitle("시선집")
+                        .setMessage("시선집 이용을 위해\n로그인이 필요합니다")
+                        .setPositiveButton("로그인", object : DialogInterface.OnClickListener{
+                            override fun onClick(p0: DialogInterface?, p1: Int) {
+                                Toast.makeText(requireContext(), "로그인 화면으로 이동합니다", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(requireContext(), LoginActivity::class.java))
+                                requireActivity().finish()
+                            }
+                        }).create().show()
+                }else{
+                    val intent = Intent(context, EditorActivity::class.java)
+                    intent.putExtra("topic", b.tvTopic.text)
+                    mainActivity.editorResultLauncher.launch(intent)
+                }
             }
         }
 

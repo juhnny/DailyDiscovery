@@ -63,8 +63,7 @@ class FollowingsFragment : Fragment() {
         appCompatActivity.setSupportActionBar(b.toolbar)
         appCompatActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        val user = FirebaseAuth.getInstance().currentUser
-        if(user == null){ //비로그인 상태
+        if(G.user == null){ //비로그인 상태
             b.layoutContent.visibility = View.GONE
             b.layoutSigninNotice.visibility = View.VISIBLE
         } else { //로그인 상태
@@ -72,7 +71,7 @@ class FollowingsFragment : Fragment() {
             b.layoutSigninNotice.visibility = View.GONE
 
             b.recycler.adapter = FollowRecyclerAdapter(requireContext(), this, follows)
-            loadFollow(user.email!!)
+            loadFollow(G.user?.email!!)
         }
 
         b.btnSignin.setOnClickListener {
@@ -83,18 +82,6 @@ class FollowingsFragment : Fragment() {
     }
 
     private fun loadFollow(userEmail:String){
-        val call2 = RetrofitHelper.getRetrofitInterface().loadFollowingString(userEmail)
-        call2.enqueue(object : Callback<String>{
-            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                val resultStr = response.body()
-                Log.e("FollowingsFrag loadFollwingString Success", "$resultStr")
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("FollowingsFrag loadFollwingString Failure", "${t.message}")
-            }
-        })
-
         val call = RetrofitHelper.getRetrofitInterface().loadFollowing(userEmail)
         call.enqueue(object : Callback<Response<Follow>>{
             override fun onResponse(
@@ -105,7 +92,7 @@ class FollowingsFragment : Fragment() {
                 val body = response.body()?.responseBody
                 if(header != null && body != null){
                     val newFollows = body.items
-                    Log.e("FollowingsFrag loadFollow Success", "itemCount: ${body.itemCount}, ${body.items}")
+                    Log.e("FollowingsFrag loadFollow Success", "userEmail: $userEmail, itemCount: ${body.itemCount}, ${body.items}")
                     if(body.itemCount != 0) {
                         follows.addAll(newFollows)
                         b.recycler.adapter?.notifyDataSetChanged()

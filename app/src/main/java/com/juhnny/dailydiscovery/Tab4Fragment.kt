@@ -21,7 +21,7 @@ class Tab4Fragment : Fragment(){
 
     val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy {FragmentTab4Binding.inflate(layoutInflater)}
-    val fragments = listOf(MyBioFragment(FirebaseAuth.getInstance().currentUser?.email)) //로그인 상태면 유저 이메일이, 아니면 null이 전달
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,7 +82,9 @@ class Tab4Fragment : Fragment(){
 
 
         //교체할 container가 내 layout 안에 있다면 childFragmentManager를 쓴다.
-        childFragmentManager.beginTransaction().add(R.id.container_tab4, fragments[0], "MYBIO_FRAG").addToBackStack(null).commit() //기본 화면
+        val bundle = Bundle()
+        bundle.putString("email", G.user?.email)
+        childFragmentManager.beginTransaction().add(R.id.container_tab4, MyBioFragment::class.java, bundle, "MYBIO_FRAG").addToBackStack(null).commit() //기본 화면
 
         b.nav.setNavigationItemSelectedListener {
             when(it.itemId){
@@ -91,7 +93,7 @@ class Tab4Fragment : Fragment(){
                     //공지사항 화면 열기. 프래그먼트로 만들어보자.
                     //MyBioFragment는 닫고, NoticeFragment는 열고
                     childFragmentManager.beginTransaction()
-                        .hide(fragments[0])
+                        .hide(childFragmentManager.findFragmentByTag("MYBIO_FRAG")!!)
                         .add(R.id.tab4_fragment_root, NoticeFragment(), "NOTICE_FRAG")
                         .addToBackStack(null)
                         .commit()
