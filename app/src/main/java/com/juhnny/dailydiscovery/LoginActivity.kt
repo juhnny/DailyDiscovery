@@ -96,26 +96,12 @@ class LoginActivity : AppCompatActivity() {
                 val intent = result.data
                 if(intent == null) Toast.makeText(this@LoginActivity, "LoginAc intent가 null", Toast.LENGTH_SHORT).show()
                 val didLogInSuccessed:Boolean? = intent?.getBooleanExtra("didLogInSuccessed", false)
-                val email = intent?.getStringExtra("email")
+                val email = intent?.getStringExtra("email") ?:"null@emailLoginResultLauncher"
                 Toast.makeText(this@LoginActivity, "이메일 로그인 성공여부: ${didLogInSuccessed}, email: $email", Toast.LENGTH_SHORT).show()
-                //로그인 날짜 업데이트
-
                 val userId = "Stub~"
-                //성공 시
-                prefs.edit().putBoolean("isLoggedIn", true)
-                    .putString("email", email)
-                    .putString("memId", userId)
-                    .putString("snsType", "")
-                    .commit()
-                if(prefs.getBoolean("isLoggedIn", false)) {
-                    G.user = User("1", "asdf", "$email", "nick", "Hello", "19891111", "19891201", "", "", "19891231")
-                }
-                val intent2 = Intent(this@LoginActivity, MainActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                startActivity(intent2)
-                finish()
+
+                //서버에 로그인 날짜 업데이트
+                updateLastLogInDatetime(email)
             }
         }
     })
@@ -139,125 +125,94 @@ class LoginActivity : AppCompatActivity() {
 
     val googleLoginResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object: ActivityResultCallback<ActivityResult>{
         override fun onActivityResult(result: ActivityResult?) {
-            Toast.makeText(baseContext, "resultLauncer came back", Toast.LENGTH_SHORT).show()
             try {
                 //로그인 창을 그냥 닫아버리면 예외 발생
                 if(result?.resultCode == RESULT_CANCELED) return
 
-                val intent = result?.data
-                val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
-                val account = task.getResult()
+                result?.run{
+                    val intent = this.data
+                    val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
+                    val account = task.result
+                    Log.e("LoginAc googleLoginResultLauncher", "${account.email}, ${account.id}, ${account.idToken}")
 
-                Log.e("TAG Google sign in account", "${account.email}, ${account.id}, ${account.idToken}")
-                val intent2 = Intent(baseContext, MainActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    updateLastLogInDatetime(account.email ?:"null@googleLoginResultLauncher")
                 }
-                startActivity(intent)
-                finish()
             } catch (e:ApiException){
-                Log.w("TAG Google Login Failed", "failure code : ${e.statusCode}")
+                Log.w("LoginAc googleLoginResultLauncher error", "${e.statusCode}")
             }
         }
     })
 
+    private fun updateLastLogInDatetime(email: String){
+        RetrofitHelper.getRetrofitInterface().updateLastLoginDatetime("Stub", email).enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                Log.e("LoginAc updateLastLogInDatetime() response", "${response.body()}")
+                //DB에서 유저 정보 가져오기
+                loadUserData(email)
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("LoginAc updateLastLogInDatetime() failure", "${t.message}")
+            }
+        })
+    }
+
     //이메일 로그인 시
-    //유저 정보를 DB로부터 로드해 SharedPreference에 저장해놓는 메소드
-    fun loadAndSaveUserData(user: FirebaseUser){
+    fun loadUserData(email:String){
         //email을 기준으로 SELECT
-//        val email = "bcde@naver.co"
-        val email = user.email
-        Log.e("user email", "$email")
-
-        val retrofitInterface = RetrofitHelper.getRetrofitInterface()
-
-        val call = retrofitInterface.loadMember(email!!)
-        call.enqueue(object : Callback<Response<User>> {
+        RetrofitHelper.getRetrofitInterface().loadMember(email).enqueue(object : Callback<Response<User>> {
             override fun onResponse(call: Call<Response<User>>, response: retrofit2.Response<Response<User>>) {
                 val myResponse:Response<User>? = response.body()
                 if(myResponse != null){
                     val resultMsg = myResponse.responseHeader.resultMsg
                     val body:ResponseBody<User>? = myResponse.responseBody
-                    if (body != null) {
-                        val user:User = body.items[0]
+                    body?.run{
+                        val user:User = this.items[0]
+                        Log.e("LoginAc loadUserData resultMsg", resultMsg)
+                        Log.e("LoginAc loadUserData user", user.toString())
                         //SharedPreference에 회원 정보 저장
-//                        val prefs = getSharedPreferences("user", MODE_PRIVATE) //덮어쓰기
-                        val prefs = PreferenceManager.getDefaultSharedPreferences(this@LoginActivity) //덮어쓰기
-                        prefs.edit().putString("no", user.memNo)
-                            .putString("idToken", user.memId)
-                            .putString("email", user.email)
-                            .putString("nickname", user.nickname)
-                            .putString("profileMsg", user.profileMsg)
-                            .putString("signUpDatetime", user.signUpDatetime)
-                            .putString("lastLoginDatetime", user.lastLoginDatetime)
-                            .commit()
-                        Log.e("MainAc loadMember Success",
-                            "$resultMsg: ${prefs.getString("email", "load email failed")}, ${prefs.getString("nickname", "load nickname failed")}")
+                        saveUserDataToLocal(user)
                     }
                 }
             }
 
             override fun onFailure(call: Call<Response<User>>, t: Throwable) {
-                Log.e("MainAc loadMember Failure", "${t.message}")
+                Log.e("LoginAc loadUserData Failure", "${t.message}")
             }
-        })//loadMember
-
+        })
     }//loadUserData
 
-    fun updateLastLogInDatetime(){
+    private fun saveUserDataToLocal(user:User){
+        //val prefs = getSharedPreferences("user", MODE_PRIVATE) //덮어쓰기
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this@LoginActivity) //덮어쓰기
+        prefs.edit().putBoolean("isLoggedIn", false)
+            .putString("memNo", user.memNo)
+            .putString("memId", user.memId)
+            .putString("email", user.email)
+            .putString("nickname", user.nickname)
+            .putString("profileMsg", user.profileMsg)
+            .putString("signUpDatetime", user.signUpDatetime)
+            .putString("lastLoginDatetime", user.lastLoginDatetime)
+            .putString("snsType", user.snsType)
+            .putString("snsId", user.snsId)
+            .putString("snsConnectDate", user.snsConnectDate)
+            .apply() //apply()를 쓰면 메모리에선 즉시 변경, 디스크에선 별도 쓰레드에서 비동기로 쓰기 작업
+                    //어차피 네트워크 작업하는 별도 스레드에서 일게 할 함수라 commit()해도 되지만 그냥 apply()로 가보자. 대신 intro에서 검증하고 있으니까.
+        Log.e("LoginAc saveUserDataToLocal() prefs",
+            "${prefs.getString("email", "load email failed")}, ${prefs.getString("nickname", "load nickname failed")}")
+        G.user = user
+        Log.e("LoginAc saveUserDataToLocal() G.user", G.user.toString())
+
+        goToMainActivity()
     }
 
-    private fun saveLoggedInUserData(){
-        val user = auth.currentUser
-        Log.e("user : ", "$user")
-        if(user != null) { //로그인한 사용자가 있으면
-            val email:String? = user.email
-            val name:String? = user.displayName
-            val photoUri: Uri? = user.photoUrl
-            val creationTime:Long? = user.metadata?.creationTimestamp
-            val lastSignInTime:Long? = user.metadata?.lastSignInTimestamp
-            user.getIdToken(false).result.token
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            val uid:String? = user.uid
-
-            // Check if user's email is verified
-            val emailVerified:Boolean = user.isEmailVerified
-
-            //사용자에게 연결된 로그인 제공업체로부터 프로필 정보를 가져오려면 getProviderData 메서드를 사용합니다.
-
-            Log.e("TAG currentUser: ", "email: $email, name: $name, photoUri: $photoUri, uid: $uid, emailVerified: $emailVerified")
-            Log.e("TAG currentUser: ", "creationTime: $creationTime, lastSignInTime: $lastSignInTime")
-            Log.e("TAG currentUser: ", ": ${user.getIdToken(false).result.token}, : ${user.getIdToken(false).result.claims.values}")
-
-            //내 DB에 마지막 로그인 시각 업데이트 & 회원 정보 읽어오기
-            //성공 시 prefs 와 G.user에 저장
-
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-            prefs.edit().putBoolean("isLoggedIn", true)
-                .commit()
-
-            G.user = User("1", "asdf", "asdf@naver.com", "nick", "Hello", "19891111", "19891201", "", "", "19891231")
-
+    private fun goToMainActivity(){
+        val intent2 = Intent(this@LoginActivity, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-
+        startActivity(intent2)
+        finish()
     }
-    //현재 사용자를 가져올 때 권장하는 방법은 getCurrentUser 메서드를 호출하는 것입니다.
-    // 로그인한 사용자가 없으면 getCurrentUser는 null을 반환합니다.
-
-    //getCurrentUser가 null이 아닌 FirebaseUser(얘가 여기서 말하는 토큰)를 반환하지만 기본 토큰이 유효하지 않은 경우가 있습니다.
-    // 예를 들어 사용자가 다른 기기에서 삭제되었는데 로컬 토큰을 새로고침하지 않은 경우가 여기에 해당합니다.
-    // 이 경우 유효한 사용자 getCurrentUser를 가져올 수 있지만, 인증 리소스에 대한 후속 호출이 실패합니다.
-    //인증 객체의 초기화가 완료되지 않은 경우에도 getCurrentUser가 null을 반환할 수 있습니다.
-
-    //AuthStateListener를 연결하면 기본 토큰의 상태가 변경될 때마다 콜백이 호출됩니다.
-    // 이를 통해 위에서 설명한 것과 같은 특이한 사례에 대처할 수 있습니다.
-    //Listener called when there is a change in the authentication state.
-    //- Right after the listener has been registered
-    //- When a user is signed in
-    //- When the current user is signed out
-    //- When the current user changes
 
 }

@@ -91,18 +91,21 @@ class IntroActivity : AppCompatActivity() {
         super.onStart()
         //로그인 여부 확인 후 회원 데이터 로드 및 화면 전환
 
+        //apply()는 메모리 내 SharedPreferences 객체를 즉시 변경하지만 업데이트를 디스크에 비동기적으로 씁니다.
+        // 또는 commit()을 사용하여 데이터를 디스크에 동기적으로 쓸 수 있습니다.
+        // 그러나 commit()은 동기적이므로 기본 스레드에서 호출하는 것을 피해야 합니다. UI 렌더링이 일시중지될 수 있기 때문입니다.
         if( ! prefs.contains("isLoggedIn")) prefs.edit()
             .putBoolean("isLoggedIn", false)
-            .putString("memNo", "")
-            .putString("memId", "")
-            .putString("email", "")
-            .putString("nickname", "")
-            .putString("profileMsg", "")
-            .putString("signUpDatetime", "")
-            .putString("lastLoginDatetime", "")
-            .putString("snsType", "")
-            .putString("snsId", "")
-            .putString("snsConnectDate", "")
+//            .putString("memNo", "")
+//            .putString("memId", "")
+//            .putString("email", "")
+//            .putString("nickname", "")
+//            .putString("profileMsg", "")
+//            .putString("signUpDatetime", "")
+//            .putString("lastLoginDatetime", "")
+//            .putString("snsType", "")
+//            .putString("snsId", "")
+//            .putString("snsConnectDate", "")
             .apply()
 
         if( ! prefs.getBoolean("isLoggedIn", false)){ //로그인 안돼있었으면 로그인 화면으로 연결

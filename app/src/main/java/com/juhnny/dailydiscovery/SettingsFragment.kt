@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.preference.*
 import com.google.firebase.auth.FirebaseAuth
@@ -49,10 +50,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         //항목이 클릭되었을 때
         findPreference<Preference>("signout")?.onPreferenceClickListener = object : Preference.OnPreferenceClickListener{
             override fun onPreferenceClick(preference: Preference): Boolean {
-                Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
-
                 //로그아웃 처리////////
-                if(G.user == null) Toast.makeText(requireContext(), "SettingsFrag G.user is null while logged in", Toast.LENGTH_SHORT).show()
+                if(G.user == null) Toast.makeText(requireContext(), "SettingsFrag logged in but G.user was null", Toast.LENGTH_SHORT).show()
                 when(G.user?.snsType){
                     "" -> {
                         FirebaseAuth.getInstance().signOut()
@@ -69,15 +68,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }
                 //////////////
 
-                Toast.makeText(requireContext(), "G.user: ${G.user}", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "G.user: ${G.user}", Toast.LENGTH_SHORT).show()
+                Log.e("SettingsFrag G.user", G.user.toString())
                 G.user = null
                 val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-                prefs.edit().putBoolean("isLoggedIn", false).commit()
+                prefs.edit().clear().putBoolean("isLoggedIn", false).apply()
                 Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(requireContext(), MainActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
 
                 return true //구글 문서 예제에 true

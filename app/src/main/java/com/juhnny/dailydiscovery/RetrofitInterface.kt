@@ -11,6 +11,11 @@ interface RetrofitInterface {
                    @Field("nickname") nickname:String):Call<String>
 
     @FormUrlEncoded
+    @POST("/DailyDiscovery/saveMember.php")
+    fun updateLastLoginDatetime(@Field("userId") userId:String,
+                                @Field("email") email: String):Call<String>
+
+    @FormUrlEncoded
     @POST("/DailyDiscovery/loadMember.php")
     fun loadMember(@Field("email") email: String):Call<Response<User>>
 

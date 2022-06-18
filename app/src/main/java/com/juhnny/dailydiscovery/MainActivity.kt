@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.e("MainAc onDestroy()", "")
-        Toast.makeText(this, "MainAc onDestroy()", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "MainAc onDestroy()", Toast.LENGTH_SHORT).show()
     }
 
 
