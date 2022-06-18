@@ -72,6 +72,7 @@ class TodayFragment : Fragment() {
                 //로그인 안내 띄우기
                 AlertDialog.Builder(requireContext()).setTitle("시선집")
                     .setMessage("시선집 이용을 위해\n로그인이 필요합니다")
+                    .setNeutralButton("확인", DialogInterface.OnClickListener{dialogInterface, int-> })
                     .setPositiveButton("로그인", object : DialogInterface.OnClickListener{
                         override fun onClick(p0: DialogInterface?, p1: Int) {
                             Toast.makeText(requireContext(), "로그인 화면으로 이동합니다", Toast.LENGTH_SHORT).show()

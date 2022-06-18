@@ -8,9 +8,9 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.preference.PreferenceManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -66,8 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
         b.btnLoginKakao.setOnClickListener { loginWithKakao() }
         b.btnLoginGoogle.setOnClickListener { loginWithGoogle() }
-        b.btnLoginKakao.setOnClickListener { loginWithNaver() }
-
+        b.btnLoginNaver.setOnClickListener { loginWithNaver() }
 
 //        b.btnLogout.visibility = View.VISIBLE
         b.btnLogout.setOnClickListener{
@@ -96,18 +95,28 @@ class LoginActivity : AppCompatActivity() {
             else if(result?.resultCode == RESULT_OK){
                 val intent = result.data
                 if(intent == null) Toast.makeText(this@LoginActivity, "LoginAc intent가 null", Toast.LENGTH_SHORT).show()
-                val didLogInSuccessed:String? = intent?.getStringExtra("didLogInSuccessed")
+                val didLogInSuccessed:Boolean? = intent?.getBooleanExtra("didLogInSuccessed", false)
                 val email = intent?.getStringExtra("email")
-                Toast.makeText(this@LoginActivity, "이메일 로그인 성공여부: ${didLogInSuccessed}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "이메일 로그인 성공여부: ${didLogInSuccessed}, email: $email", Toast.LENGTH_SHORT).show()
                 //로그인 날짜 업데이트
 
+                val userId = "Stub~"
                 //성공 시
                 prefs.edit().putBoolean("isLoggedIn", true)
                     .putString("email", email)
+                    .putString("memId", userId)
+                    .putString("snsType", "")
                     .commit()
-                if(prefs.getBoolean("isLoggedIn", false)) G.user = User("1", "asdf", "$email", "nick", "Hello", "19891111", "19891201", "", "", "19891231")
+                if(prefs.getBoolean("isLoggedIn", false)) {
+                    G.user = User("1", "asdf", "$email", "nick", "Hello", "19891111", "19891201", "", "", "19891231")
+                }
+                val intent2 = Intent(this@LoginActivity, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                startActivity(intent2)
+                finish()
             }
-
         }
     })
 
@@ -125,10 +134,10 @@ class LoginActivity : AppCompatActivity() {
             .build()
         val client:GoogleSignInClient = GoogleSignIn.getClient(this, signInOptions)
         val intent = client.signInIntent
-        resultLauncher.launch(intent)
+        googleLoginResultLauncher.launch(intent)
     }
 
-    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object: ActivityResultCallback<ActivityResult>{
+    val googleLoginResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object: ActivityResultCallback<ActivityResult>{
         override fun onActivityResult(result: ActivityResult?) {
             Toast.makeText(baseContext, "resultLauncer came back", Toast.LENGTH_SHORT).show()
             try {
@@ -140,9 +149,11 @@ class LoginActivity : AppCompatActivity() {
                 val account = task.getResult()
 
                 Log.e("TAG Google sign in account", "${account.email}, ${account.id}, ${account.idToken}")
-
-
-                startActivity(Intent(baseContext, MainActivity::class.java))
+                val intent2 = Intent(baseContext, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                startActivity(intent)
                 finish()
             } catch (e:ApiException){
                 Log.w("TAG Google Login Failed", "failure code : ${e.statusCode}")
@@ -182,8 +193,6 @@ class LoginActivity : AppCompatActivity() {
                             .commit()
                         Log.e("MainAc loadMember Success",
                             "$resultMsg: ${prefs.getString("email", "load email failed")}, ${prefs.getString("nickname", "load nickname failed")}")
-
-//                    updateUI()
                     }
                 }
             }

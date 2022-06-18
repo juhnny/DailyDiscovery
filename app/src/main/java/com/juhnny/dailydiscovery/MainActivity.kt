@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
     //글쓰기가 완료되면 두번째 탭 열기
     val editorResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ActivityResultCallback {
-        Toast.makeText(this, "resultLauncher came back", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "resultLauncher came back", Toast.LENGTH_SHORT).show()
         if(it.resultCode == RESULT_OK) {
             supportFragmentManager.fragments.forEach{
                 supportFragmentManager.beginTransaction().hide(it)
@@ -138,6 +138,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.e("MainAc onDestroy()", "")
         Toast.makeText(this, "MainAc onDestroy()", Toast.LENGTH_SHORT).show()
     }
 

@@ -110,7 +110,6 @@ class Tab4Fragment : Fragment(){
                     }catch (e: ActivityNotFoundException){
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)))
                     }
-
                 }
                 R.id.nav_opinion -> {
                     Toast.makeText(context, "Tab4 - cc", Toast.LENGTH_SHORT).show()
@@ -173,7 +172,7 @@ class Tab4Fragment : Fragment(){
                 "OS : ${deviceOs}\n" +
                 "App Version(SDK) : ${appVersion}(${appVersionCode}) \n" +
                 "내용 : ")
-        intent.setType("message/rfc822")
+        intent.type = "message/rfc822"
         startActivity(intent)
 
     }

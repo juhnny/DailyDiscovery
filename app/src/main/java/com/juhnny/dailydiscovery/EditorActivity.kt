@@ -95,8 +95,8 @@ class EditorActivity : AppCompatActivity() {
                 }
 
                 //입력 데이터 읽어와서
-                var topic = b.etTopic.text.toString()
-                var msg = b.etDesc.text.toString()
+                var topic = b.etTopic.text.toString().trim()
+                var msg = b.etDesc.text.toString().trim()
 
                 if(topic.length !in 1..20){
                     Toast.makeText(this, "주제는 1~20자 사이로 입력해주세요", Toast.LENGTH_SHORT).show()

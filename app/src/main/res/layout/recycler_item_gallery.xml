@@ -39,8 +39,7 @@
         android:fontFamily="@font/eastseadokdo_regular"
         android:text="주제명"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/tv_msg"
@@ -50,8 +49,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="6dp"
-        android:padding="6dp"
         android:lineSpacingExtra="4dp"
+        android:padding="6dp"
         android:text="설명"
         android:textColor="@color/black"
         android:textSize="12sp" />

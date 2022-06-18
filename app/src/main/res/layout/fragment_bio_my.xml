@@ -44,7 +44,7 @@
             android:background="@color/white"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
-            android:text="NICKNAME"
+            android:text="작가명"
             android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -57,10 +57,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="36dp"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="12dp"
             android:background="@color/white"
-            android:text="INTRODUCE"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:text="자기소개"
             android:textSize="18sp" />
 
         <RelativeLayout

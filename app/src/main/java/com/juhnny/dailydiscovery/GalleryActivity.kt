@@ -3,6 +3,7 @@ package com.juhnny.dailydiscovery
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.juhnny.dailydiscovery.databinding.ActivityGalleryBinding
 import retrofit2.Call
@@ -33,6 +34,7 @@ class GalleryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         b.tvBarTitle.text = topicSelected
+        b.layoutNoResult.visibility = View.GONE
 
         b.recycler.adapter = GalleryRecyclerAdapter(this, photos)
 
@@ -71,6 +73,7 @@ class GalleryActivity : AppCompatActivity() {
                     Log.e("loadPost Success", "Header : $resultMsg")
                     Log.e("loadPost Success", "Body itemCount : $itemCount")
 
+                    if(posts.isEmpty()) b.layoutNoResult.visibility = View.VISIBLE
                     photos.addAll(posts)
                     b.recycler.adapter?.notifyDataSetChanged()
                 }

@@ -23,8 +23,8 @@
     </style>
 
     <!--  툴바의 테마 지정 - OptionMenu의 색상 지정  -->
-    <style name="MyToolbarTheme">
-        <item name="colorControlNormal">@color/sunset</item>
+    <style name="MyToolbarTheme" parent="Theme.DailyDiscovery">
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">

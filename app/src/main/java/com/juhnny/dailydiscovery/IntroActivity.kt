@@ -108,7 +108,7 @@ class IntroActivity : AppCompatActivity() {
         if( ! prefs.getBoolean("isLoggedIn", false)){ //로그인 안돼있었으면 로그인 화면으로 연결
             Log.e("IntroAc isLoggedIn", "false")
             nextActivityClass = LoginActivity::class.java
-            OpenActivityHandler(mainLooper, nextActivityClass).sendEmptyMessageDelayed(119, 1500)
+            OpenActivityHandler(mainLooper, nextActivityClass).sendEmptyMessageDelayed(100, 1500)
         } else { //로그인 돼있으면
             Log.e("IntroAc isLoggedIn", "true")
 
@@ -127,6 +127,8 @@ class IntroActivity : AppCompatActivity() {
 
     private fun handleError(){
         Log.e("IntroAc snsType", "error")
+        nextActivityClass = LoginActivity::class.java
+        OpenActivityHandler(mainLooper, nextActivityClass).sendEmptyMessageDelayed(119, 1500)
     }
 
     private fun checkEmailLoginStatus(){

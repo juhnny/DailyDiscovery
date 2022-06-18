@@ -3,8 +3,10 @@ package com.juhnny.dailydiscovery
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.toColor
 import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.ActivitySingupBinding
 import retrofit2.Call
@@ -23,6 +25,8 @@ class SignupActivity : AppCompatActivity() {
         setSupportActionBar(b.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        b.tvGuide.visibility = View.GONE
 
         /***** 회원가입 화면에서 할 일 *****/
         //이메일/비번 회원가입 시
@@ -49,7 +53,7 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    //iwibesr@naver.com
+    //iwibest@naver.com
     fun signUp(){
         var isOk = false
         //이메일 및 비밀번호 인증 방식의 회원가입 - 입력된 이메일로 [인증확인]메일이 보내지고 사용자가 확인했을때 가입이 완료되는 방식
@@ -93,8 +97,8 @@ class SignupActivity : AppCompatActivity() {
                         user?.getIdToken(false)?.addOnSuccessListener {
                             val token = it.token //나중에 추가하던가 빼버릴 것
                             Log.e("IdToken", "${it.token}")
-
                             val userId = "Stub!"
+
                             val retrofitInterface = RetrofitHelper.getRetrofitInterface()
                             val call:Call<String> = retrofitInterface.saveMember(userId, email, nickname)
                             call.enqueue(object : Callback<String>{

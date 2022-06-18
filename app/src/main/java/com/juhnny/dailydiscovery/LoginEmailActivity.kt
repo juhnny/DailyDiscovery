@@ -42,44 +42,25 @@ class LoginEmailActivity : AppCompatActivity() {
         val email = b.etEmail.text.toString()
         val pw = b.etPw.text.toString()
 
-        //기존에 받아둔 currentUser 토큰이 더이상 유효하지 않은 경우(아래 코멘트의 상황들)에 대한 처리
-        //FirebaseAuth 서버를 감시
-        //리스너를 프로세스(액티비티)마다 달아줘야 하나?
-        //여기서 달아놓고 액티비티가 종료돼도 액티비티에서 작동하는지 알아보자
-        //로그인 시도가 있을 때마다도 불려짐
-        auth.addAuthStateListener { auth ->
-            Toast.makeText(baseContext, "AuthStateListener called", Toast.LENGTH_SHORT).show()
-            //로그인부터 로그아웃 때까지만 달아놓자
-            //로그아웃 시키고 안내 띄우고 MainActivity 새로 띄우고
-            if(auth.currentUser == null){
-
-            }
-            //- Right after the listener has been registered
-            //- When a user is signed in
-            //- When the current user is signed out
-            //- When the current user changes
-
-        }
-
         auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener{
             if(it.isSuccessful){
                 // Sign in success, update UI with the signed-in user's information
                 val user: FirebaseUser? = auth.currentUser
 
                 if(user != null){ //로그인 되어있을 경우
-                    Log.e("TAG LoginAc", "currentUser != null, email:${user.email}")
+                    Log.e("TAG LoginEmailAc", "currentUser != null, email:${user.email}")
 
                     //인증이 돼있나 확인
                     if(user.isEmailVerified){ //인증 완료시에만 로그인 처리, 메인 액티비티 스타트
-                        Log.e("TAG LoginAc", "인증 완료")
+                        Log.e("TAG LoginEmailAc", "인증 완료")
                         Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                        //save Logged In User Data
+                        //send to save Logged In User Data
                         intent.putExtra("didLogInSuccessed", true)
-                        intent.putExtra("email", true)
+                        intent.putExtra("email", user.email)
                         setResult(RESULT_OK, intent)
                         finish()
                     } else { //인증 미완료 시 인증메일 발송 버튼 띄우고 로그아웃 처리. 안내 띄우기.
-                        Log.e("TAG LoginAc", "인증 미완료")
+                        Log.e("TAG LoginEmailAc", "인증 미완료")
                         Toast.makeText(this, "로그인을 위해 이메일 인증을 완료해주세요", Toast.LENGTH_SHORT).show()
                         b.tvGuideEmailVerification.visibility = View.VISIBLE
                         b.layoutEmailVerification.visibility = View.VISIBLE
@@ -101,7 +82,7 @@ class LoginEmailActivity : AppCompatActivity() {
                             // it's a good idea to call .getCurrentUser().reload() for an update.
                             if(user != null){
                                 user.reload().addOnCompleteListener {
-                                    Log.e("TAG LoginAc checkEmailVerification", "${user.email}, ${user.isEmailVerified}")
+                                    Log.e("TAG LoginEmailAc checkEmailVerification", "${user.email}, ${user.isEmailVerified}")
 
                                     if(user.isEmailVerified){
                                         Toast.makeText(this, "인증 확인", Toast.LENGTH_SHORT).show()
@@ -113,17 +94,34 @@ class LoginEmailActivity : AppCompatActivity() {
                         }
                     }//이메일 인증여부 검사
                 } else{ //로그인은 성공했는데 null인 경우. 안내만 띄우자. 거의 없을 듯.
-                    Log.e("TAG LoginAc", "currentUser == null")
+                    Log.e("TAG LoginEmailAc", "currentUser == null")
                     Toast.makeText(this, "유저 정보를 가져올 수 없습니다.\n다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
                     auth.signOut()
                 }
             } else {
                 // If sign in fails, display a message to the user.
-                Log.e("TAG LoginAc", "signIn failed: ${it.exception}")
-                Toast.makeText(baseContext, "로그인 실패 \n ${it.exception}", Toast.LENGTH_SHORT).show()
-//                updateUI(null)
+                Log.e("TAG LoginEmailAc", "signIn failed: ${it.exception}")
+                Toast.makeText(baseContext, "로그인 실패. 다시 시도해주세요. \n ${it.exception}", Toast.LENGTH_SHORT).show()
             }
         }
+
+        //기존에 받아둔 currentUser 토큰이 더이상 유효하지 않은 경우(아래 코멘트의 상황들)에 대한 처리
+        //FirebaseAuth 서버를 감시
+        //리스너를 프로세스(액티비티)마다 달아줘야 하나?
+        //여기서 달아놓고 액티비티가 종료돼도 액티비티에서 작동하는지 알아보자
+        //로그인 시도가 있을 때마다도 불려짐
+//        auth.addAuthStateListener { auth ->
+//            Toast.makeText(baseContext, "AuthStateListener called", Toast.LENGTH_SHORT).show()
+//            //로그인부터 로그아웃 때까지만 달아놓자
+//            //로그아웃 시키고 안내 띄우고 MainActivity 새로 띄우고
+//            if(auth.currentUser == null){
+//
+//            }
+//            //- Right after the listener has been registered
+//            //- When a user is signed in
+//            //- When the current user is signed out
+//            //- When the current user changes
+//        }
     }//signIn
 
     override fun onSupportNavigateUp(): Boolean {
