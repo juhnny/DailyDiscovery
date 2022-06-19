@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DailyDiscovery</string>
+    <string name="app_name">시선집</string>
     <string name="openDrawerDesc">open drawer</string>
     <string name="closeDrawerDesc">close drawer</string>
     <string name="large_text">
@@ -92,12 +92,9 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="medium_text">A material metaphor is the unifying theory of a rationalized space and a system of motion.
-
         Components with
         responsive elevations
         may encounter other components
         as they move between.
-</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    </string>
 </resources>

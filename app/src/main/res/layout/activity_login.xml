@@ -41,7 +41,7 @@
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:src="@drawable/icon2" />
+            android:src="@drawable/icon_round_purple" />
 
         <TextView
             android:id="@+id/tv_lookaround"

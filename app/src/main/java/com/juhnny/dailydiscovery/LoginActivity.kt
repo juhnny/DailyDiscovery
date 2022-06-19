@@ -1,7 +1,6 @@
 package com.juhnny.dailydiscovery
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -10,7 +9,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.preference.PreferenceManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -19,7 +17,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.juhnny.dailydiscovery.databinding.ActivityLoginBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -135,13 +132,50 @@ class LoginActivity : AppCompatActivity() {
                     val account = task.result
                     Log.e("LoginAc googleLoginResultLauncher", "${account.email}, ${account.id}, ${account.idToken}")
 
-                    updateLastLogInDatetime(account.email ?:"null@googleLoginResultLauncher")
+                    //id를 써야 하는지 idToken을 써야 하는지 확인 필요
+                    checkIfUserExists("google", account.id.toString(), account.email.toString())
                 }
             } catch (e:ApiException){
                 Log.w("LoginAc googleLoginResultLauncher error", "${e.statusCode}")
             }
         }
     })
+
+    private fun checkIfUserExists(snsType:String, snsId:String, email:String){
+        //서버에 유저 등록여부 체크.
+        RetrofitHelper.getRetrofitInterface().checkIfUserExists(snsType, snsId, email).enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val doesExist = response.body().toBoolean()
+                Log.e("LoginAc checkIfUserExists()", doesExist.toString())
+
+                if(doesExist) updateLastLogInDatetime(email) //존재 시 로그인 작업
+                else registerUserInDB(snsType, snsId, email) //존재하지 않을 시 유저 등록
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(this@LoginActivity, "서버오류 - 회원여부를 확인할 수 없습니다. \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun registerUserInDB(snsType:String, snsId:String, email: String){
+        //DB에 회원 등록하기
+        //userId는 stub으로 처리, snsId는 간편로그인 서비스에서 받기
+        //userId 로직을 만들어서 서버에서 중복되지 않는 값 받아오기.
+        val nickname = "신인작가"
+        RetrofitHelper.getRetrofitInterface().saveMemberWithSNS(email, nickname, snsType, snsId).enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                if(response.body().toBoolean()){
+                    Log.e("LoginAc registerUserInDB()", response.body().toString())
+                    updateLastLogInDatetime(email)
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(this@LoginActivity, "서버오류 - 회원등록 실패 \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 
     private fun updateLastLogInDatetime(email: String){
         RetrofitHelper.getRetrofitInterface().updateLastLoginDatetime("Stub", email).enqueue(object : Callback<String>{
