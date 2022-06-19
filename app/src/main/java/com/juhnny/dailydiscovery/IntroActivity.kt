@@ -112,14 +112,14 @@ class IntroActivity : AppCompatActivity() {
             Log.e("IntroAc isLoggedIn", "false")
             nextActivityClass = LoginActivity::class.java
             OpenActivityHandler(mainLooper, nextActivityClass).sendEmptyMessageDelayed(100, 1500)
-        } else { //로그인 돼있으면
+        } else { //로그인 돼있었으면
             Log.e("IntroAc isLoggedIn", "true")
 
             //어떤 방식으로 로그인 했었는지 확인해서 알맞게 처리
             val snsType = prefs.getString("snsType", "error")
             when(snsType){
                 "error" -> { handleError() }
-                "" -> { checkEmailLoginStatus() }
+                "email" -> { checkEmailLoginStatus() }
                 "kakao" -> { checkKakaoLoginStatus() }
                 "google" -> { checkGoogleLoginStatus() }
                 "naver" -> { checkNaverLoginStatus() }

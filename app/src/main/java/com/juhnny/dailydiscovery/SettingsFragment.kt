@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.preference.*
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -51,36 +53,52 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("signout")?.onPreferenceClickListener = object : Preference.OnPreferenceClickListener{
             override fun onPreferenceClick(preference: Preference): Boolean {
                 //로그아웃 처리////////
-                if(G.user == null) Toast.makeText(requireContext(), "SettingsFrag logged in but G.user was null", Toast.LENGTH_SHORT).show()
-                when(G.user?.snsType){
-                    "" -> {
+                if(G.user == null) {
+                    Log.e("SettingsFrag G.user == null", "")
+                    signOutProcess()
+                }
+                when(G.user?.authType){
+                    "email" -> {
+                        Log.e("SettingsFrag signout from", "email")
                         FirebaseAuth.getInstance().signOut()
+                        signOutProcess()
                     }
                     "kakao" -> {
+                        Log.e("SettingsFrag signout from", "kakao")
 
                     }
                     "google" -> {
-
+                        Log.e("SettingsFrag signout from", "google")
+                        GoogleSignIn.getClient(requireActivity(), GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .build())
+                            .signOut()
+                            .addOnSuccessListener {
+                                Log.e("SettingsFrag signout from", "google - Success")
+                                signOutProcess()
+                            }
                     }
                     "naver" -> {
+                        Log.e("SettingsFrag signout from", "naver")
 
                     }
                 }
                 //////////////
 
-//                Toast.makeText(requireContext(), "G.user: ${G.user}", Toast.LENGTH_SHORT).show()
-                Log.e("SettingsFrag G.user", G.user.toString())
-                G.user = null
-                val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-                prefs.edit().clear().putBoolean("isLoggedIn", false).apply()
-                Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(requireContext(), MainActivity::class.java)
-                startActivity(intent)
-
                 return true //구글 문서 예제에 true
             }
         }
+    }
+
+    private fun signOutProcess(){
+        //Toast.makeText(requireContext(), "G.user: ${G.user}", Toast.LENGTH_SHORT).show()
+        Log.e("SettingsFrag G.user", G.user.toString())
+        G.user = null
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        prefs.edit().clear().putBoolean("isLoggedIn", false).apply()
+        Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onPause() {

@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.toColor
 import com.google.firebase.auth.FirebaseAuth
 import com.juhnny.dailydiscovery.databinding.ActivitySingupBinding
 import retrofit2.Call
@@ -96,11 +95,11 @@ class SignupActivity : AppCompatActivity() {
                         val user = auth.currentUser
                         user?.getIdToken(false)?.addOnSuccessListener {
                             val token = it.token //나중에 추가하던가 빼버릴 것
-                            Log.e("IdToken", "${it.token}")
-                            val userId = "Stub!"
+                            val uid = user.uid
+                            Log.e("SignupAc", "uid: $uid, token: $token")
 
                             val retrofitInterface = RetrofitHelper.getRetrofitInterface()
-                            val call:Call<String> = retrofitInterface.saveMember(userId, email, nickname)
+                            val call:Call<String> = retrofitInterface.saveMember("email", uid, email, nickname)
                             call.enqueue(object : Callback<String>{
                                 override fun onResponse(
                                     call: Call<String>,

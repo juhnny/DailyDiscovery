@@ -93,12 +93,12 @@ class LoginActivity : AppCompatActivity() {
                 val intent = result.data
                 if(intent == null) Toast.makeText(this@LoginActivity, "LoginAc intent가 null", Toast.LENGTH_SHORT).show()
                 val didLogInSuccessed:Boolean? = intent?.getBooleanExtra("didLogInSuccessed", false)
-                val email = intent?.getStringExtra("email") ?:"null@emailLoginResultLauncher"
-                Toast.makeText(this@LoginActivity, "이메일 로그인 성공여부: ${didLogInSuccessed}, email: $email", Toast.LENGTH_SHORT).show()
-                val userId = "Stub~"
+                val authId = intent?.getStringExtra("idToken") ?: ""
+                val email = intent?.getStringExtra("email") ?: ""
+                Log.e("LoginAc emailLoginResultLauncher", "didLogInSuccessed: ${didLogInSuccessed}, userId: $authId, email: $email")
 
                 //서버에 로그인 날짜 업데이트
-                updateLastLogInDatetime(email)
+                updateLastLogInDatetime(authId, email)
             }
         }
     })
@@ -112,8 +112,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginWithGoogle(){
+        Toast.makeText(this, "Google login - on test\nAPI 변경 작업 중입니다.", Toast.LENGTH_SHORT).show()
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
+//            .requestIdToken("whatsthisid")
             .build()
         val client:GoogleSignInClient = GoogleSignIn.getClient(this, signInOptions)
         val intent = client.signInIntent
@@ -132,8 +134,10 @@ class LoginActivity : AppCompatActivity() {
                     val account = task.result
                     Log.e("LoginAc googleLoginResultLauncher", "${account.email}, ${account.id}, ${account.idToken}")
 
-                    //id를 써야 하는지 idToken을 써야 하는지 확인 필요
-                    checkIfUserExists("google", account.id.toString(), account.email.toString())
+                    //id 말고 idToken을 써야 함
+                    //Google 계정의 이메일 주소는 변경 될 수 있으므로 사용자를 식별하는 데 사용하지 마십시오.
+                    // 대신 GoogleSignInAccount.getId 클라이언트와 ID 토큰의 sub 클레임에서 백엔드에서 가져올 수있는 계정의 ID를 사용하세요.
+                    checkIfUserExists("google", account.idToken.toString(), account.email.toString())
                 }
             } catch (e:ApiException){
                 Log.w("LoginAc googleLoginResultLauncher error", "${e.statusCode}")
@@ -141,15 +145,18 @@ class LoginActivity : AppCompatActivity() {
         }
     })
 
-    private fun checkIfUserExists(snsType:String, snsId:String, email:String){
-        //서버에 유저 등록여부 체크.
-        RetrofitHelper.getRetrofitInterface().checkIfUserExists(snsType, snsId, email).enqueue(object : Callback<String>{
+    private fun checkIfUserExists(authType:String, authId:String, email:String){
+        //서버에 유저 등록여부 체크
+        RetrofitHelper.getRetrofitInterface().checkIfUserExists(authType, authId, email).enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                val doesExist = response.body().toBoolean()
-                Log.e("LoginAc checkIfUserExists()", doesExist.toString())
+                val result = response.body().toString()
+                Log.e("LoginAc checkIfUserExists()", result)
 
-                if(doesExist) updateLastLogInDatetime(email) //존재 시 로그인 작업
-                else registerUserInDB(snsType, snsId, email) //존재하지 않을 시 유저 등록
+                when(result){
+                    "error"->{}
+                    "false"->{ registerUserInDB(authType, authId, email) } //존재하지 않을 시 유저 등록
+                    "true"->{ updateLastLogInDatetime(authId, email) } //존재 시 로그인 작업
+                }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
@@ -158,16 +165,17 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerUserInDB(snsType:String, snsId:String, email: String){
+    private fun registerUserInDB(authType:String, authId:String, email: String){
         //DB에 회원 등록하기
-        //userId는 stub으로 처리, snsId는 간편로그인 서비스에서 받기
+        //userId는 stub으로 처리, authId는 간편로그인 서비스에서 받기
         //userId 로직을 만들어서 서버에서 중복되지 않는 값 받아오기.
         val nickname = "신인작가"
-        RetrofitHelper.getRetrofitInterface().saveMemberWithSNS(email, nickname, snsType, snsId).enqueue(object : Callback<String>{
+        RetrofitHelper.getRetrofitInterface().saveMember(authType, authId, email, nickname).enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if(response.body().toBoolean()){
                     Log.e("LoginAc registerUserInDB()", response.body().toString())
-                    updateLastLogInDatetime(email)
+
+                    updateLastLogInDatetime(authId, email)
                 }
             }
 
@@ -177,11 +185,13 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun updateLastLogInDatetime(email: String){
-        RetrofitHelper.getRetrofitInterface().updateLastLoginDatetime("Stub", email).enqueue(object : Callback<String>{
+    private fun updateLastLogInDatetime(authId:String, email: String){
+        RetrofitHelper.getRetrofitInterface().updateLastLoginDatetime(authId, email).enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 Log.e("LoginAc updateLastLogInDatetime() response", "${response.body()}")
+
                 //DB에서 유저 정보 가져오기
+                //여기부터는 유저 정보 쿼리에 email을 쓸 지, authId를 쓸 지에 따라 수정...
                 loadUserData(email)
             }
 
@@ -204,6 +214,7 @@ class LoginActivity : AppCompatActivity() {
                         val user:User = this.items[0]
                         Log.e("LoginAc loadUserData resultMsg", resultMsg)
                         Log.e("LoginAc loadUserData user", user.toString())
+
                         //SharedPreference에 회원 정보 저장
                         saveUserDataToLocal(user)
                     }
@@ -227,9 +238,9 @@ class LoginActivity : AppCompatActivity() {
             .putString("profileMsg", user.profileMsg)
             .putString("signUpDatetime", user.signUpDatetime)
             .putString("lastLoginDatetime", user.lastLoginDatetime)
-            .putString("snsType", user.snsType)
-            .putString("snsId", user.snsId)
-            .putString("snsConnectDate", user.snsConnectDate)
+            .putString("authType", user.authType)
+            .putString("authId", user.authId)
+            .putString("authConnectDatetime", user.authConnectDatetime)
             .apply() //apply()를 쓰면 메모리에선 즉시 변경, 디스크에선 별도 쓰레드에서 비동기로 쓰기 작업
                     //어차피 네트워크 작업하는 별도 스레드에서 일게 할 함수라 commit()해도 되지만 그냥 apply()로 가보자. 대신 intro에서 검증하고 있으니까.
         Log.e("LoginAc saveUserDataToLocal() prefs",
@@ -241,6 +252,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity(){
+        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
         val intent2 = Intent(this@LoginActivity, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -6,26 +6,26 @@ import retrofit2.http.*
 interface RetrofitInterface {
     @FormUrlEncoded
     @POST("/DailyDiscovery/checkIfMemberExists.php")
-    fun checkIfUserExists(@Field("snsType") snsType:String,
-                          @Field("snsId") snsId:String,
+    fun checkIfUserExists(@Field("authType") authType:String,
+                          @Field("authId") authId:String,
                           @Field("email") email: String):Call<String>
 
     @FormUrlEncoded
-    @POST("/DailyDiscovery/saveMember.php")
-    fun saveMember(@Field("userId") userId:String,
+    @POST("/DailyDiscovery/saveMember2.php")
+    fun saveMember(@Field("authType") authType:String,
+                   @Field("authId") authId:String,
                    @Field("email") email: String,
-                   @Field("nickname") nickname:String):Call<String>
+                   @Field("nickname") nickname:String,):Call<String>
 
     @FormUrlEncoded
-    @POST("/DailyDiscovery/saveMemberWithSNS.php")
-    fun saveMemberWithSNS(@Field("email") email: String,
-                         @Field("nickname") nickname:String,
-                         @Field("snsType") snsType:String?,
-                         @Field("snsId") snsId:String?):Call<String>
+    @POST("/DailyDiscovery/saveMember.php")
+    fun saveMember3(@Field("userId") userId:String,
+                    @Field("email") email: String,
+                    @Field("nickname") nickname:String):Call<String>
 
     @FormUrlEncoded
     @POST("/DailyDiscovery/updateMemberLastLogin.php")
-    fun updateLastLoginDatetime(@Field("userId") userId:String,
+    fun updateLastLoginDatetime(@Field("authId") authId:String,
                                 @Field("email") email: String):Call<String>
 
     @FormUrlEncoded

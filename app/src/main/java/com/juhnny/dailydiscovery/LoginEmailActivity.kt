@@ -42,7 +42,7 @@ class LoginEmailActivity : AppCompatActivity() {
         val email = b.etEmail.text.toString()
         val pw = b.etPw.text.toString()
 
-        auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener{
+        auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener{ it ->
             if(it.isSuccessful){
                 // Sign in success, update UI with the signed-in user's information
                 val user: FirebaseUser? = auth.currentUser
@@ -56,9 +56,12 @@ class LoginEmailActivity : AppCompatActivity() {
                         Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                         //send to save Logged In User Data
                         intent.putExtra("didLogInSuccessed", true)
-                        intent.putExtra("email", user.email)
-                        setResult(RESULT_OK, intent)
-                        finish()
+                        user.getIdToken(false).addOnSuccessListener { result ->
+                            intent.putExtra("idToken", result.token)
+                            intent.putExtra("email", user.email)
+                            setResult(RESULT_OK, intent)
+                            finish()
+                        }
                     } else { //인증 미완료 시 인증메일 발송 버튼 띄우고 로그아웃 처리. 안내 띄우기.
                         Log.e("TAG LoginEmailAc", "인증 미완료")
                         Toast.makeText(this, "로그인을 위해 이메일 인증을 완료해주세요", Toast.LENGTH_SHORT).show()

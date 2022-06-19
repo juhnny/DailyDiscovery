@@ -7,9 +7,9 @@ data class User(val memNo:String,
                 val profileMsg:String,
                 val signUpDatetime:String,
                 val lastLoginDatetime:String,
-                val snsType:String,
-                val snsId:String,
-                val snsConnectDate:String
+                val authType:String,
+                val authId:String,
+                val authConnectDatetime:String
                 ) {
 
 }
