@@ -33,4 +33,10 @@
     <style name="TodayFragmentTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor"  tools:targetApi="l">@color/dahong</item>
     </style>
+
+    <!-- SplashActivity 화면 테마 -->
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!--상태표시줄이 안 보이도록 설정. 없앨 순 없고 가려야 한다.-->
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>
