@@ -53,7 +53,7 @@ class LoginEmailActivity : AppCompatActivity() {
                     //인증이 돼있나 확인
                     if(user.isEmailVerified){ //인증 완료시에만 로그인 처리, 메인 액티비티 스타트
                         Log.e("TAG LoginEmailAc", "인증 완료")
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
                         //send to save Logged In User Data
                         intent.putExtra("didLogInSuccessed", true)
                         user.getIdToken(false).addOnSuccessListener { result ->

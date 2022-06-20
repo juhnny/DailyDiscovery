@@ -76,11 +76,11 @@
             <TextView
                 android:id="@+id/tv_postcard2"
                 android:layout_width="60dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="10dp"
                 android:paddingHorizontal="3dp"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|bottom"
                 android:text="가나다라마"
                 android:autoSizeTextType="uniform"
                 android:fontFamily="@font/eastseadokdo_regular"/>
@@ -103,11 +103,11 @@
             <TextView
                 android:id="@+id/tv_postcard3"
                 android:layout_width="60dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="10dp"
                 android:paddingHorizontal="3dp"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|bottom"
                 android:text="가나다라마"
                 android:autoSizeTextType="uniform"
                 android:fontFamily="@font/eastseadokdo_regular"/>
@@ -148,8 +148,9 @@
                 android:id="@+id/tv_topic"
                 android:layout_width="240dp"
                 android:layout_height="160dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="-4dp"
                 android:padding="30dp"
                 android:gravity="center"
                 android:text=""
