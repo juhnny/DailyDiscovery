@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
             b.bnv.menu.getItem(1).isChecked = true
         } else {
-            Toast.makeText(this, "MainAc resultCode != RESULT_OK", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "MainAc resultCode != RESULT_OK", Toast.LENGTH_SHORT).show()
         }
     })
 

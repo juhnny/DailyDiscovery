@@ -2,6 +2,7 @@ package com.juhnny.dailydiscovery
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -49,9 +50,11 @@ class PhotoPagerAdapter(val context: Context, val photos:ArrayList<Photo>): Recy
 
         //앨범 이동
         holder.binding.tvNickname.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("email", photo.userEmail)
             val appCompatActivity = context as AppCompatActivity //맞다. 애초에 저 context의 정체가 adapter 생성자에 인수로 집어넣은 OOOActivity였지..
             appCompatActivity.supportFragmentManager.beginTransaction()
-                .replace(R.id.photo_activity_root, MyBioFragment(photo.userEmail))
+                .replace(R.id.photo_activity_root, MyBioFragment::class.java, bundle)
                 .addToBackStack(null)
                 .commit()
         }
