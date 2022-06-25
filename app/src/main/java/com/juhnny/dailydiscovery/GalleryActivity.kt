@@ -22,7 +22,7 @@ class GalleryActivity : AppCompatActivity() {
     //항목 선택 시 PhotoActivity로 사진 크게 로딩
 
     val b by lazy { ActivityGalleryBinding.inflate(layoutInflater) }
-    val topicSelected by lazy { intent.getStringExtra("topicSelected") }
+    val topicSelected by lazy { intent.getStringExtra("topicSelected") ?: "오류" }
 
     val photos = mutableListOf<Photo>()
 
@@ -38,7 +38,7 @@ class GalleryActivity : AppCompatActivity() {
 
         b.recycler.adapter = GalleryRecyclerAdapter(this, photos)
 
-        loadPhotos(topicSelected!!)
+        loadPhotos(topicSelected)
 //        loadPhotosStub()
 
     }//onCreate()
@@ -52,6 +52,7 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     fun loadPhotos(queryTopic:String){
+        b.progressCircular.visibility = View.VISIBLE
         val retrofit:Retrofit = Retrofit.Builder().baseUrl("http://iwibest.dothome.co.kr")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
@@ -73,6 +74,7 @@ class GalleryActivity : AppCompatActivity() {
                     Log.e("loadPost Success", "Header : $resultMsg")
                     Log.e("loadPost Success", "Body itemCount : $itemCount")
 
+                    b.progressCircular.visibility = View.GONE
                     if(posts.isEmpty()) b.layoutNoResult.visibility = View.VISIBLE
                     photos.addAll(posts)
                     b.recycler.adapter?.notifyDataSetChanged()

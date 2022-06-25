@@ -80,7 +80,7 @@ class EditorActivity : AppCompatActivity() {
                         dialogInterface, i -> Toast.makeText(this,"계속 작성", Toast.LENGTH_SHORT).show()})
                     .setNegativeButton("나가기", DialogInterface.OnClickListener( {
                         dialogInterface, i -> run{
-                        Toast.makeText(this, "나가기", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "나가기", Toast.LENGTH_SHORT).show()
 
                         setResult(RESULT_CANCELED, intent)
                         finish()

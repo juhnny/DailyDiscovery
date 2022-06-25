@@ -89,7 +89,6 @@ class Tab4Fragment : Fragment(){
         b.nav.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_notice -> {
-                    Toast.makeText(context, "Tab4 - aa", Toast.LENGTH_SHORT).show()
                     //공지사항 화면 열기. 프래그먼트로 만들어보자.
                     //MyBioFragment는 닫고, NoticeFragment는 열고
                     childFragmentManager.beginTransaction()
@@ -99,7 +98,6 @@ class Tab4Fragment : Fragment(){
                         .commit()
                 }
                 R.id.nav_appstore -> {
-                    Toast.makeText(context, "Tab4 - bb", Toast.LENGTH_SHORT).show()
                     //리뷰/평점 남기기 위해 플레이스토어 앱페이지 열기
                     //market:// 프로토콜은 playstore 뿐만 아니라 다른 마켓 앱에서도 반응한다.
                     //다른 마켓 말고 플레이스토어를 먼저 타겟하겠다면.. https://stackoverflow.com/a/28090925
@@ -112,12 +110,10 @@ class Tab4Fragment : Fragment(){
                     }
                 }
                 R.id.nav_opinion -> {
-                    Toast.makeText(context, "Tab4 - cc", Toast.LENGTH_SHORT).show()
                     //이메일 앱 띄우기
                     sendEmailToAdmin(requireContext(), arrayOf("opnrstudio@gmail.com"), "개발자에게 메일 보내기")
                 }
                 R.id.nav_settings -> {
-                    Toast.makeText(context, "Tab4 - dd", Toast.LENGTH_SHORT).show()
                     //설정 액티비티 열기
                     startActivity(Intent(context, SettingsActivity::class.java))
                     //설정 프래그먼트 열기

@@ -180,6 +180,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("LoginAc registerUserInDB()", "error")
                 Toast.makeText(this@LoginActivity, "서버오류 - 회원등록 실패 \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
         })
