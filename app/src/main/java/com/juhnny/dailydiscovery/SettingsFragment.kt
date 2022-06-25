@@ -24,7 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     //각 항목들의 설정값이 항목명 아래 summary에 바로 보여지게 하고 싶다면 리스너로 값을 바꿔줘야 한다.
-    //onResume, onPause 양족에서 쓰기 위해 멤버변수로 만들어주고
+    //onResume, onPause 양쪽에서 쓰기 위해 멤버변수로 만들어주고
     val prefs by lazy { PreferenceManager.getDefaultSharedPreferences(requireContext()) }
 
     override fun onResume() {
