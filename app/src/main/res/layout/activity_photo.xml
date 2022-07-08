@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".PhotoActivity"
     android:orientation="vertical"
-    android:background="@color/grey205"
-
+    android:background="@color/grey224"
     android:id="@+id/photo_activity_root">
 
     <androidx.appcompat.widget.Toolbar
@@ -21,12 +20,12 @@
         android:orientation="vertical"
         android:layout_below="@id/toolbar">
 
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Photo Activity"
-            android:background="@color/lightgreen"/>
+<!--        <TextView-->
+<!--            android:id="@+id/tv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Photo Activity"-->
+<!--            android:background="@color/lightgreen"/>-->
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager_photo"

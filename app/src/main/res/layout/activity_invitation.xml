@@ -6,52 +6,327 @@
     android:layout_height="match_parent"
     tools:context=".InvitationActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Invitation Activity"
-        android:background="@color/lemon"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Invitation Activity"-->
+<!--        android:background="@color/lemon"/>-->
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
-        android:background="#E4E4E4">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_login"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:background="@color/grey192"
-            android:text="로그인"
-            android:textSize="32dp"
-            android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_signup"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:background="@color/grey192"
-            android:text="회원가입"
-            android:textSize="32dp"
-            android:gravity="center"
-            android:layout_below="@id/tv_login"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"/>
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:background="@drawable/gradient_invitation"/>-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="-50dp"
+                android:background="#141414"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginRight="-50dp"
+                android:rotation="1"
+                android:background="#1E1E1E"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginRight="-50dp"
+                android:rotation="3"
+                android:background="#282828"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginRight="-50dp"
+                android:rotation="5"
+                android:background="#323232"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginRight="-50dp"
+                android:background="#3E3E3E"
+                android:rotation="7" />
 
-        <TextView
-            android:id="@+id/tv_lookaround"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:text="둘러보기"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_below="@id/tv_signup"
-            android:layout_centerInParent="true"/>
+<!--            <ImageView-->
+<!--                android:layout_width="600dp"-->
+<!--                android:layout_height="600dp"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:layout_marginTop="-80dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:src="@drawable/light2" />-->
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
+                android:text="매일의 발견,"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title1"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/eastseadokdo_regular"
+                android:text="시선집"
+                android:textColor="@color/tangerine"
+                android:textSize="100dp" />
+
+            <TextView
+                android:id="@+id/copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title2"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="8dp"
+                android:text="서로 다른 시선을 발견하는 즐거움"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frame1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/copy"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:padding="20dp"
+                app:cardBackgroundColor="@color/champaigngold_dark"
+                app:cardElevation="8dp">
+
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white"
+                    android:padding="25dp"
+                    android:src="@drawable/unsplash_ash_ashley" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@id/frame1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toRightOf="@id/frame1"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="열매"
+                        android:textSize="12sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="김대리"
+                        android:textSize="8sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="꽃 피기도 전에 \n매실이 열렸네"
+                        android:textSize="8sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frame2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/frame1"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="20dp"
+                android:padding="20dp"
+                app:cardBackgroundColor="@color/champaigngold_dark"
+                app:cardElevation="8dp">
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white"
+                    android:padding="20dp"
+                    android:src="@drawable/unsplash_pineapple_supply_co" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@id/frame2"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toLeftOf="@id/frame2"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="헤어스타일"
+                        android:textSize="12sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="산다라"
+                        android:textSize="8sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="에에 에에 에 \n에에 에에 에 \n에에"
+                        android:textSize="8sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frame3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/frame2"
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="10dp"
+                android:padding="20dp"
+                app:cardBackgroundColor="@color/champaigngold_dark"
+                app:cardElevation="8dp">
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white"
+                    android:padding="30dp"
+                    android:src="@drawable/unsplash_jakob_owens" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@id/frame3"
+                android:layout_toRightOf="@id/frame3"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="-50dp"
+                app:cardElevation="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"                        android:layout_marginTop="8dp"
+                        android:text="사진"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="앙리"
+                        android:textSize="8sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="오늘 내게 \n단 한 컷만 \n주어진다면"
+                        android:textSize="8sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="430dp"
+                android:layout_below="@id/frame3"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="-50dp"
+                android:background="@color/tangerine" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/frame3">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/letter"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="185dp"
+                    android:gravity="center_horizontal"
+                    android:text="전시 초대장"
+                    android:textColor="@color/champaigngold"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="240dp"
+                    android:fontFamily="@font/eastseadokdo_regular"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="8sp"
+                    android:text="오늘의 주제가 발표됐습니다. 작가님만의 시선을 \n시선집에 공유해주세요. "
+                    android:textColor="@color/champaigngold_dark"
+                    android:textSize="32sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_lookaround"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/frame3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="375dp"
+                android:background="@drawable/bg_all_round_black"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="참가하기"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

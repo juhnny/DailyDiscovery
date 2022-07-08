@@ -8,26 +8,20 @@
 
     <!--화면 영역-->
     <RelativeLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/container_tab4"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </RelativeLayout>
-
+            android:layout_height="match_parent"></RelativeLayout>
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:background="#FFFFFF">
+            android:background="@color/grey224">
         </androidx.appcompat.widget.Toolbar>
-
-
-
     </RelativeLayout>
 
     <!--Drawer 영역-->

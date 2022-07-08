@@ -1,16 +1,15 @@
 package com.juhnny.dailydiscovery
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,23 +17,26 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.juhnny.dailydiscovery.databinding.ActivityLoginBinding
+import retrofit2.Call
+import retrofit2.Callback
 
 class LoginActivity : AppCompatActivity() {
 
     val b by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     val auth by lazy { FirebaseAuth.getInstance() }
+    val prefs by lazy { PreferenceManager.getDefaultSharedPreferences(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(b.root)
 
         setSupportActionBar(b.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         //로그인 화면에서 할 일
+        //둘러보기
+        //  메인 화면으로 이동
         //이메일 로그인
         //  인증메일 재발송
         //  DB에 마지막 로그인 시간 업데이트
@@ -44,22 +46,26 @@ class LoginActivity : AppCompatActivity() {
         //  인증메일 재발송
         //간편로그인
         //  회원 정보 DB에 insert
-        //둘러보기
-        //  메인 화면으로 이동
-        b.btnLogin.setOnClickListener{ signIn() }
+        b.tvLookaround.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
-        b.tvFindId.setOnClickListener { MyUtil.showSorryAlert(this) }
+        b.btnGoToEmailLogin.setOnClickListener{
+            val intent = Intent(this, LoginEmailActivity::class.java)
+            emailLoginResultLauncher.launch(intent)
+        }
 
-        b.tvFindPw.setOnClickListener { MyUtil.showSorryAlert(this) }
-
-        b.tvSignup.setOnClickListener{
+        b.btnGoToSignup.setOnClickListener{
             val intent = Intent(this, SignupActivity::class.java )
             startActivity(intent)
         }
 
-        b.btnGoogleLogin.setOnClickListener { googleLogin() }
+        b.btnLoginKakao.setOnClickListener { loginWithKakao() }
+        b.btnLoginGoogle.setOnClickListener { loginWithGoogle() }
+        b.btnLoginNaver.setOnClickListener { loginWithNaver() }
 
-        b.btnLogout.visibility = View.VISIBLE
+//        b.btnLogout.visibility = View.VISIBLE
         b.btnLogout.setOnClickListener{
             auth.signOut()
 
@@ -73,7 +79,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> onBackPressed()
@@ -81,173 +86,180 @@ class LoginActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun signIn(){
-        val email = b.etEmail.text.toString()
-        val pw = b.etPw.text.toString()
-
-        //기존에 받아둔 currentUser 토큰이 더이상 유효하지 않은 경우(아래 코멘트의 상황들)에 대한 처리
-        //FirebaseAuth 서버를 감시
-        //리스너를 프로세스(액티비티)마다 달아줘야 하나?
-        //여기서 달아놓고 액티비티가 종료돼도 액티비티에서 작동하는지 알아보자
-        //로그인 시도가 있을 때마다도 불려짐
-        auth.addAuthStateListener { auth ->
-            Toast.makeText(baseContext, "AuthStateListener called", Toast.LENGTH_SHORT).show()
-            //로그인부터 로그아웃 때까지만 달아놓자
-            //로그아웃 시키고 안내 띄우고 MainActivity 새로 띄우고
-            if(auth.currentUser == null){
-
-            }
-            //- Right after the listener has been registered
-            //- When a user is signed in
-            //- When the current user is signed out
-            //- When the current user changes
-
-        }
-
-        auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener{
-            if(it.isSuccessful){
-                // Sign in success, update UI with the signed-in user's information
-                val user:FirebaseUser? = auth.currentUser
-
-                if(user != null){ //로그인 되어있을 경우
-                    Log.e("TAG LoginAc", "currentUser != null, email:${user.email}")
-
-                    updateLastLogInDatetime()
-                    //인증이 돼있나 확인
-                    if(user.isEmailVerified){ //인증 완료시에만 로그인 처리, 메인 액티비티 스타트
-                        Log.e("TAG LoginAc", "인증 완료")
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                        saveLoggedInUserData()
-                        startActivity(Intent(this, MainActivity::class.java))
-                    } else { //인증 미완료 시 인증메일 발송 버튼 띄우고 로그아웃 처리. 안내 띄우기.
-                        Log.e("TAG LoginAc", "인증 미완료")
-                        Toast.makeText(this, "로그인을 위해 이메일 인증을 완료해주세요", Toast.LENGTH_SHORT).show()
-                        b.tvGuideEmailVerification.visibility = View.VISIBLE
-                        b.layoutEmailVerification.visibility = View.VISIBLE
-
-                        b.tvGuideEmailVerification.text = "로그인을 위해 이메일 인증을 완료해주세요. 인증 메일의 링크를 클릭하시면 인증이 완료됩니다."
-                        b.tvSendEmailVerification.setOnClickListener {
-                            auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{
-
-                                if(it.isSuccessful){
-                                    Toast.makeText(this, "인증메일 발송 완료", Toast.LENGTH_SHORT).show()
-                                } else {
-                                    Toast.makeText(this, "인증메일 발송 실패", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        }
-                        b.tvCheckEmailVerification.setOnClickListener{
-                            val user:FirebaseUser? = auth.currentUser
-                            //Do note that the FirebaseUser object is cached within an app session,
-                            // so if you want to check on the verification state of a user,
-                            // it's a good idea to call .getCurrentUser().reload() for an update.
-                            if(user != null){
-                                user.reload().addOnCompleteListener {
-                                    Log.e("TAG LoginAc checkEmailVerification", "${user.email}, ${user.isEmailVerified}")
-
-                                    if(user.isEmailVerified){
-                                        Toast.makeText(this, "인증 확인", Toast.LENGTH_SHORT).show()
-                                        saveLoggedInUserData()
-                                        startActivity(Intent(this, MainActivity::class.java))
-                                    }else{
-                                        Toast.makeText(this, "이메일 인증이 완료되지 않았습니다. 인증 메일의 링크를 클릭하시면 인증이 완료됩니다.", Toast.LENGTH_LONG).show()
-                                    }
-                                }
-                            } else Toast.makeText(this, "유저 정보를 확인할 수 없습니다. \n다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
-                        }
-                    }//이메일 인증여부 검사
-                } else{ //로그인은 성공했는데 null인 경우. 안내만 띄우자. 거의 없을 듯.
-                    Log.e("TAG LoginAc", "currentUser == null")
-                    Toast.makeText(this, "유저 정보를 가져올 수 없습니다.\n다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
-                    auth.signOut()
-                }
-            } else {
-                // If sign in fails, display a message to the user.
-                Log.e("TAG LoginAc", "signIn failed: ${it.exception}")
-                Toast.makeText(baseContext, "로그인 실패 \n ${it.exception}", Toast.LENGTH_SHORT).show()
-//                updateUI(null)
-            }
-        }
-
-    }//signIn
-
-    fun updateLastLogInDatetime(){
-
-    }
-
-
-    private fun saveLoggedInUserData(){
-        val user = auth.currentUser
-        Log.e("user : ", "$user")
-        if(user != null) { //로그인한 사용자가 있으면
-            val email:String? = user.email
-            val name:String? = user.displayName
-            val photoUri: Uri? = user.photoUrl
-            val creationTime:Long? = user.metadata?.creationTimestamp
-            val lastSignInTime:Long? = user.metadata?.lastSignInTimestamp
-            user.getIdToken(false).result.token
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            val uid:String? = user.uid
-
-            // Check if user's email is verified
-            val emailVerified:Boolean = user.isEmailVerified
-
-            //사용자에게 연결된 로그인 제공업체로부터 프로필 정보를 가져오려면 getProviderData 메서드를 사용합니다.
-
-            Log.e("TAG currentUser: ", "email: $email, name: $name, photoUri: $photoUri, uid: $uid, emailVerified: $emailVerified")
-            Log.e("TAG currentUser: ", "creationTime: $creationTime, lastSignInTime: $lastSignInTime")
-            Log.e("TAG currentUser: ", ": ${user.getIdToken(false).result.token}, : ${user.getIdToken(false).result.claims.values}")
-        }
-
-    }
-    //현재 사용자를 가져올 때 권장하는 방법은 getCurrentUser 메서드를 호출하는 것입니다.
-    // 로그인한 사용자가 없으면 getCurrentUser는 null을 반환합니다.
-
-    //getCurrentUser가 null이 아닌 FirebaseUser(얘가 여기서 말하는 토큰)를 반환하지만 기본 토큰이 유효하지 않은 경우가 있습니다.
-    // 예를 들어 사용자가 다른 기기에서 삭제되었는데 로컬 토큰을 새로고침하지 않은 경우가 여기에 해당합니다.
-    // 이 경우 유효한 사용자 getCurrentUser를 가져올 수 있지만, 인증 리소스에 대한 후속 호출이 실패합니다.
-    //인증 객체의 초기화가 완료되지 않은 경우에도 getCurrentUser가 null을 반환할 수 있습니다.
-
-    //AuthStateListener를 연결하면 기본 토큰의 상태가 변경될 때마다 콜백이 호출됩니다.
-    // 이를 통해 위에서 설명한 것과 같은 특이한 사례에 대처할 수 있습니다.
-    //Listener called when there is a change in the authentication state.
-    //- Right after the listener has been registered
-    //- When a user is signed in
-    //- When the current user is signed out
-    //- When the current user changes
-
-    private fun googleLogin(){
-        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestEmail()
-                                .build()
-
-        val client:GoogleSignInClient = GoogleSignIn.getClient(this, signInOptions)
-        val intent = client.signInIntent
-        resultLauncher.launch(intent)
-
-    }
-
-    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object: ActivityResultCallback<ActivityResult>{
+    val emailLoginResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object:ActivityResultCallback<ActivityResult>{
         override fun onActivityResult(result: ActivityResult?) {
-            Toast.makeText(baseContext, "resultLauncer came back", Toast.LENGTH_SHORT).show()
-            try {
-                //로그인 창을 그냥 닫아버리면 예외 발생
-                val intent = result?.data
-                val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
-                val account = task.getResult()
+            if(result?.resultCode == RESULT_CANCELED) return
+            else if(result?.resultCode == RESULT_OK){
+                val intent = result.data
+                if(intent == null) Toast.makeText(this@LoginActivity, "LoginAc intent가 null", Toast.LENGTH_SHORT).show()
+                val didLogInSuccessed:Boolean? = intent?.getBooleanExtra("didLogInSuccessed", false)
+                val authId = intent?.getStringExtra("idToken") ?: ""
+                val email = intent?.getStringExtra("email") ?: ""
+                Log.e("LoginAc emailLoginResultLauncher", "didLogInSuccessed: ${didLogInSuccessed}, userId: $authId, email: $email")
 
-                val email = account.email
-                Log.e("TAG Google sign in account", "$email")
-
-                startActivity(Intent(baseContext, MainActivity::class.java))
-                finish()
-            } catch (e:ApiException){
-                Log.w("TAG Google Login Failed", "failure code : ${e.statusCode}")
+                //서버에 로그인 날짜 업데이트
+                updateLastLogInDatetime(authId, email)
             }
         }
     })
+
+    private fun loginWithKakao(){
+        Toast.makeText(this, "Kakao login", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun loginWithNaver(){
+        Toast.makeText(this, "Naver login", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun loginWithGoogle(){
+        Toast.makeText(this, "Google login - on test\nAPI 변경 작업 중입니다.", Toast.LENGTH_SHORT).show()
+        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+//            .requestIdToken("whatsthisid")
+            .build()
+        val client:GoogleSignInClient = GoogleSignIn.getClient(this, signInOptions)
+        val intent = client.signInIntent
+        googleLoginResultLauncher.launch(intent)
+    }
+
+    val googleLoginResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object: ActivityResultCallback<ActivityResult>{
+        override fun onActivityResult(result: ActivityResult?) {
+            try {
+                //로그인 창을 그냥 닫아버리면 예외 발생
+                if(result?.resultCode == RESULT_CANCELED) return
+
+                result?.run{
+                    val intent = this.data
+                    val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
+                    val account = task.result
+                    Log.e("LoginAc googleLoginResultLauncher", "${account.email}, ${account.id}, ${account.idToken}")
+
+                    //id 말고 idToken을 써야 함
+                    //Google 계정의 이메일 주소는 변경 될 수 있으므로 사용자를 식별하는 데 사용하지 마십시오.
+                    // 대신 GoogleSignInAccount.getId 클라이언트와 ID 토큰의 sub 클레임에서 백엔드에서 가져올 수있는 계정의 ID를 사용하세요.
+                    checkIfUserExists("google", account.idToken.toString(), account.email.toString())
+                }
+            } catch (e:ApiException){
+                Log.w("LoginAc googleLoginResultLauncher error", "${e.statusCode}")
+            }
+        }
+    })
+
+    private fun checkIfUserExists(authType:String, authId:String, email:String){
+        //서버에 유저 등록여부 체크
+        RetrofitHelper.getRetrofitInterface().checkIfUserExists(authType, authId, email).enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val result = response.body().toString()
+                Log.e("LoginAc checkIfUserExists()", result)
+
+                when(result){
+                    "error"->{}
+                    "false"->{ registerUserInDB(authType, authId, email) } //존재하지 않을 시 유저 등록
+                    "true"->{ updateLastLogInDatetime(authId, email) } //존재 시 로그인 작업
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(this@LoginActivity, "서버오류 - 회원여부를 확인할 수 없습니다. \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun registerUserInDB(authType:String, authId:String, email: String){
+        //DB에 회원 등록하기
+        //userId는 stub으로 처리, authId는 간편로그인 서비스에서 받기
+        //userId 로직을 만들어서 서버에서 중복되지 않는 값 받아오기.
+        val nickname = "신인작가"
+        RetrofitHelper.getRetrofitInterface().saveMember(authType, authId, email, nickname).enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                if(response.body().toBoolean()){
+                    Log.e("LoginAc registerUserInDB()", response.body().toString())
+
+                    updateLastLogInDatetime(authId, email)
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("LoginAc registerUserInDB()", "error")
+                Toast.makeText(this@LoginActivity, "서버오류 - 회원등록 실패 \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun updateLastLogInDatetime(authId:String, email: String){
+        RetrofitHelper.getRetrofitInterface().updateLastLoginDatetime(authId, email).enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                Log.e("LoginAc updateLastLogInDatetime() response", "${response.body()}")
+
+                //DB에서 유저 정보 가져오기
+                //여기부터는 유저 정보 쿼리에 email을 쓸 지, authId를 쓸 지에 따라 수정...
+                loadUserData(email)
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("LoginAc updateLastLogInDatetime() failure", "${t.message}")
+            }
+        })
+    }
+
+    //이메일 로그인 시
+    fun loadUserData(email:String){
+        //email을 기준으로 SELECT
+        RetrofitHelper.getRetrofitInterface().loadMember(email).enqueue(object : Callback<Response<User>> {
+            override fun onResponse(call: Call<Response<User>>, response: retrofit2.Response<Response<User>>) {
+                val myResponse:Response<User>? = response.body()
+                if(myResponse != null){
+                    val resultMsg = myResponse.responseHeader.resultMsg
+                    val body:ResponseBody<User>? = myResponse.responseBody
+                    body?.run{
+                        val user:User = this.items[0]
+                        Log.e("LoginAc loadUserData resultMsg", resultMsg)
+                        Log.e("LoginAc loadUserData user", user.toString())
+
+                        //SharedPreference에 회원 정보 저장
+                        saveUserDataToLocal(user)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Response<User>>, t: Throwable) {
+                Log.e("LoginAc loadUserData Failure", "${t.message}")
+            }
+        })
+    }//loadUserData
+
+    private fun saveUserDataToLocal(user:User){
+        //val prefs = getSharedPreferences("user", MODE_PRIVATE) //덮어쓰기
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this@LoginActivity) //덮어쓰기
+        prefs.edit().putBoolean("isLoggedIn", false)
+            .putString("memNo", user.memNo)
+            .putString("memId", user.memId)
+            .putString("email", user.email)
+            .putString("nickname", user.nickname)
+            .putString("profileMsg", user.profileMsg)
+            .putString("signUpDatetime", user.signUpDatetime)
+            .putString("lastLoginDatetime", user.lastLoginDatetime)
+            .putString("authType", user.authType)
+            .putString("authId", user.authId)
+            .putString("authConnectDatetime", user.authConnectDatetime)
+            .apply() //apply()를 쓰면 메모리에선 즉시 변경, 디스크에선 별도 쓰레드에서 비동기로 쓰기 작업
+                    //어차피 네트워크 작업하는 별도 스레드에서 일게 할 함수라 commit()해도 되지만 그냥 apply()로 가보자. 대신 intro에서 검증하고 있으니까.
+        Log.e("LoginAc saveUserDataToLocal() prefs",
+            "${prefs.getString("email", "load email failed")}, ${prefs.getString("nickname", "load nickname failed")}")
+        G.user = user
+        Log.e("LoginAc saveUserDataToLocal() G.user", G.user.toString())
+
+        goToMainActivity()
+    }
+
+    private fun goToMainActivity(){
+        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+        val intent2 = Intent(this@LoginActivity, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(intent2)
+        finish()
+    }
 
 }

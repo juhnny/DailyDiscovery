@@ -13,35 +13,28 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Followings"
-            android:textSize="20sp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:text="좋아하는 작가"
+            android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
+    <!--로그인 상태에서 보여줄 뷰-->
     <LinearLayout
+        android:id="@+id/layout_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_below="@id/toolbar">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="followings fragment"
-            android:background="@color/orange"/>
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="add fragment"/>
-        <Button
-            android:id="@+id/btn_replace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="replace fragment"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="followings fragment"-->
+<!--            android:background="@color/orange"/>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
@@ -51,6 +44,44 @@
             android:orientation="vertical" />
 
     </LinearLayout>
+
+    <!--게스트 상태에서 보여줄 뷰-->
+    <RelativeLayout
+        android:id="@+id/layout_signin_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <ImageView
+            android:id="@+id/iv_signin_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/icon_round_purple" />
+
+        <TextView
+            android:id="@+id/tv_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_signin_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="시선집 이용을 위해\n로그인이 필요합니다"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"/>
+
+        <Button
+            android:id="@+id/btn_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_signin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/tangerine"
+            android:textColor="@color/black"
+            android:text="로그인" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

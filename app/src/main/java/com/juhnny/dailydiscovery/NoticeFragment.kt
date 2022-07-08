@@ -38,7 +38,8 @@ class NoticeFragment:Fragment() {
         when (item.itemId) {
             android.R.id.home -> {
                 Log.e("Notice - home", "")
-                parentFragmentManager.beginTransaction().remove(this)
+                parentFragmentManager.beginTransaction()
+                    .remove(this)
                     .show(parentFragmentManager.findFragmentByTag("MYBIO_FRAG")!!) //이걸 지워도 왜 MyBio가 보여지지?
                     .commit()
             }

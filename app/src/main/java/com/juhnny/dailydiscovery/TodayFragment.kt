@@ -1,5 +1,6 @@
 package com.juhnny.dailydiscovery
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,15 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.juhnny.dailydiscovery.databinding.FragmentTodayBinding
+import retrofit2.Call
+import retrofit2.Callback
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,13 +30,17 @@ class TodayFragment : Fragment() {
 
     val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy { FragmentTodayBinding.inflate(layoutInflater) }
+    lateinit var todayTopic:Topic
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return b.root
+        val view = b.root
+        loadMainPhotos()
+
+        return view
         //이 프래그먼트는 replace를 당해도 addToBackStack() 이후 다시 Back 해서 확인해보면 뷰들이 그대로 남아있다.
         //원래 replace는 remove & add 이기 때문에 프래그먼트가 remove되면서 그에 속한 view들도 container로부터 remove 되는 게 일반적.
         //알고보니 그 이유는 return b.root로 넘긴 뷰들이 멤버변수에 속해있는 뷰들이기 때문
@@ -47,27 +57,38 @@ class TodayFragment : Fragment() {
         //오늘에 해당하는 주제 DB에서 찾아다가 보여주기
         //글 작성 누르면 에디터 화면으로 주제 넘겨주기
         //에디터 작성 완료 시 주제 탭으로 화면 넘어가기
+        //로그인/비로그인 UI 전환
 
         mainActivity.setSupportActionBar(b.toolbar)
         mainActivity.supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        loadTopic()
-
+        if(G.user == null) b.ivNoti.visibility = View.GONE
         b.ivNoti.setOnClickListener{
             childFragmentManager.beginTransaction().add(R.id.today_fragment_root, NotiFragment()).addToBackStack(null).commit()
         }
 
-        b.tvGotoWrite.setOnClickListener {
-            val intent = Intent(context, EditorActivity::class.java)
-//            intent.putExtra("topic", )
-            mainActivity.editorResultLauncher.launch(intent)
+        b.fabSubmit.setOnClickListener {
+            if(G.user == null){
+                //로그인 안내 띄우기
+                AlertDialog.Builder(requireContext()).setTitle("시선집")
+                    .setMessage("시선집 이용을 위해\n로그인이 필요합니다")
+                    .setNeutralButton("확인", DialogInterface.OnClickListener{dialogInterface, int-> })
+                    .setPositiveButton("로그인", object : DialogInterface.OnClickListener{
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            Toast.makeText(requireContext(), "로그인 화면으로 이동합니다", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(requireContext(), LoginActivity::class.java))
+                            requireActivity().finish()
+                        }
+                    }).create().show()
+            }else{
+                val intent = Intent(context, EditorActivity::class.java)
+                intent.putExtra("topic", b.tvTopic.text)
+                mainActivity.editorResultLauncher.launch(intent)
+            }
         }
 
-        b.tvTopic.setOnClickListener {
-            val auth:FirebaseAuth = FirebaseAuth.getInstance()
-            auth.signOut()
-            Toast.makeText(requireContext(), "signOut", Toast.LENGTH_SHORT).show()
-        }
+        loadTodayTopic()
+//        loadTopic()
 
 //        //해당 탭을 닫고 다른 탭으로 이동하는 방법
 //        b.tvTopic.setOnClickListener {
@@ -81,10 +102,48 @@ class TodayFragment : Fragment() {
 
     }//onViewCreated
 
-
-
     //오늘의 주제를 발행하는 방법은?
-    //DB에 올려놓고 해당 날짜에 알맞는 주제를 읽어오는 방식은 적절
+    //DB에 올려놓고 해당 날짜에 알맞는 주제를 읽어오는 방식으로 일단 해보자
+    private fun loadTodayTopic(){
+        val callStr = RetrofitHelper.getRetrofitInterface().loadTodayTopicString()
+        callStr.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val resultMsg = response.body()
+                val code = response.code()
+                Log.e("TodayFrag loadTodayTopic Success", "$resultMsg")
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("TodayFrag loadTodayTopic Failure", "${t.message}")
+            }
+        })
+
+        val call = RetrofitHelper.getRetrofitInterface().loadTodayTopic()
+        call.enqueue(object : Callback<Response<Topic>>{
+            override fun onResponse(
+                call: Call<Response<Topic>>,
+                response: retrofit2.Response<Response<Topic>>
+            ) {
+                val header = response.body()?.responseHeader
+                val body = response.body()?.responseBody
+                if(body != null){
+                    Log.e("TodayFrag loadTodayTopic Success", "${header?.resultMsg}")
+                    Log.e("TodayFrag loadTodayTopic Success", "${body}")
+                    todayTopic = body.items[0]
+                    b.tvTopic.text = todayTopic.topicName
+                } else { //null이면 기본적으로 써있는 "자유주제"가 나오도록
+                    b.tvTopic.text = "자유 주제"
+                }
+            }
+
+            override fun onFailure(call: Call<Response<Topic>>, t: Throwable) {
+                Log.e("TodayFrag loadTodayTopic Failure", "${t.message}")
+            }
+        })
+
+    }
+
+
 
     private fun loadTopic(){
         Log.e("TAG Today 8 am", "${Date()}")
@@ -112,7 +171,7 @@ class TodayFragment : Fragment() {
 
                         Log.e("TAG parsedDate", "$parsedDate")
                         Log.e("TAG topic", "$no, $topicName, $issueDate")
-                    }
+                    }//for
 
                 } else{
                     Log.e("TAG loadTopic", "get() 실패 ${task.exception}")
@@ -120,5 +179,30 @@ class TodayFragment : Fragment() {
             }
         })
     }//loadTopic()
+
+    private fun loadMainPhotos(){
+        val call:Call<Response<Photo>> = RetrofitHelper.getRetrofitInterface().loadMainPhotos()
+        call.enqueue(object : Callback<Response<Photo>>{
+            override fun onResponse(
+                call: Call<Response<Photo>>,
+                response: retrofit2.Response<Response<Photo>>
+            ) {
+                val myResponse = response.body()
+                val resultMsg = myResponse?.responseHeader?.resultMsg ?: ""
+                val itemCnt = myResponse?.responseBody?.itemCount ?: 0
+                val photos = myResponse?.responseBody?.items ?: mutableListOf()
+                b.tvPostcard1.text = "#" + photos[0].topic
+                b.tvPostcard2.text = photos[1].topic
+                b.tvPostcard3.text = photos[2].topic
+                Glide.with(requireContext()).load(photos[0].imgUrl).into(b.ivPostcard1)
+                Glide.with(requireContext()).load(photos[1].imgUrl).into(b.ivPostcard2)
+                Glide.with(requireContext()).load(photos[2].imgUrl).into(b.ivPostcard3)
+            }
+
+            override fun onFailure(call: Call<Response<Photo>>, t: Throwable) {
+                Log.e("TodayFrag loadMainPhotos() Failure", "${t.message}")
+            }
+        })
+    }
 
 }

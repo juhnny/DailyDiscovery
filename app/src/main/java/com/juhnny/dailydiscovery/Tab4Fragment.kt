@@ -21,7 +21,7 @@ class Tab4Fragment : Fragment(){
 
     val mainActivity by lazy { requireActivity() as MainActivity }
     val b by lazy {FragmentTab4Binding.inflate(layoutInflater)}
-    val fragments = listOf(MyBioFragment())
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,49 +55,49 @@ class Tab4Fragment : Fragment(){
 ////        drawerToggle.toolbarNavigationClickListener.onClick(null)
         b.root.addDrawerListener(drawerToggle)
 
-        val tvHeaderName = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_name)
-        val tvHeaderInfo = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_info)
-
-        val btnLogin = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_login)
-        val btnLogout = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_logout)
-        //추가하기. 로그인 돼있는 상태면 버튼 숨기고 다른 헤더 정보 띄우기
-        if(FirebaseAuth.getInstance().currentUser == null) {
-            btnLogin.visibility = View.VISIBLE
-            btnLogout.visibility = View.GONE
-        } else {
-            btnLogin.visibility = View.GONE
-            btnLogout.visibility = View.VISIBLE
-        }
-        btnLogin.setOnClickListener {
-            b.root.closeDrawer(b.nav)
-            startActivity(Intent(context, LoginActivity::class.java))
-        }
-        btnLogout.setOnClickListener {
-            b.root.closeDrawer(b.nav)
-            FirebaseAuth.getInstance().signOut()
-            Toast.makeText(requireContext(), "로그아웃 완료", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(context, MainActivity::class.java))
-            requireActivity().finish()
-        }
+//        val tvHeaderName = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_name)
+//        val tvHeaderInfo = b.nav.getHeaderView(0).findViewById<TextView>(R.id.tv_header_info)
+//
+//        val btnLogin = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_login)
+//        val btnLogout = b.nav.getHeaderView(0).findViewById<Button>(R.id.btn_logout)
+//        //추가하기. 로그인 돼있는 상태면 버튼 숨기고 다른 헤더 정보 띄우기
+//        if(FirebaseAuth.getInstance().currentUser == null) {
+//            btnLogin.visibility = View.VISIBLE
+//            btnLogout.visibility = View.GONE
+//        } else {
+//            btnLogin.visibility = View.GONE
+//            btnLogout.visibility = View.VISIBLE
+//        }
+//        btnLogin.setOnClickListener {
+//            b.root.closeDrawer(b.nav) //animation은 기본이 true
+//            startActivity(Intent(context, LoginActivity::class.java))
+//        }
+//        btnLogout.setOnClickListener {
+//            b.root.closeDrawer(b.nav)
+//            FirebaseAuth.getInstance().signOut()
+//            Toast.makeText(requireContext(), "로그아웃 완료", Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(context, MainActivity::class.java))
+//            requireActivity().finish()
+//        }
 
 
         //교체할 container가 내 layout 안에 있다면 childFragmentManager를 쓴다.
-        childFragmentManager.beginTransaction().add(R.id.container_tab4, fragments[0], "MYBIO_FRAG").addToBackStack(null).commit() //기본 화면
+        val bundle = Bundle()
+        bundle.putString("email", G.user?.email)
+        childFragmentManager.beginTransaction().add(R.id.container_tab4, MyBioFragment::class.java, bundle, "MYBIO_FRAG").addToBackStack(null).commit() //기본 화면
 
         b.nav.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_notice -> {
-                    Toast.makeText(context, "Tab4 - aa", Toast.LENGTH_SHORT).show()
                     //공지사항 화면 열기. 프래그먼트로 만들어보자.
                     //MyBioFragment는 닫고, NoticeFragment는 열고
                     childFragmentManager.beginTransaction()
-                        .hide(fragments[0])
+                        .hide(childFragmentManager.findFragmentByTag("MYBIO_FRAG")!!)
                         .add(R.id.tab4_fragment_root, NoticeFragment(), "NOTICE_FRAG")
                         .addToBackStack(null)
                         .commit()
                 }
                 R.id.nav_appstore -> {
-                    Toast.makeText(context, "Tab4 - bb", Toast.LENGTH_SHORT).show()
                     //리뷰/평점 남기기 위해 플레이스토어 앱페이지 열기
                     //market:// 프로토콜은 playstore 뿐만 아니라 다른 마켓 앱에서도 반응한다.
                     //다른 마켓 말고 플레이스토어를 먼저 타겟하겠다면.. https://stackoverflow.com/a/28090925
@@ -108,18 +108,20 @@ class Tab4Fragment : Fragment(){
                     }catch (e: ActivityNotFoundException){
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)))
                     }
-
                 }
                 R.id.nav_opinion -> {
-                    Toast.makeText(context, "Tab4 - cc", Toast.LENGTH_SHORT).show()
                     //이메일 앱 띄우기
                     sendEmailToAdmin(requireContext(), arrayOf("opnrstudio@gmail.com"), "개발자에게 메일 보내기")
                 }
                 R.id.nav_settings -> {
-                    Toast.makeText(context, "Tab4 - dd", Toast.LENGTH_SHORT).show()
                     //설정 액티비티 열기
                     startActivity(Intent(context, SettingsActivity::class.java))
-
+                    //설정 프래그먼트 열기
+//                    childFragmentManager.beginTransaction()
+//                        .hide(fragments[0])
+//                        .add(R.id.tab4_fragment_root, SettingsFragment(), "SETTINGS_FRAG")
+//                        .addToBackStack(null)
+//                        .commit()
                 }
             }
             b.root.closeDrawer(b.nav, true)
@@ -166,7 +168,7 @@ class Tab4Fragment : Fragment(){
                 "OS : ${deviceOs}\n" +
                 "App Version(SDK) : ${appVersion}(${appVersionCode}) \n" +
                 "내용 : ")
-        intent.setType("message/rfc822")
+        intent.type = "message/rfc822"
         startActivity(intent)
 
     }

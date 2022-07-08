@@ -1,8 +1,9 @@
 package com.juhnny.dailydiscovery
 
-data class Follow constructor(var nickname:String,
-                              var instroduce:String,
-                              var src1:String,
-                              var src2:String,
-                              var src3:String) {
+data class Follow constructor(var email:String,
+                              var nickname:String,
+                              var profileMsg:String,
+                              var imgUrl1:String,
+                              var imgUrl2:String,
+                              var imgUrl3:String) {
 }
