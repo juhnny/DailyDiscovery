@@ -189,8 +189,12 @@ class TodayFragment : Fragment() {
             ) {
                 val myResponse = response.body()
                 val resultMsg = myResponse?.responseHeader?.resultMsg ?: ""
-                val itemCnt = myResponse?.responseBody?.itemCount ?: 0
+                val itemCnt = myResponse?.responseBody?.itemCount ?: -1
                 val photos = myResponse?.responseBody?.items ?: mutableListOf()
+                Log.e("TodayFrag loadMainPhotos - response", "$response")
+                Log.e("TodayFrag loadMainPhotos - myResponse", "${response.body()}")
+                Log.e("TodayFrag loadMainPhotos - photos", "$photos")
+                if(photos.isEmpty()) return
                 b.tvPostcard1.text = "#" + photos[0].topic
                 b.tvPostcard2.text = photos[1].topic
                 b.tvPostcard3.text = photos[2].topic
@@ -202,6 +206,17 @@ class TodayFragment : Fragment() {
             override fun onFailure(call: Call<Response<Photo>>, t: Throwable) {
                 Log.e("TodayFrag loadMainPhotos() Failure", "${t.message}")
             }
+        })
+
+        RetrofitHelper.getRetrofitInterface().loadMainPhotosString().enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                Log.e("TodayFrag loadMainPhotosString Success", "${response.body()}")
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("TodayFrag loadMainPhotosString Failure", "")
+            }
+
         })
     }
 
