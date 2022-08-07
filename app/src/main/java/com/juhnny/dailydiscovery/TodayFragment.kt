@@ -208,6 +208,7 @@ class TodayFragment : Fragment() {
             }
         })
 
+        //테스트
         RetrofitHelper.getRetrofitInterface().loadMainPhotosString().enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 Log.e("TodayFrag loadMainPhotosString Success", "${response.body()}")
