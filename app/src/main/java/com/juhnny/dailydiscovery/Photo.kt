@@ -2,11 +2,13 @@ package com.juhnny.dailydiscovery
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.Keep
 
 //data 클래스와 일반 클래스의 차이는 toString()과 equals()
 //일반 클래스에서 toString()이 객체 정보를 알려준다면 data 클래스에서는 주생성자의 멤버변수명과 값을 나열해준다.
 //일반 클래스에서 equals()가 동일한 인스턴스인지 여부를 알려준다면 data 클래스에서는 멤버변수의 값이 같은지 비교해준다. String 클래스에서처럼.
 //단, 주생성자의 멤버변수들에 한해서!
+@Keep
 data class Photo(var no:String,
                  var topic:String,
                  var message:String,

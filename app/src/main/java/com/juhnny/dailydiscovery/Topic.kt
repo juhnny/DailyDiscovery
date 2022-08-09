@@ -1,5 +1,8 @@
 package com.juhnny.dailydiscovery
 
+import androidx.annotation.Keep
+
+@Keep
 data class Topic(var no:String,
                  var topicName:String,
                  var isIssued:Boolean,
