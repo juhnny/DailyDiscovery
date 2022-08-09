@@ -35,7 +35,7 @@ android {
         applicationId "com.juhnny.dailydiscovery"
         minSdk 23
         targetSdk 32
-        versionCode 4
+        versionCode 6
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -43,16 +43,16 @@ android {
 
     buildTypes {
         release {
-//            debuggable true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.myConfig
+            shrinkResources true
         }
         myRelease {
             debuggable true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.myConfig
+            shrinkResources true
         }
     }
     compileOptions {
