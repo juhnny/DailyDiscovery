@@ -108,10 +108,8 @@ class MyBioFragment (val userEmail: String?,
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
         }
-
         b.btnSubscribe.setOnClickListener { saveFollow(userEmail2) }
         b.btnUnsubscribe.setOnClickListener { saveUnfollow(userEmail2) }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -188,8 +186,10 @@ class MyBioFragment (val userEmail: String?,
         })
     }
 
+    // 구독 버튼의 숨김/구독/구독해제 처리
     private fun updateUiOnFollow(targetEmail:String){
-        val myEmail = auth.currentUser?.email
+        val myEmail = G.user?.email
+        Log.e("MyBioFrag updateUiOnFollow", "myEmail: $myEmail, targetEmail: $targetEmail")
         //기본적으로 다 가려놨다가..
         b.btnSubscribe.visibility = View.GONE
         b.btnUnsubscribe.visibility = View.GONE

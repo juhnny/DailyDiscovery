@@ -138,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("LoginAc googleLoginResultLauncher", "${account.email}, ${account.id}, ${account.idToken}")
 
                     //id 말고 idToken을 써야 함
-                    //Google 계정의 이메일 주소는 변경 될 수 있으므로 사용자를 식별하는 데 사용하지 마십시오.
+                    //Google 계정의 이메일 주소는 변경될 수 있으므로 사용자를 식별하는 데 사용하지 마십시오.
                     // 대신 GoogleSignInAccount.getId 클라이언트와 ID 토큰의 sub 클레임에서 백엔드에서 가져올 수있는 계정의 ID를 사용하세요.
                     checkIfUserExists("google", account.idToken.toString(), account.email.toString())
                 }
@@ -205,7 +205,6 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    //이메일 로그인 시
     fun loadUserData(email:String){
         //email을 기준으로 SELECT
         RetrofitHelper.getRetrofitInterface().loadMember(email).enqueue(object : Callback<Response<User>> {
