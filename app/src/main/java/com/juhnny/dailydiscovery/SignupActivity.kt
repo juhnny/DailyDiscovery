@@ -41,18 +41,6 @@ class SignupActivity : AppCompatActivity() {
         b.btnSignup.setOnClickListener{ signUp() }
     }
 
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        Toast.makeText(this, "currentUser: $currentUser", Toast.LENGTH_SHORT).show()
-        if(currentUser != null){
-            //로그인 되어있을 경우 UI 업데이트
-            //reloadUI()
-        }
-    }
-
-    //iwibest@naver.com
     fun signUp(){
         var isOk = false
         //이메일 및 비밀번호 인증 방식의 회원가입 - 입력된 이메일로 [인증확인]메일이 보내지고 사용자가 확인했을때 가입이 완료되는 방식
