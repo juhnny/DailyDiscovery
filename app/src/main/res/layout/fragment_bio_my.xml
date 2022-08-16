@@ -100,6 +100,30 @@
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="2" />
 
+    <RelativeLayout
+        android:id="@+id/layout_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_profile"
+        android:layout_marginTop="50dp">
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_announcement_24"
+            android:backgroundTint="@color/tangerine"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:text="등록된 게시물이 없습니다\n나만의 시선을 공유해보세요"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
     <!--게스트 상태에서 보여줄 뷰-->
     <RelativeLayout
         android:id="@+id/layout_signin_notice"

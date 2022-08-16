@@ -75,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
 //            client.signOut().addOnCompleteListener {
 //                Toast.makeText(this, "구글 로그아웃", Toast.LENGTH_SHORT).show()
 //            }
-            Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -91,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
             if(result?.resultCode == RESULT_CANCELED) return
             else if(result?.resultCode == RESULT_OK){
                 val intent = result.data
-                if(intent == null) Toast.makeText(this@LoginActivity, "LoginAc intent가 null", Toast.LENGTH_SHORT).show()
+                if(intent == null) Toast.makeText(this@LoginActivity, "LoginAc intent가 null", Toast.LENGTH_LONG).show()
                 val didLogInSuccessed:Boolean? = intent?.getBooleanExtra("didLogInSuccessed", false)
                 val authId = intent?.getStringExtra("idToken") ?: ""
                 val email = intent?.getStringExtra("email") ?: ""
@@ -104,15 +104,15 @@ class LoginActivity : AppCompatActivity() {
     })
 
     private fun loginWithKakao(){
-        Toast.makeText(this, "Kakao login", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Kakao login", Toast.LENGTH_LONG).show()
     }
 
     private fun loginWithNaver(){
-        Toast.makeText(this, "Naver login", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Naver login", Toast.LENGTH_LONG).show()
     }
 
     private fun loginWithGoogle(){
-        Toast.makeText(this, "Google login - on test\nAPI 변경 작업 중입니다.", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "Google login - on test\nAPI 변경 작업 중입니다.", Toast.LENGTH_LONG).show()
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
 //            .requestIdToken("whatsthisid")
@@ -126,7 +126,10 @@ class LoginActivity : AppCompatActivity() {
         override fun onActivityResult(result: ActivityResult?) {
             try {
                 //로그인 창을 그냥 닫아버리면 예외 발생
-                if(result?.resultCode == RESULT_CANCELED) return
+                if(result?.resultCode == RESULT_CANCELED){
+                    Log.e("LoginAc googleLoginResultLauncher", "RESULT_CANCELED")
+                    return
+                }
 
                 result?.run{
                     val intent = this.data
@@ -135,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("LoginAc googleLoginResultLauncher", "${account.email}, ${account.id}, ${account.idToken}")
 
                     //id 말고 idToken을 써야 함
-                    //Google 계정의 이메일 주소는 변경 될 수 있으므로 사용자를 식별하는 데 사용하지 마십시오.
+                    //Google 계정의 이메일 주소는 변경될 수 있으므로 사용자를 식별하는 데 사용하지 마십시오.
                     // 대신 GoogleSignInAccount.getId 클라이언트와 ID 토큰의 sub 클레임에서 백엔드에서 가져올 수있는 계정의 ID를 사용하세요.
                     checkIfUserExists("google", account.idToken.toString(), account.email.toString())
                 }
@@ -160,7 +163,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "서버오류 - 회원여부를 확인할 수 없습니다. \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "서버오류 - 회원여부를 확인할 수 없습니다. \n다시 시도해주세요.", Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -181,7 +184,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("LoginAc registerUserInDB()", "error")
-                Toast.makeText(this@LoginActivity, "서버오류 - 회원등록 실패 \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "서버오류 - 회원등록 실패 \n다시 시도해주세요.", Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -202,7 +205,6 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    //이메일 로그인 시
     fun loadUserData(email:String){
         //email을 기준으로 SELECT
         RetrofitHelper.getRetrofitInterface().loadMember(email).enqueue(object : Callback<Response<User>> {

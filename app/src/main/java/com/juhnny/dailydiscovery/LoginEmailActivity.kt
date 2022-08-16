@@ -64,7 +64,7 @@ class LoginEmailActivity : AppCompatActivity() {
                         }
                     } else { //인증 미완료 시 인증메일 발송 버튼 띄우고 로그아웃 처리. 안내 띄우기.
                         Log.e("TAG LoginEmailAc", "인증 미완료")
-                        Toast.makeText(this, "로그인을 위해 이메일 인증을 완료해주세요", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "로그인을 위해 이메일 인증을 완료해주세요", Toast.LENGTH_LONG).show()
                         b.tvGuideEmailVerification.visibility = View.VISIBLE
                         b.layoutEmailVerification.visibility = View.VISIBLE
 
@@ -72,9 +72,9 @@ class LoginEmailActivity : AppCompatActivity() {
                         b.tvSendEmailVerification.setOnClickListener {
                             auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{
                                 if(it.isSuccessful){
-                                    Toast.makeText(this, "인증메일 발송 완료", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "인증메일 발송 완료", Toast.LENGTH_LONG).show()
                                 } else {
-                                    Toast.makeText(this, "인증메일 발송 실패", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "인증메일 발송 실패", Toast.LENGTH_LONG).show()
                                 }
                             }
                         }
@@ -88,23 +88,23 @@ class LoginEmailActivity : AppCompatActivity() {
                                     Log.e("TAG LoginEmailAc checkEmailVerification", "${user.email}, ${user.isEmailVerified}")
 
                                     if(user.isEmailVerified){
-                                        Toast.makeText(this, "인증 확인", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this, "인증 확인", Toast.LENGTH_LONG).show()
                                     } else {
                                         Toast.makeText(this, "이메일 인증이 완료되지 않았습니다. 인증 메일의 링크를 클릭하시면 인증이 완료됩니다.", Toast.LENGTH_LONG).show()
                                     }
                                 }
-                            } else Toast.makeText(this, "유저 정보를 확인할 수 없습니다. \n다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
+                            } else Toast.makeText(this, "유저 정보를 확인할 수 없습니다. \n다시 로그인 해주세요.", Toast.LENGTH_LONG).show()
                         }
                     }//이메일 인증여부 검사
                 } else{ //로그인은 성공했는데 null인 경우. 안내만 띄우자. 거의 없을 듯.
                     Log.e("TAG LoginEmailAc", "currentUser == null")
-                    Toast.makeText(this, "유저 정보를 가져올 수 없습니다.\n다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "유저 정보를 가져올 수 없습니다.\n다시 로그인 해주세요.", Toast.LENGTH_LONG).show()
                     auth.signOut()
                 }
             } else {
                 // If sign in fails, display a message to the user.
                 Log.e("TAG LoginEmailAc", "signIn failed: ${it.exception}")
-                Toast.makeText(baseContext, "로그인 실패. 다시 시도해주세요. \n ${it.exception}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "로그인 실패. 다시 시도해주세요. \n ${it.exception}", Toast.LENGTH_LONG).show()
             }
         }
 

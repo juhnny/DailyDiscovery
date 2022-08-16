@@ -37,7 +37,6 @@ class MyBioFragment (val userEmail: String?,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         setHasOptionsMenu(true) //잊지마
         return b.root
     }
@@ -108,11 +107,9 @@ class MyBioFragment (val userEmail: String?,
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
         }
-
         b.btnSubscribe.setOnClickListener { saveFollow(userEmail2) }
         b.btnUnsubscribe.setOnClickListener { saveUnfollow(userEmail2) }
-
-    }
+    }// onViewCreated
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -188,8 +185,10 @@ class MyBioFragment (val userEmail: String?,
         })
     }
 
+    // 구독 버튼의 숨김/구독/구독해제 처리
     private fun updateUiOnFollow(targetEmail:String){
-        val myEmail = auth.currentUser?.email
+        val myEmail = G.user?.email
+        Log.e("MyBioFrag updateUiOnFollow", "myEmail: $myEmail, targetEmail: $targetEmail")
         //기본적으로 다 가려놨다가..
         b.btnSubscribe.visibility = View.GONE
         b.btnUnsubscribe.visibility = View.GONE
@@ -252,6 +251,7 @@ class MyBioFragment (val userEmail: String?,
     }
 
     fun loadPhotos(queryEmail:String?){
+        b.layoutNoResult.visibility = View.GONE
         if(queryEmail == null) return
 
         val retrofitInterface = RetrofitHelper.getRetrofitInterface()
@@ -284,8 +284,8 @@ class MyBioFragment (val userEmail: String?,
                     Log.e("loadPostToAlbum Success", "Header : $resultMsg")
                     photos.addAll(body.items)
                     Log.e("loadPostToAlbum Success", "Body : itemCount: ${body.itemCount}")
-
                     b.recycler.adapter?.notifyDataSetChanged()
+                    if(body.itemCount == 0) b.layoutNoResult.visibility = View.VISIBLE
                 }
             }
 
@@ -294,8 +294,6 @@ class MyBioFragment (val userEmail: String?,
             }
         })
 
-
     }//loadPhotos
-
 
 }
