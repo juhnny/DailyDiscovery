@@ -45,6 +45,30 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/layout_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="50dp">
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_announcement_24"
+            android:backgroundTint="@color/tangerine"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:text="구독중인 작가가 없습니다\n작가 앨범 화면에서 구독할 수 있어요"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
     <!--게스트 상태에서 보여줄 뷰-->
     <RelativeLayout
         android:id="@+id/layout_signin_notice"

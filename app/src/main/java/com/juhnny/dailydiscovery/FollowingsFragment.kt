@@ -24,7 +24,7 @@ class FollowingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-                return b.root
+        return b.root
 
         //바인딩을 inflate 해서 root뷰를 넘기는 방법
 //        val binding = FragmentFollowingsBinding.inflate(layoutInflater)
@@ -70,6 +70,7 @@ class FollowingsFragment : Fragment() {
             b.layoutContent.visibility = View.VISIBLE
             b.layoutSigninNotice.visibility = View.GONE
 
+            b.layoutNoResult.visibility = View.GONE
             b.recycler.adapter = FollowRecyclerAdapter(requireContext(), this, follows)
             loadFollow(G.user?.email!!)
         }
@@ -79,7 +80,7 @@ class FollowingsFragment : Fragment() {
             requireActivity().finish()
         }
 
-    }
+    }// onViewCreated
 
     private fun loadFollow(userEmail:String){
         val call = RetrofitHelper.getRetrofitInterface().loadFollowing(userEmail)
@@ -96,7 +97,7 @@ class FollowingsFragment : Fragment() {
                     if(body.itemCount != 0) {
                         follows.addAll(newFollows)
                         b.recycler.adapter?.notifyDataSetChanged()
-                    }
+                    } else b.layoutNoResult.visibility = View.VISIBLE
                 }
             }
 

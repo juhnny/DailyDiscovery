@@ -37,7 +37,6 @@ class MyBioFragment (val userEmail: String?,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         setHasOptionsMenu(true) //잊지마
         return b.root
     }
@@ -110,7 +109,7 @@ class MyBioFragment (val userEmail: String?,
         }
         b.btnSubscribe.setOnClickListener { saveFollow(userEmail2) }
         b.btnUnsubscribe.setOnClickListener { saveUnfollow(userEmail2) }
-    }
+    }// onViewCreated
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -252,6 +251,7 @@ class MyBioFragment (val userEmail: String?,
     }
 
     fun loadPhotos(queryEmail:String?){
+        b.layoutNoResult.visibility = View.GONE
         if(queryEmail == null) return
 
         val retrofitInterface = RetrofitHelper.getRetrofitInterface()
@@ -284,8 +284,8 @@ class MyBioFragment (val userEmail: String?,
                     Log.e("loadPostToAlbum Success", "Header : $resultMsg")
                     photos.addAll(body.items)
                     Log.e("loadPostToAlbum Success", "Body : itemCount: ${body.itemCount}")
-
                     b.recycler.adapter?.notifyDataSetChanged()
+                    if(body.itemCount == 0) b.layoutNoResult.visibility = View.VISIBLE
                 }
             }
 
@@ -294,8 +294,6 @@ class MyBioFragment (val userEmail: String?,
             }
         })
 
-
     }//loadPhotos
-
 
 }

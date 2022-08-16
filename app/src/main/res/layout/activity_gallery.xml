@@ -29,9 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         android:orientation="vertical"
-        app:spanCount="2"/>
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        app:spanCount="2" />
 
     <RelativeLayout
         android:id="@+id/layout_no_result"
@@ -46,15 +46,16 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/ic_announcement_24"
             android:backgroundTint="@color/tangerine"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_icon"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"
-            android:textAlignment="center"
             android:text="등록된 게시물이 없습니다\n이 주제의 첫번째 작가가 되어보세요"
-            android:textSize="18sp"/>
+            android:textAlignment="center"
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <ProgressBar
