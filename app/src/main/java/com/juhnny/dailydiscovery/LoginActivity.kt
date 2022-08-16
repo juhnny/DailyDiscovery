@@ -112,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginWithGoogle(){
-        Toast.makeText(this, "Google login - on test\nAPI 변경 작업 중입니다.", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "Google login - on test\nAPI 변경 작업 중입니다.", Toast.LENGTH_LONG).show()
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
 //            .requestIdToken("whatsthisid")
@@ -126,7 +126,10 @@ class LoginActivity : AppCompatActivity() {
         override fun onActivityResult(result: ActivityResult?) {
             try {
                 //로그인 창을 그냥 닫아버리면 예외 발생
-                if(result?.resultCode == RESULT_CANCELED) return
+                if(result?.resultCode == RESULT_CANCELED){
+                    Log.e("LoginAc googleLoginResultLauncher", "RESULT_CANCELED")
+                    return
+                }
 
                 result?.run{
                     val intent = this.data
