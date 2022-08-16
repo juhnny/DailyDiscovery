@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.juhnny.dailydiscovery.databinding.ActivityIntroBinding
 
 class IntroActivity : AppCompatActivity() {
-
     val b:ActivityIntroBinding by lazy { ActivityIntroBinding.inflate(layoutInflater) }
     val auth by lazy { FirebaseAuth.getInstance() }
     //FirebaseApp이라는 앱 실행과 함께 자동실행되는 Content Provider의 객체를 소환
