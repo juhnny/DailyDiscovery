@@ -75,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
 //            client.signOut().addOnCompleteListener {
 //                Toast.makeText(this, "구글 로그아웃", Toast.LENGTH_SHORT).show()
 //            }
-            Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -91,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
             if(result?.resultCode == RESULT_CANCELED) return
             else if(result?.resultCode == RESULT_OK){
                 val intent = result.data
-                if(intent == null) Toast.makeText(this@LoginActivity, "LoginAc intent가 null", Toast.LENGTH_SHORT).show()
+                if(intent == null) Toast.makeText(this@LoginActivity, "LoginAc intent가 null", Toast.LENGTH_LONG).show()
                 val didLogInSuccessed:Boolean? = intent?.getBooleanExtra("didLogInSuccessed", false)
                 val authId = intent?.getStringExtra("idToken") ?: ""
                 val email = intent?.getStringExtra("email") ?: ""
@@ -104,15 +104,15 @@ class LoginActivity : AppCompatActivity() {
     })
 
     private fun loginWithKakao(){
-        Toast.makeText(this, "Kakao login", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Kakao login", Toast.LENGTH_LONG).show()
     }
 
     private fun loginWithNaver(){
-        Toast.makeText(this, "Naver login", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Naver login", Toast.LENGTH_LONG).show()
     }
 
     private fun loginWithGoogle(){
-        Toast.makeText(this, "Google login - on test\nAPI 변경 작업 중입니다.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Google login - on test\nAPI 변경 작업 중입니다.", Toast.LENGTH_LONG).show()
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
 //            .requestIdToken("whatsthisid")
@@ -160,7 +160,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "서버오류 - 회원여부를 확인할 수 없습니다. \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "서버오류 - 회원여부를 확인할 수 없습니다. \n다시 시도해주세요.", Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -181,7 +181,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("LoginAc registerUserInDB()", "error")
-                Toast.makeText(this@LoginActivity, "서버오류 - 회원등록 실패 \n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "서버오류 - 회원등록 실패 \n다시 시도해주세요.", Toast.LENGTH_LONG).show()
             }
         })
     }

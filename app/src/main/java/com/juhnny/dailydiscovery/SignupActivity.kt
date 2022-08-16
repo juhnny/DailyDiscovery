@@ -68,7 +68,7 @@ class SignupActivity : AppCompatActivity() {
 //        }//email, pw는 Firebase 시스템이 검증해줄 거고..
         //닉네임은 여기서 검사
         if(nickname.equals("")) {
-            Toast.makeText(this, "작가명을 입력해주세요", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "작가명을 입력해주세요", Toast.LENGTH_LONG).show()
             return
         }
 
@@ -77,7 +77,7 @@ class SignupActivity : AppCompatActivity() {
                 //입력된 이메일로 [인증확인] 메일 전송 및 전송 성공여부 확인
                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
                     if(it.isSuccessful) {
-                        Toast.makeText(this, "전송된 이메일을 확인하고 인증에 성공하면 가입이 완료됩니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "전송된 이메일을 확인하고 인증에 성공하면 가입이 완료됩니다", Toast.LENGTH_LONG).show()
 
                         //회원 정보 DB에 저장
                         val user = auth.currentUser
@@ -86,26 +86,26 @@ class SignupActivity : AppCompatActivity() {
                             val uid = user.uid
                             Log.e("SignupAc", "uid: $uid, token: $token")
 
-                            val retrofitInterface = RetrofitHelper.getRetrofitInterface()
-                            val call:Call<String> = retrofitInterface.saveMember("email", uid, email, nickname)
-                            call.enqueue(object : Callback<String>{
-                                override fun onResponse(
-                                    call: Call<String>,
-                                    response: Response<String>
-                                ) {
-                                    val resultStr = response.body()
-                                    Log.w("saveMember Success", "resultStr : $resultStr")
-                                    finish()
-                                }
+                            RetrofitHelper.getRetrofitInterface()
+                                .saveMember("email", uid, email, nickname)
+                                .enqueue(object : Callback<String>{
+                                    override fun onResponse(
+                                        call: Call<String>,
+                                        response: Response<String>
+                                    ) {
+                                        val resultStr = response.body()
+                                        Log.e("saveMember Success", "resultStr : $resultStr")
+                                        finish()
+                                    }
 
-                                override fun onFailure(call: Call<String>, t: Throwable) {
-                                    Log.w("saveMember Failure", "${t.message}")
-                                }
-                            })//saveMember
+                                    override fun onFailure(call: Call<String>, t: Throwable) {
+                                        Log.e("saveMember Failure", "${t.message}")
+                                    }
+                                })//saveMember
                         }
                     }
                     else {
-                        Toast.makeText(this, "인증용 이메일 전송에 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "인증용 이메일 전송에 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
                         Log.e("TAG", "createUser failed: ", it.exception)
                     }
                 }
